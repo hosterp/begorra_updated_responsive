@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+	<data>
+
+		<record id="dpr_status_survey_tree_id" model="ir.ui.view">
+			<field name="name">DPR Status Survey Tree</field>
+			<field name="model">dpr.status.survey</field>
+			<field name="arch" type="xml">
+				<tree string="DPR Status">
+					<field name="date" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="dpr_status_survey_form_id" model="ir.ui.view">
+			<field name="name">DPR Status Survey Form</field>
+			<field name="model">dpr.status.survey</field>
+			<field name="arch" type="xml">
+				<form string="DPR Status">
+					<header>
+						<button name="done" string="Done" type="object" class="oe_highlight" states="not"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+					<sheet>
+						<group>
+							<field name="date"/>
+						</group>
+						<group>
+							<notebook>
+								<page string="DPR Status">
+									<field name="dpr_status_line" nolabel="1">
+										<tree editable="bottom">
+											<field name="site_id" />
+											<field name="employee_id" />
+											<field name="planned_work" />
+											<field name="todays_work" />
+											<field name="next_day_plan" />
+											<field name="target_status" />
+											<field name="remarks" />
+										</tree>
+									</field>
+								</page>
+							</notebook>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="dpr_status_survey_search">
+			<field name="name">DPR Status Survey search</field>
+			<field name="model">dpr.status.survey</field>
+			<field name="arch" type="xml">
+				<search string="Membership">
+					<field name="date"/>
+					<group expand="1" string="Group By">
+						<filter string="Date" name="date"
+								context="{'group_by':'date'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_dpr_status_survey" model="ir.actions.act_window">
+			<field name="name">DPR Status</field>
+			<field name="res_model">dpr.status.survey</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_type">form</field>
+			<field name="search_view_id" ref="dpr_status_survey_search"/>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="menu_dpr_status_survey" parent="hiworth_survey.menu_hiworth_survey_department" name="DPR Status" sequence="5" action="action_dpr_status_survey"/>
+	</data>
+</openerp>

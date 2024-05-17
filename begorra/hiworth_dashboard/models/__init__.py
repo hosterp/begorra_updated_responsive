@@ -1,0 +1,3 @@
+import hr_dashboard
+import stock_dashboard
+import fleet_dashboard

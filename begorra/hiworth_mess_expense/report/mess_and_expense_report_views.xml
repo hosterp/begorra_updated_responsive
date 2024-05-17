@@ -1,0 +1,373 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+
+		<report id="print_mess_and_expense_daily_report" string="Mess and Expense Daily - Print Report"
+			model="mess.expense.report.wizard" report_type="qweb-pdf"
+			name="hiworth_mess_expense.report_mess_and_expense_detail" />
+
+
+	<!--	<report id="view_partner_daily_report" string="Supervisor Daily - View Report"
+			model="partner.daily.statement" report_type="qweb-html"
+			name="hiworth_construction.report_partner_daily_statement" />
+
+			<record id="hiworth_construction.print_partner_daily_report" model="ir.actions.report.xml">
+			<field name="paperformat_id" ref="hiworth_construction.report_paperformat" />
+		</record>-->
+
+		<template id="report_mess_and_expense_detail">
+			<t t-call="report.html_container">
+
+				<t t-call="report.external_layout">
+
+					<div class="page">
+                            <t t-foreach="docs" t-as="o">
+						<div>
+							<h2>
+								<center>
+									<span>
+										<b>
+											Begorra Infrastructure &amp; Developers Pvt. Ltd.
+										</b>
+                                    <br/><!--<span t-field="o.project_id.name"/>--><br/>
+                                        <b>Mess Expense Details for the period of </b>
+									</span>
+								</center>
+							</h2>
+						</div>
+
+							<table class="table table-bordered" style="width: 100%;border-bottom: outset;border-top: outset;border-right: outset;border-left: outset;">
+									<thead style="width: 100%;border-bottom: outset;border-top: outset;border-right: outset;">
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;border-top: outset;">
+											<th style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;" rowspan="3">Sl.No</th>
+											<th rowspan="3" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Date</th>
+											<th colspan="11" align="center" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Particulars</th>
+
+										</tr>
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;border-top: outset;">
+											<th rowspan="2" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Provisions</th>
+											<th rowspan="2" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Vegetables</th>
+											<th rowspan="2" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Cooking Water</th>
+											<th rowspan="2" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Packing Exp</th>
+											<th rowspan="2" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Milk/Curd</th>
+											<th colspan="2" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Non-Veg</th>
+											<th colspan="1" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Miscellaneous</th>
+											<th colspan="2" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Gas Cylinder</th>
+											<th rowspan="2" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Total Amount</th>
+										</tr>
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<th style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Chicken</th>
+											<th style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Fish</th>
+											<th style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Amount</th>
+											<th style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Nos</th>
+											<th style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Amount</th>
+										</tr>
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td colspan="4" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Opening Balance</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+
+
+
+										</tr>
+									</thead>
+									<t t-set="sl_no" t-value="1" />
+									<t t-set="provision" t-value="0" />
+								<t t-set="vegetables" t-value="0" />
+								<t t-set="cooking_water" t-value="0" />
+								<t t-set="packing_exp" t-value="0" />
+								<t t-set="milk_curd" t-value="0" />
+								<t t-set="chicken" t-value="0" />
+								<t t-set="fish" t-value="0" />
+								<t t-set="miscellaneous" t-value="0" />
+								<t t-set="gas_no" t-value="0" />
+								<t t-set="gas_amt" t-value="0" />
+								<t t-set="total_amt" t-value="0" />
+
+
+									<tbody style="width: 100%;border-color:black;border-bottom: outset;border-top: outset;border-right: outset;border-left: outset;">
+										<tr t-foreach="o.get_details()" t-as="line" style=";border:solid-black;border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="border-right: outset;width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<span t-esc="sl_no" />
+												<t t-set="sl_no" t-value="sl_no+1" />
+											</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<t t-if="line['date']">
+												<span t-esc="line['date']" />
+												</t>
+											</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<t t-if="line.get('provision')">
+												<span t-esc="line['provision']" />
+												<t t-set="provision" t-value="provision+line['provision']" />
+												</t>
+											</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<t t-if="line.get('vegetables')">
+												<span t-esc="line['vegetables']" />
+												<t t-set="vegetables" t-value="vegetables+line['vegetables']" />
+												</t>
+											</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<t t-if="line.get('cooking_water')">
+												<span t-esc="line['cooking_water']" />
+												<t t-set="cooking_water" t-value="cooking_water+line['cooking_water']" />
+												</t>
+											</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<t t-if="line.get('packing_expense')">
+												<span t-esc="line['packing_expense']" />
+												<t t-set="packing_exp" t-value="packing_exp+line['packing_expense']" />
+												</t>
+											</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<t t-if="line.get('milk_curd')">
+												<span t-esc="line['milk_curd']" />
+												<t t-set="milk_curd" t-value="milk_curd+line['milk_curd']" />
+												</t>
+											</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<t t-if="line.get('chicken')">
+												<span t-esc="line['chicken']" />
+												<t t-set="chicken" t-value="chicken+line['chicken']" />
+												</t>
+											</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<t t-if="line.get('fish')">
+												<span t-esc="line['fish']" />
+												<t t-set="fish" t-value="fish+line['fish']" />
+												</t>
+											</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<t t-if="line.get('miscellaneous')">
+												<span t-esc="line['miscellaneous']" />
+												<t t-set="miscellaneous" t-value="miscellaneous+line['miscellaneous']" />
+												</t>
+											</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<t t-if="line.get('gas_no')">
+												<span t-esc="line['gas_no']" />
+												<t t-set="gas_no" t-value="gas_no+line['gas_no']" />
+												</t>
+											</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<t t-if="line.get('gas_total')">
+												<span t-esc="line['gas_total']" />
+												<t t-set="gas_amt" t-value="gas_amt+line['gas_total']" />
+												</t>
+											</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">
+												<t t-if="line.get('total_stock')">
+												<span t-esc="line['total_stock']" />
+												<t t-set="total_amt" t-value="total_amt+line['total_stock']" />
+												</t>
+											</td>
+
+
+
+										</tr>
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td colspan="2" style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Total</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-esc="provision" /></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-esc="vegetables" /></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-esc="cooking_water" /></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-esc="packing_exp" /></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-esc="milk_curd" /></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-esc="chicken" /></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-esc="fish" /></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-esc="miscellaneous" /></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-esc="gas_no" /></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-esc="gas_amt" /></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-esc="total_amt" /></td>
+
+										</tr>
+									</tbody>
+								</table>
+								<t t-set="man_power" t-value="0" />
+
+
+								<table class="table table-bordered" style="width: 100%;border:solid-black;border-bottom: outset;border-top: outset;">
+									<thead style="width: 100%;border:solid-black;border-bottom: outset;border-top: outset;">
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Attendance for the period of  <span t-field="o.date_from"/> to <span t-field="o.date_to"/> </td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+										</tr>
+
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Staff Attendance</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-field="o.staff_attendance"/></td>
+											<t t-set="man_power" t-value="man_power+o.staff_attendance" />
+										</tr>
+
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Labours</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-field="o.labours"/></td>
+											<t t-set="man_power" t-value="man_power+o.labours" />
+										</tr>
+
+
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Hire drivers/Operaters</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-field="o.hire_drivers"/></td>
+											<t t-set="man_power" t-value="man_power+o.hire_drivers" />
+										</tr>
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Guest</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+										</tr>
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Total Man Power</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"><span t-esc="man_power" /></td>
+										</tr>
+
+									</thead>
+								</table>
+
+								<table class="table table-bordered" style="width: 100%;border:solid-black;border-bottom: outset;border-top: outset;">
+									<thead style="width: 100%;border:solid-black;border-bottom: outset;border-top: outset;">
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Mess Expense  Details for the Period <span t-field="o.date_from"/> to <span t-field="o.date_to"/> </td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+										</tr>
+
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Total Provision Purchase</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+										</tr>
+
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Total Vegetable Purchase</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+										</tr>
+
+
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Total Milk/Curd</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+										</tr>
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Purchase Packing Material For Parcel</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+										</tr>
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Total Non-Veg Purchase (Chicken,Fish,Meat &amp; Egg)</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+										</tr>
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Total Gas Cylinder Purchase</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+										</tr>
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Miscellaneous</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+										</tr>
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Opening Stock</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+										</tr>
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Total</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+										</tr>
+
+									</thead>
+								</table>
+
+								<table class="table table-bordered" style="width: 100%;border:solid-black;border-bottom: outset;border-top: outset;">
+									<thead style="width: 100%;border:solid-black;border-bottom: outset;border-top: outset;">
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Less </td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+
+										</tr>
+
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Closing Stock of Material</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+
+										</tr>
+
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Holy Festival Expense(Extra Amount)</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+
+										</tr>
+
+
+										<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;">Total (A)</td>
+											<td style="width: 5%;border-right: outset;border-bottom: outset;border-top: outset;"></td>
+
+										</tr>
+
+
+									</thead>
+								</table>
+
+								<!--<table class="table table-bordered" style="width: 100%;border:solid-black;">
+									<thead>
+										<tr>
+											<td>Less </td>
+											<td></td>
+
+										</tr>
+
+										<tr>
+											<td>Closing Stock of Material</td>
+											<td></td>
+
+										</tr>
+
+										<tr>
+											<td>Holy Festival Expense(Extra Amount)</td>
+											<td></td>
+
+										</tr>
+
+
+										<tr>
+											<td>Total (A)</td>
+											<td></td>
+
+										</tr>
+
+
+									</thead>
+								</table>-->
+
+						</t>
+
+
+					</div>
+
+				</t>
+			</t>
+		</template>
+
+
+		</data>
+	</openerp>

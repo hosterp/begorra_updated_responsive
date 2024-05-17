@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sub_advance_payment,access_sub_advance_payment,model_sub_advance_payment,,1,1,1,1
+access_sub_advance_line,access_sub_advance_payment,model_sub_advance_line,,1,1,1,1
+access_work_order_payment,access_work_order_payment,model_work_order_payment,,1,1,1,1

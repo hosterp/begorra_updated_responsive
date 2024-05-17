@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+,,,,,,,
+,,,,,,,
+access_survey_work_status,access_survey_work_status,model_survey_work_status,,1,1,1,1
+access_survey_work_status_line,access_survey_work_status_line,model_survey_work_status_line,,1,1,1,1
+access_training_evaluation,access_training_evaluation,model_training_evaluation,,1,1,1,1
+access_staff_movement,access_staff_movement,model_staff_movement,,1,1,1,1
+access_movement_purpose,access_movement_purpose,model_movement_purpose,,1,1,1,1
+access_quantity_status,access_quantity_status,model_quantity_status,,1,1,1,1
+access_quantity_status_line,access_quantity_status_line,model_quantity_status_line,,1,1,1,1
+access_review_meeting_minutes,access_review_meeting_minutes,model_review_meeting_minutes,,1,1,1,1
+access_instrument_status,access_instrument_status,model_instrument_status,,1,1,1,1
+access_dpr_status_survey,access_dpr_status_survey,model_dpr_status_survey,,1,1,1,1
+,,,,,,,
+,,,,,,,

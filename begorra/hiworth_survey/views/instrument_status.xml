@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+
+        <record id="instrument_status_tree_id" model="ir.ui.view">
+            <field name="name">Instrument Status Tree</field>
+            <field name="model">instrument.status</field>
+            <field name="arch" type="xml">
+                <tree editable="top" create="true" string="Instrument Status">
+                    <field name="instrument_no"/>
+                    <field name="calibrated_on"/>
+                    <field name="duration"/>
+                    <field name="calibrated_due"/>
+                    <field name="state"/>
+                    <field name="location_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="instrument_status_form_id" model="ir.ui.view">
+            <field name="name">Instrument Status Form</field>
+            <field name="model">instrument.status</field>
+            <field name="arch" type="xml">
+                <form string="Instrument Status">
+                    <header>
+						<button name="done" string="Done" type="object" class="oe_highlight" states="not"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+                    <group>
+                        <group>
+                            <field name="instrument_no"/>
+                            <field name="calibrated_on"/>
+                            <field name="duration"/>
+                        </group>
+                        <group>
+                            <field name="calibrated_due"/>
+                            <field name="status"/>
+                            <field name="location_id"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="instrument_status_search">
+			<field name="name">Instrument Status search</field>
+			<field name="model">instrument.status</field>
+			<field name="arch" type="xml">
+				<search string="Membership">
+					<field name="instrument_no"/>
+					<field name="calibrated_on"/>
+					<field name="duration"/>
+					<field name="calibrated_due"/>
+					<field name="state"/>
+					<field name="location_id"/>
+					<group expand="1" string="Group By">
+						<filter string="Instrument Number" name="instrument_no"
+								context="{'group_by':'instrument_no'}"/>
+						<filter string="Calibrated On" name="calibrated_date"
+								context="{'group_by':'calibrated_on'}"/>
+						<filter string="Duration" name="duration"
+								context="{'group_by':'duration'}"/>
+						<filter string="Valid Upto" name="date_due"
+								context="{'group_by':'calibrated_due'}"/>
+						<filter string="State" name="state_id"
+								context="{'group_by':'state'}"/>
+						<filter string="Site" name="site_id"
+								context="{'group_by':'location_id'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+        <record id="action_instrument_status" model="ir.actions.act_window">
+            <field name="name">Instrument Status</field>
+            <field name="res_model">instrument.status</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="instrument_status_search"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_instrument_status" name="Instrument Status" id="menu_instrument_status" sequence="6" parent="hiworth_survey.menu_hiworth_survey_department"/>
+
+    </data>
+</openerp>

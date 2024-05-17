@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+        <record id="survey_planning_chart_tree_id" model="ir.ui.view">
+            <field name="name">Planning Chart Tree</field>
+            <field name="model">survey.planning.chart</field>
+            <field name="arch" type="xml">
+                <tree string="Planning Chart">
+                    <field name="period_from"/>
+                    <field name="period_to"/>
+                    <field name="is_site"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="survey_planning_chart_form_id" model="ir.ui.view">
+            <field name="name">Planning Chart Form</field>
+            <field name="model">survey.planning.chart</field>
+            <field name="arch" type="xml">
+                <form string="Planning Chart">
+                    <header>
+						<button name="done" string="Done" type="object" class="oe_highlight" states="not"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="period_from"/>
+                                <field name="period_to"/>
+                            </group>
+                            <group>
+                                <field name="is_site" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page>
+                                <field name="chart_lines" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="survey_id" invisible="True"/>
+                                        <field name="create_date"/>
+                                        <field name="location_id"/>
+                                        <field name="worklist_id"/>
+                                        <field name="employee_id"/>
+                                        <field name="completion_date"/>
+                                        <field name="completed_on"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="survey_planning_chart_search">
+            <field name="name">Planning Chart Form search</field>
+            <field name="model">survey.planning.chart</field>
+            <field name="arch" type="xml">
+                <search string="Membership">
+                    <field name="period_from"/>
+                    <field name="period_to"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Period From" name="priod_from"
+                                context="{'group_by':'period_from'}"/>
+                        <filter string="Period To" name="period_to"
+                                context="{'group_by':'period_to'}"/>
+                        <filter string="Site" name="site_ids"
+                                context="{'group_by':'is_site'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="survey_worklist_tree_id" model="ir.ui.view">
+            <field name="name">Work List Tree</field>
+            <field name="model">survey.worklist</field>
+            <field name="arch" type="xml">
+                <tree string="Work List">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="survey_worklist_form_id" model="ir.ui.view">
+            <field name="name">Work List Form</field>
+            <field name="model">survey.worklist</field>
+            <field name="arch" type="xml">
+                <form string="Work List">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <menuitem name="Planning Chart" id="menu_survey_planning_chart" sequence="1" parent="hiworth_survey.menu_hiworth_survey_department"/>
+
+        <record id="action_survey_planning_chart_site_weekly" model="ir.actions.act_window">
+            <field name="name">Planning Chart Site Weekly</field>
+            <field name="res_model">survey.planning.chart</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_site', '=', True), ('is_weekly', '=', True)]</field>
+            <field name="search_view_id" ref="survey_planning_chart_search"/>
+            <field name="context">{'default_is_site': True, 'default_is_weekly': True}</field>
+        </record>
+
+        <record id="action_survey_planning_chart_site_monthly" model="ir.actions.act_window">
+            <field name="name">Planning Chart Site Monthly</field>
+            <field name="res_model">survey.planning.chart</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_site', '=', True), ('is_weekly', '=', False)]</field>
+            <field name="search_view_id" ref="survey_planning_chart_search"/>
+            <field name="context">{'default_is_site': True, 'default_is_weekly': False}</field>
+        </record>
+
+        <menuitem parent="hiworth_survey.menu_survey_planning_chart" name="Site" id="menu_survey_planning_chart_site" sequence="1"/>
+        <menuitem parent="hiworth_survey.menu_survey_planning_chart_site" action="action_survey_planning_chart_site_weekly" name="Weekly" id="menu_survey_planning_chart_site_weekly" sequence="1"/>
+        <menuitem parent="hiworth_survey.menu_survey_planning_chart_site" action="action_survey_planning_chart_site_monthly" name="Monthly" id="menu_survey_planning_chart_site_monthly" sequence="2"/>
+
+        <record id="action_survey_planning_chart_office_weekly" model="ir.actions.act_window">
+            <field name="name">Planning Chart office Weekly</field>
+            <field name="res_model">survey.planning.chart</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_site', '=', False), ('is_weekly', '=', True)]</field>
+            <field name="search_view_id" ref="survey_planning_chart_search"/>
+            <field name="context">{'default_is_site': False, 'default_is_weekly': True}</field>
+        </record>
+
+        <record id="action_survey_planning_chart_office_monthly" model="ir.actions.act_window">
+            <field name="name">Planning Chart office Monthly</field>
+            <field name="res_model">survey.planning.chart</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_site', '=', False), ('is_weekly', '=', False)]</field>
+            <field name="search_view_id" ref="survey_planning_chart_search"/>
+            <field name="context">{'default_is_site': False, 'default_is_weekly': False}</field>
+        </record>
+
+        <menuitem parent="hiworth_survey.menu_survey_planning_chart" name="Office" id="menu_survey_planning_chart_office" sequence="2"/>
+        <menuitem parent="hiworth_survey.menu_survey_planning_chart_office" action="action_survey_planning_chart_office_weekly" name="Weekly" id="menu_survey_planning_chart_office_weekly" sequence="1"/>
+        <menuitem parent="hiworth_survey.menu_survey_planning_chart_office" action="action_survey_planning_chart_office_monthly" name="Monthly" id="menu_survey_planning_chart_office_monthly" sequence="2"/>
+
+        <record id="action_survey_worklist" model="ir.actions.act_window">
+            <field name="name">Work List Form</field>
+            <field name="res_model">survey.worklist</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem parent="base.menu_definitions" action="action_survey_worklist" name="Work List" id="menu_survey_worklist" sequence="1"/>
+    </data>
+</openerp>

@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+<record id="form_maintanance_report_daily" model="ir.ui.view">
+			<field name="name">Labour Bata Reort</field>
+			<field name="model">maintanance.report</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+
+
+							<field name="from_date"/>
+						<field name="to_date"/>
+
+							<field name="vehicle_id" />
+							<field name="tyre_id" invisible="context.get('tyre_bool',1)"/>
+
+					</group>
+					<footer>
+						<!--button type="object" name="view_report_location_stock"
+							string="View" class="oe_highlight" /-->
+						<button type="object" name="generate_xls_report"
+							string="Print" class="oe_highlight" />
+						<button special="cancel" string="Cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+		<record id="action_report_maintanace_daily" model="ir.actions.act_window">
+			<field name="name">Dashboard</field>
+			<field name="res_model">maintanance.report</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+		<report
+            id="maintance_report_daily"
+            model="maintanance.report"
+            string="Equipment Breakdown Excel"
+            report_type="xlsx"
+            name="equipment_breakdown_report.xlsx"
+            file="equipment_breakdown_report.xlsx"
+            menu="False"
+        />
+
+		<report
+            id="equi_maintance_report_daily"
+            model="maintanance.report"
+            string="Equipment Daily Maintenance Excel"
+            report_type="xlsx"
+            name="equipment_daily_report.xlsx"
+            file="equipment_daily_report.xlsx"
+            menu="False"
+        />
+
+		<report
+            id="prev_maintance_report_daily"
+            model="maintanance.report"
+            string="Equipment Preventive Excel"
+            report_type="xlsx"
+            name="equipment_preventive_report.xlsx"
+            file="equipment_preventive_report.xlsx"
+            menu="False"
+        />
+
+		<report
+            id="tyre_rep_maintance_report_daily"
+            model="maintanance.report"
+            string="Equipment Tyre Repairs Excel"
+            report_type="xlsx"
+            name="equipment_tyre_repairs_report.xlsx"
+            file="equipment_tyre_repairs_report.xlsx"
+            menu="False"
+        />
+
+		<report
+            id="fueld_maintance_report_daily"
+            model="maintanance.report"
+            string="Equipment Fuel Details Excel"
+            report_type="xlsx"
+            name="equipment_fuel_details_report.xlsx"
+            file="equipment_fuel_details_report.xlsx"
+            menu="False"
+        />
+
+		<report
+            id="utili_maintance_report_daily"
+            model="maintanance.report"
+            string="Equipment Utilization Excel"
+            report_type="xlsx"
+            name="equipment_utilisation_report.xlsx"
+            file="equipment_utilisation_report.xlsx"
+            menu="False"
+        />
+
+		<report
+            id="monthly_report_fleet"
+            model="maintanance.report"
+            string="Equipment Monthly Excel"
+            report_type="xlsx"
+            name="equipment_monthly_report.xlsx"
+            file="equipment_monthly_report.xlsx"
+            menu="False"
+        />
+
+		<report
+            id="maintance_report_daily"
+            model="maintanance.report"
+            string="Equipment Breakdown Excel"
+            report_type="xlsx"
+            name="equipment_breakdown_report.xlsx"
+            file="equipment_breakdown_report.xlsx"
+            menu="False"
+        />
+
+
+
+
+
+	</data>
+</openerp>

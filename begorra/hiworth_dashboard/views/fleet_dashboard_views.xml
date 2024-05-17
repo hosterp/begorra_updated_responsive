@@ -1,0 +1,272 @@
+<openerp>
+<data>
+      <record id="channel_dashboard_fleet_form_view" model="ir.ui.view">
+          <field name="name">custom.fleet.dashboard.form.view</field>
+          <field name="model">fleet.dashboard</field>
+          <field name="arch" type="xml">
+            <form>
+              <field name="color"/>
+              <field name="name"/>
+            </form>
+          </field>
+      </record>
+      <record id="custom_fleet_dasboard_kanban" model="ir.ui.view">
+        <field name="name">custom.fleet.dashboard.view</field>
+        <field name="model">fleet.dashboard</field>
+        <field name="arch" type="xml">
+          <kanban class="o_kanban_dashboard" create="0">
+          <templates>
+              <t t-name="kanban-box" string="Plant/Machinery"> 
+                <table class="oe_kanban_groups">
+                  <tr style="width:120px;">
+                     <td style="border: 3px solid black;">
+                      <span t-attf-class="#{kanban_color(661)} oe_kanban_card ">
+                        <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                        <div class="o_kanban_card_content" style="position:absolute;left:85px;absolute;top:100px" align="center">
+                          <center>
+                            <table>
+                              <tr>
+                                <center>
+                                  <b><span style="font-size:27px;">
+                                       Monthly Report
+                                      </span>
+                                  </b>
+                                </center>
+                                </tr>
+                              <tr>
+                                <div >
+                                  <center>
+                                    <button class="your_custom_button" type="object" name="monthly_report" string="Monthly Report">Monthly Report</button>
+                                  </center>
+                                </div>
+                              </tr>
+                            </table>
+                          </center>
+                        </div>
+                        </div>
+                      </span>
+                    </td>
+                    <td style="border: 3px solid black;">
+                      <span t-attf-class="#{kanban_color(661)} oe_kanban_card ">
+                        <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                        <div class="o_kanban_card_content" style="position:absolute;left:85px;absolute;top:100px" align="center">
+                          <center>
+                            <table>
+                              <tr>
+                                <center>
+                                  <b><span style="font-size:27px;">
+                                       DAILY UTILIZATION
+                                      </span>
+                                  </b>
+                                </center>
+                                </tr>
+                              <tr>
+                                <div >
+                                  <center>
+                                    <button class="your_custom_button" type="object" name="Daily_Utilization_report" string="Daily utilization">Daily Utilization</button>
+                                  </center>
+                                </div>
+                              </tr>
+                            </table>
+                          </center>
+                        </div>
+                        </div>
+                      </span>
+                    </td>
+                    <td style="border: 3px solid black;">
+                      <span t-attf-class="#{kanban_color(661)} oe_kanban_card ">
+                        <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                        <div class="o_kanban_card_content" style="position:absolute;left:20px;absolute;top:100px" align="center">
+                          <center>
+                            <table>
+                              <tr>
+                                <center>
+                                  <b><span style="font-size:27px;">
+                                       DAILY PREVENTIVE MAINTENANCE
+                                      </span>
+                                  </b>
+                                </center>
+                                </tr>
+                              <tr>
+                                <div >
+                                  <center>
+                                    <button class="your_custom_button" type="object" name="today_preventive_maintanence" string="Preventive maintenence">Preventive Maintenence</button>
+                                  </center>
+                                </div>
+                              </tr>
+                            </table>
+                          </center>
+                        </div>
+                        </div>
+                      </span>
+                    </td>
+                    <td style="border: 3px solid black;">
+                      <span t-attf-class="#{kanban_color(661)} oe_kanban_card ">
+                        <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                        <div class="o_kanban_card_content" style="position:absolute;left:70px;absolute;top:100px" align="center">
+                          <center>
+                            <table>
+                              <tr>
+                                <center>
+                                  <b><span style="font-size:27px;">
+                                       DAILY MAINTENANCE
+                                      </span>
+                                  </b>
+                                </center>
+                                </tr>
+                              <tr>
+                                <div >
+                                  <center>
+                                    <button class="your_custom_button" type="object" name="daily_maintanence" string="daily maintenence">Daily Maintenence</button>
+                                  </center>
+                                </div>
+                              </tr>
+                            </table>
+                          </center>
+                        </div>
+                        </div>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr style="width:120px;">
+                    <td style="border: 3px solid black;">
+                      <span t-attf-class="#{kanban_color(661)} oe_kanban_card ">
+                        <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                        <div class="o_kanban_card_content" style="position:absolute;left:50px;absolute;top:100px" align="center">
+                          <center>
+                            <table>
+                              <tr>
+                                <center>
+                                  <b><span style="font-size:27px;">
+                                       REPAIRS/BREAKDOWNS
+                                      </span>
+                                  </b>
+                                </center>
+                                </tr>
+                              <tr>
+                                <div >
+                                  <center>
+                                    <button class="your_custom_button" type="object" name="repairs_and_breakdowns" string="Repairs/Breakdown">Daily Repairs</button>
+                                  </center>
+                                </div>
+                              </tr>
+                            </table>
+                          </center>
+                        </div>
+                        </div>
+                      </span>
+                    </td>
+                    <td style="border: 3px solid black;">
+                      <span t-attf-class="#{kanban_color(661)} oe_kanban_card ">
+                        <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                        <div class="o_kanban_card_content" style="position:absolute;left:95px;absolute;top:100px;" align="center">
+                          <center>
+                            <table>
+                              <tr>
+                                <center>
+                                  <b><span style="font-size:27px;">
+                                       TYRE REPAIRS
+                                      </span>
+                                  </b>
+                                </center>
+                                </tr>
+                              <tr>
+                                <div >
+                                  <center>
+                                    <button class="your_custom_button" type="object" name="tyre_repairs" string="Todays Tyre Repairs">Tyre Repairs</button>
+                                  </center>
+                                </div>
+                              </tr>
+                            </table>
+                          </center>
+                        </div>
+                        </div>
+                      </span>
+                    </td>
+                    <td style="border: 3px solid black;">
+                      <span t-attf-class="#{kanban_color(661)} oe_kanban_card ">
+                        <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                        <div class="o_kanban_card_content" style="position:absolute;left:95px;absolute;top:100px" align="center">
+                          <center>
+                            <table>
+                              <tr>
+                                <center>
+                                  <b><span style="font-size:27px;">
+                                       OTHER REPAIRS
+                                      </span>
+                                  </b>
+                                </center>
+                                </tr>
+                              <tr>
+                                <div >
+                                  <center>
+                                    <button class="your_custom_button" type="object" name="other_repairs" string="Other Repairs">Other Repairs</button>
+                                  </center>
+                                </div>
+                              </tr>
+                            </table>
+                          </center>
+                        </div>
+                        </div>
+                      </span>
+                    </td>
+
+                    <td style="border: 3px solid black;">
+                      <span t-attf-class="#{kanban_color(661)} oe_kanban_card ">
+                        <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                        <div class="o_kanban_card_content" style="position:absolute;left:95px;absolute;top:100px" align="center">
+                          <center>
+                            <table>
+                              <tr>
+                                <center>
+                                  <b><span style="font-size:27px;">
+                                       Fuel Filling Details
+                                      </span>
+                                  </b>
+                                </center>
+                                </tr>
+                              <tr>
+                                <div >
+                                  <center>
+                                    <button class="your_custom_button" type="object" name="fuel_details" string="Fuel Filling Details">Fuel Filling Details</button>
+                                  </center>
+                                </div>
+                              </tr>
+                            </table>
+                          </center>
+                        </div>
+                        </div>
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+              </t>
+            </templates>
+          </kanban>
+        </field>
+      </record>
+
+
+
+
+      <record id="custom_fleet_dashboard_action" model="ir.actions.act_window">
+          <field name="name">Dashboard</field>
+          <field name="res_model">fleet.dashboard</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="view_type">form</field>
+          <field name="context">{}</field>
+          <field name="view_mode">kanban,form</field>
+      </record>
+
+        <menuitem id="menu_fleet_dash_config" parent= "hr.menu_hr_reporting" sequence= "2" name= "Plant&amp;machinery" action="custom_fleet_dashboard_action"/>
+         <!-- <menuitem id="base.next_id_64" name="Sales" parent="base.menu_reporting" sequence="1" groups="hiworth_dashboard.group_hiworth_dashboard" />
+        <menuitem id="hr.menu_hr_reporting" parent="base.menu_reporting" name="My DashBoard" sequence="40"/>
+        <menuitem id="account.menu_finance_reporting" name="Accounting" parent="base.menu_reporting" sequence="35" groups="hiworth_dashboard.group_hiworth_dashboard"/>
+        <menuitem parent="base.menu_reporting" id="event.menu_reporting_events" sequence="30" groups="hiworth_dashboard.group_hiworth_dashboard" name="Events"/>
+        <menuitem name="Fleet" parent="base.menu_reporting" id="fleet.menu_fleet_reporting" sequence="50" groups="hiworth_dashboard.group_hiworth_dashboard"/> -->
+
+
+    
+ 
+  </data>
+ </openerp>

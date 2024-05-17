@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+
+        <record id="survey_work_status_tree_id" model="ir.ui.view">
+            <field name="name">Work Status Tree</field>
+            <field name="model">survey.work.status</field>
+            <field name="arch" type="xml">
+                <tree string="Work Status">
+                    <field name="location_id"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="survey_work_status_form_id" model="ir.ui.view">
+            <field name="name">Work Status Form</field>
+            <field name="model">survey.work.status</field>
+            <field name="arch" type="xml">
+                <form string="Work Status">
+                    <header>
+						<button name="done" string="Done" type="object" class="oe_highlight" states="not"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="location_id"/>
+                            </group>
+                            <group>
+                                <field name="status"/>
+                            </group>
+                        </group>
+                        <group>
+                            <notebook>
+                                <page string="Work Status">
+                                    <field name="report_status_line" nolabel="1">
+                                        <tree editable="bottom">
+                                            <field name="status_id" invisible="1"/>
+                                            <field name="reporting_status"/>
+                                            <field name="reporting_date"/>
+                                            <field name="approval_status"/>
+                                            <field name="approval_date"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="survey_work_status_search">
+            <field name="name">Work Status Tree search</field>
+            <field name="model">survey.work.status</field>
+            <field name="arch" type="xml">
+                <search string="Membership">
+                    <field name="location_id"/>
+                    <field name="status"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Site" name="site_id"
+                                context="{'group_by':'location_id'}"/>
+                        <filter string="Status" name="status_id"
+                                context="{'group_by':'status'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_survey_work_status" model="ir.actions.act_window">
+            <field name="name">Work Status</field>
+            <field name="res_model">survey.work.status</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="survey_work_status_search"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_survey_work_status" parent="hiworth_survey.menu_hiworth_survey_department" name="Work Status" sequence="3" action="action_survey_work_status"/>
+
+    </data>
+</openerp>

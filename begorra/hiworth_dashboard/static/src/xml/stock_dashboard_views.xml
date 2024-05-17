@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="hotel_template" xml:space="preserve">
+
+    <t t-name="kanban-box" string="HR">
+          				<field name="department_list"/>
+          				<!-- <t t-value="JSON.parse(record.name.raw_value)" t-set="department_list"/> -->
+          				<!-- Use <t> tag instead of <span> for color change -->
+            			<table style="">
+               				 <!-- <t  t-foreach="get_range" t-as="rang"> -->
+               				 	<tr>
+               				 	<td><span>ffffffffffffffffffffffff</span>
+               				 	</td>
+               				 </tr>
+               				<!-- </t> -->
+               			</table>
+               	    </t>
+</templates>

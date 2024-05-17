@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="view_account_move_form_inherit_expense" model="ir.ui.view">
+           <field name="name">account.move.form.inherit.expense</field>
+           <field name="model">account.move</field>
+           <field name="inherit_id" ref="hiworth_accounting.view_move_form_hiworth"/>
+           <field name="arch" type="xml">
+                <field name="review" position="after">
+                    <field name="copy_to_expense"/>
+                </field>
+           </field>
+        </record>
+
+
+		<record id="expense_book_form123" model="ir.ui.view">
+			<field name="name">expense.book.form</field>
+			<field name="model">expense.book</field>
+			<field name="arch" type="xml">
+				<form string="Expense Book Opening Entry" >
+					<header>
+							<button name="action_open" string="Open"
+								states="draft,reject" type="object"
+								class="oe_highlight" />
+						<button name="action_close" string="Close" type="object" states="approve" class="oe_highlight" />
+						<button name="action_approve" string="Approve" type="object" states="open" class="oe_highlight" groups="base.group_erp_manager"/>
+						<button name="action_reject" string="Lock" type="object" states="open" class="oe_highlight" groups="base.group_erp_manager"/>
+						<button name="action_cancel" string="Cancel" type="object" states="close,open" class="oe_highlight" groups="base.group_erp_manager"/>
+						<button name="set_to_draft" string="Set to Draft" type="object" states="cancel" class="oe_highlight" groups="base.group_erp_manager"/>
+						<field name="state" widget="statusbar" statusbar_visible="draft,open,approve,reject,close,cancel"/>
+
+						</header>
+					<sheet>
+
+						<group>
+							<group>
+								<field name="date" required="1" />
+								<field name="user_id" required="1"/>
+							</group>
+						</group>
+						<group string="Transactions">
+							<field name="move_lines" nolabel="1">
+								<tree colors="red:state == 'reject';blue:state == 'cancel';">
+									<field name="narration" string="Particulars" readonly="1"/>
+									<field name="account_id" string="Account" readonly="1"/>
+									<field name="debit" sum="Total Debit" readonly="1"/>
+									<field name="credit"  sum="Total Credit" readonly="1"/>
+									<field name="move_id"/>
+									<field name="location_ids"/>
+									<field name="date"/>
+									<button name="action_approve" string="Approve" type="object" states="draft" class="oe_highlight" groups="base.group_erp_manager"/>
+									<button name="action_reject" string="Reject" type="object" states="draft" class="oe_highlight" groups="base.group_erp_manager"/>
+									<button name="action_cancel" string="Cancel" type="object" states="reject,approve" class="oe_highlight" groups="base.group_erp_manager"/>
+									<button name="set_to_draft" string="Set to Draft" type="object" states="cancel" class="oe_highlight" groups="base.group_erp_manager"/>
+									<field name="state" invisible="0" widget="statusbar"/>
+								</tree>
+							</field>
+						</group>
+
+						<group class="oe_subtotal_footer oe_right">
+							<div class="oe_subtotal_footer_separator oe_inline">
+                                <label for="current_balance"/>
+                            </div>
+                            <field name="current_balance" nolabel="1" class="oe_subtotal_footer_separator"/>
+
+							<div class="oe_subtotal_footer_separator oe_inline">
+                                <label for="rejected"/>
+                            </div>
+                            <field name="rejected" nolabel="1" class="oe_subtotal_footer_separator"/>
+
+
+                            <div class="oe_subtotal_footer_separator oe_inline">
+                                <label for="actual_balance"/>
+                            </div>
+                            <field name="actual_balance" nolabel="1" class="oe_subtotal_footer_separator"/>
+                            <field name="is_difference" invisible="1"/>
+                            <field name="write_off_account" attrs="{'invisible':[('is_difference','=',False)]}"/>
+						</group>
+						<group>
+							<field name="company_id" invisible="1"/>
+							<field name="remarks" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="expense_book_form" model="ir.ui.view">
+			<field name="name">expense.book.form</field>
+			<field name="model">expense.book</field>
+			<field name="arch" type="xml">
+				<tree string="Suspense Book">
+					<field name="date"  />
+					<field name="user_id" />
+					<field name="current_balance" />
+					<field name="remarks" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+
+
+
+
+		<record id="action_expense_book_form" model="ir.actions.act_window">
+			<field name="name">Expense Book</field>
+			<field name="res_model">expense.book</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+<!--		<menuitem name="Expense Book"  id="menu_expense_book_root" parent="account.menu_finance" sequence="1"  />-->
+
+		<menuitem name="Expense Book"  id="menu_expense_book" parent="hiworth_cashbook.menu_cash_book_root" sequence="10"
+			action="action_expense_book_form" />
+	</data>
+</openerp>

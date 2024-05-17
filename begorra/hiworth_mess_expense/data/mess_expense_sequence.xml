@@ -1,0 +1,17 @@
+<openerp>
+    <data noupdate="1">
+
+        <record id="mess_expense_daily_statement" model="ir.sequence.type">
+            <field name="name">Mess Expense Daily Statment Code</field>
+            <field name="code">mess.expense.code</field>
+        </record>
+
+        <record id="mess_expense_daily_statement_seq" model="ir.sequence">
+            <field name="name">>Mess Expense Daily Statment</field>
+            <field name="code">mess.expense.code</field>
+            <field name="padding">4</field>
+        </record>
+
+
+    </data>
+</openerp>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="res_partner_inherit_mou_button" model="ir.ui.view">
+			<field name="name">res.partner.inherit.mou.button</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<div name="buttons" position="inside">
+					<button class="oe_inline oe_stat_button" type="object"
+							name="action_show_mou" string="MOU"  icon="fa-arrow-right">
+					</button>
+				</div>
+			</field>
+		</record>
+
+
+		<record id="view_mou_form" model="ir.ui.view">
+			<field name="name">mou.mou.form.view</field>
+			<field name="model">mou.mou</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="action_approve" states="draft" string="Approve" type="object" class="oe_highlight" groups="base.group_erp_manager"/>
+						<button name="action_reject" states="draft,approved" string="Reject" type="object" class="oe_highlight" groups="base.group_erp_manager"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+					<sheet>
+						<h1>
+							<field name="name" class="oe_inline" readonly="1"/>
+						</h1>
+						<group col="4">
+							<field name="partner_id"/>
+							<field name="address"/>
+							<field name="category_id"/>
+							<field name="type"/>
+							<field name="vehicle_number" widget="many2many_tags"/>
+							<field name="land_area"/>
+							<field name="supervisor"/>
+							<field name="site"/>
+							<field name="contractor_id"/>
+						</group>
+
+						<group string="Agreement Details">
+							<group col="2">
+								<field name="agreement_date"/>
+								<field name="cost"/>
+								<field name="unit_of_meassure"/>
+								<field name="with_operator"/>
+								<field name="bata" attrs="{'invisible':[('with_operator','!=',True)]}"/>
+								<field name="total" attrs="{'invisible':[('with_operator','!=',True)]}"/>
+
+							</group>
+							<group col="2">
+								<field name="starting_date"/>
+								<field name="finishing_date"/>
+
+							</group>
+
+
+						</group>
+
+						<group string="Security Deposit Details" col="4">
+							<field name="amount"/>
+							<field name="mode_of_payment"/>
+							<field name="date_of_payment"/>
+						</group>
+
+						<group string="Bank Account Details">
+							<group col="2">
+								<field name="account_name"/>
+								<field name="bank_name"/>
+								<field name="branch"/>
+								<field name="acc_no"/>
+								<field name="pan"/>
+							</group>
+							<group col="2">
+								<field name="ifsc_code"/>
+								<field name="gst_account"/>
+								<field name="gst_no"/>
+								<field name="company_id"/>
+							</group>
+
+						</group>
+
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_mou_tree" model="ir.ui.view">
+			<field name="name">mou.mou.tree.view</field>
+			<field name="model">mou.mou</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="partner_id"/>
+					<field name="category_id"/>
+					<field name="site"/>
+					<field name="supervisor"/>
+					<field name="cost"/>
+					<field name="starting_date"/>
+					<field name="finishing_date"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_mou_search" model="ir.ui.view">
+			<field name="name">mou.mou.search.view</field>
+			<field name="model">mou.mou</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="partner_id"/>
+					<field name="category_id"/>
+					<field name="starting_date"/>
+					<field name="finishing_date"/>
+
+					<group expand="0" string="Group By">
+						<filter string="Partner" icon="group_partner" domain="[]"  context="{'group_by':'partner_id'}"/>
+						<filter string="Category" icon="group_category" domain="[]"  context="{'group_by':'category_id'}"/>
+						<filter string="Starting Date" icon="group_start_date" domain="[]"  context="{'group_by':'starting_date'}"/>
+						<filter string="Finishing Date" icon="group_stop_date" domain="[]"  context="{'group_by':'finishing_date'}"/>
+
+					</group>
+
+
+				</search>
+			</field>
+		</record>
+
+
+
+		<record id="action_mou_mou" model="ir.actions.act_window">
+			<field name="name">Memorandum of Understanding</field>
+			<field name="res_model">mou.mou</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+		</record>
+
+		<record model="ir.actions.act_window" id="action_mou_other_owner_actions">
+			<field name="name">Other Supplier/Owners</field>
+			<field name="res_model">res.partner</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'default_other_mou_supplier':1}</field>
+			<field name="domain">[('other_mou_supplier','=',True)]</field>
+		</record>
+
+		<menuitem name="Rentals" id="main_menu_main_mou"
+				  sequence="1" />
+
+		<menuitem name="MOU" id="menu_mou" parent="main_menu_main_mou"
+				  sequence="3" />
+		<menuitem action="action_mou_mou"
+				  name="MOU" id="menu_main_mou" parent="menu_mou"
+				  sequence="1" />
+
+		<menuitem parent="main_menu_main_mou" id="mou_menu_rent_vehicless" sequence="1"  name="Rentals" />
+		<menuitem action="hiworth_tms.action_fleet_rent_vehicless_112" parent="mou_menu_rent_vehicless" id="hiworth_tms.menu_rent_vehicless" sequence="1"  name="Vehicles" />
+		<menuitem id="hiworth_tms.fleet_rent_machinary_menu_new" name="Machinery" action="hiworth_tms.action_fleet_rent_machinery" parent="mou_menu_rent_vehicless" sequence="2"/>
+
+
+		<menuitem parent="main_menu_main_mou" id="main_rental_partner" sequence="2"  name="Rentals Partners" />
+		<menuitem action="hiworth_tms.action_vehicle_owner_actions" parent="main_rental_partner" id="hiworth_tms.menu_rent_vehicle_owner" sequence="1"  name="Vehicle Owners" groups="base.group_erp_manager"/>
+		<menuitem id="hiworth_tms.menu_rent_machinery_owner" action="hiworth_tms.action_rent_machinery_owner_actions" parent="main_rental_partner" name="Machinery Owners" groups="base.group_erp_manager" sequence="2"/>
+		<menuitem action="action_mou_other_owner_actions" parent="main_rental_partner" id="mou_other_owner_actions_id" sequence="3"  name="Other Supplier/Owners"/>
+	</data>
+</openerp>

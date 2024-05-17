@@ -1,0 +1,89 @@
+<openerp>
+    <data>
+        <report
+                string="Cashbook Report"
+                id="action_report_cashbook"
+                model="cash.book"
+                report_type="qweb-pdf"
+                name="hiworth_cashbook.cashbook_report"
+                file="hiworth_cashbook.cashbook_report"
+        />
+
+        <template id="cashbook_report">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <center><header><h1>Palathra</h1></header></center>
+                            <center><strong>Cash Book</strong></center>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>User</th>
+                                    <th><span t-esc="o.user_id.name"/></th>
+                                    <th>Date</th>
+                                    <th><span t-esc="datetime.datetime.strptime(o.date,'%Y-%m-%d').strftime('%-d-%m-%Y')"/></th>
+                                </tr>
+                                <tr>
+                                    <th>Opening Balance</th>
+                                    <th><span t-esc="o.opening"/></th>
+                                    <th/>
+                                    <th/>
+                                </tr>
+                            </table>
+                            <table style="border:1px solid grey;">
+                                <thead>
+                                    <tr style="border:1px solid grey;">
+                                        <th style="border-right:1px solid grey;">S.No</th>
+                                        <th style="border-right:1px solid grey;"><center>Account</center></th>
+                                        <th style="border-right:1px solid grey;" class="text-right"><center>Debit</center></th>
+                                        <th class="text-right" style="border-right:1px solid grey;"><center>Credit</center></th>
+                                        <th style="padding-left:3mm;"><center>Narration</center></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-value="1" t-set="c"/>
+                                    <tr  t-foreach="o.move_lines.sorted(key=lambda b: b.narration)" t-as="line" >
+                                        <td  style="height:5mm;font-size:12px;width:10mm;border-right:1px solid grey;"><center><span t-esc="c"/></center></td>
+                                        <td style="height:5mm;font-size:12px;width:90mm;border-right:1px solid grey;">
+                                            <span t-field="line.account_id.name"/>
+                                        </td>
+                                        <td class="text-right" style="height:5mm;font-size:15px;width:25mm;border-right:1px solid grey;">
+                                            <t t-if="line.debit">
+                                                <span t-field="line.debit"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-right" style="height:5mm;font-size:15px;width:25mm;border-right:1px solid grey;">
+                                            <t t-if="line.credit">
+                                                <span t-field="line.credit"/>
+                                            </t>
+                                        </td>
+                                        <td style="height:5mm;font-size:12px;width:70mm;padding-left:3mm;"><span t-field="line.narration"/></td>
+                                        <t t-set="c" t-value="c+1"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-xs-4 pull-right">
+                                    <table class="table table-condensed">
+                                        <tr class="border-black">
+                                            <td><strong>Current Balance</strong></td>
+                                            <td class="text-right">
+                                                <span t-field="o.current_balance"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Actual Balance</td>
+                                            <td class="text-right">
+                                                <strong><span t-field="o.actual_balance"/></strong>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+
+		<record id="form_master_data_estimate" model="ir.ui.view">
+			<field name="name">form.master.data.estimate</field>
+			<field name="model">master.data.estimation</field>
+			<field name="arch" type="xml">
+				<form string="Master Data Estimation">
+					<!-- <sheet> -->
+					<h1><center>MASTER DATA ESTIMATION</center></h1>
+					<group>
+						<field name="project_id"/>
+						<field name="product_id" required="True" options="{'no_create':1}" />
+						<field name="item_work_id"/>
+						<field name="no_of_labours" options="{'no_create':1}"/>
+						<field name="labour_wage"/>
+						<field name="total_amount"/>
+					</group>
+					<group col="4">
+						<field name="no_of_machines" required="True" />
+						<field name="veh_categ_id" required="True" />
+					</group>
+
+
+					<!-- </sheet> -->
+				</form>
+			</field>
+		</record>
+
+
+		<record id="master_plan_search_view" model="ir.ui.view">
+			<field name="name">master.plan.search.view</field>
+			<field name="model">master.data.estimation</field>
+			<field name="arch" type="xml">
+				<search string="Master Plan">
+					<field name="item_work_id" />
+					<field name="no_of_labours" />
+					<field name="veh_categ_id" />
+
+
+
+				</search>
+
+			</field>
+		</record>
+
+
+
+		<record id="tree_master_data_estimation" model="ir.ui.view">
+			<field name="name">tree master data estimation</field>
+			<field name="model">master.data.estimation</field>
+			<field name="arch" type="xml">
+				<tree string="Master Plan">
+						<field name="item_work_id"/>
+						<field name="product_id" required="True" options="{'no_create':1}" />
+						<field name="no_of_labours" options="{'no_create':1}"/>
+						<field name="no_of_machines" required="True" />
+						<field name="veh_categ_id" required="True" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_master_data_estimation" model="ir.actions.act_window">
+			<field name="name">Master Data Estimation</field>
+			<field name="res_model">master.data.estimation</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+
+		<menuitem id="hiworth_master_data_estimation" parent="project_planning.main_menu_hiworth_planning"
+				  name="Master Data Estimation" sequence="10" action="action_master_data_estimation" groups="hiworth_hr_attendance.group_supervisor,base.group_erp_manager"/>
+
+	</data>
+</openerp>

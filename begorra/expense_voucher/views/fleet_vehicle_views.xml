@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+
+		<record id="view_fleet_vehicle_form_inherit_mou" model="ir.ui.view">
+			<field name="name">fleet.vehicle.inherit.form.view</field>
+			<field name="model">fleet.vehicle</field>
+			<field name="inherit_id" ref="hiworth_tms.view_rent_vehicle_form"/>
+			<field name="arch" type="xml">
+			
+				<xpath expr="//sheet/group[1]/group[2]/field[@name='asset_account_id']" position="after">
+					<field name="mou_id" />
+				</xpath>
+		    </field>
+		</record>
+   </data>
+ </openerp>

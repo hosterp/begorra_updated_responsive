@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="view_expense_form" model="ir.ui.view">
+			<field name="name">expense.expense.form.view</field>
+			<field name="model">expense.expense</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+	                    <button name="action_post" states="draft" string="Post" type="object" class="oe_highlight"/>
+	                    <field name="state" widget="statusbar" nolabel="1" />
+                </header>
+					<sheet>
+					<group col="4">
+						<field name="date"/>
+						<field name="journal_type" invisible="1"/>
+						<field name="journal_id" required="1" domain="[('type','=',journal_type)]"/>
+						<field name="move_id" attrs="{'invisible':[('move_id','=',False)]}" readonly="1"/>
+						<field name="from_readonly" invisible="1"/>
+						<field name="amount_total" invisible="1"/>
+					</group>
+					
+					<notebook>
+					   <page name="expense_line" string="Expense Line">
+					      <field name="expense_line_ids" nolabel="1" widget="one2many_list" context="{'default_from_readonly': from_readonly}">
+					      	<tree editable="bottom">
+					      		<field name="from_readonly" invisible="1"/>
+					      		<field name="narration" required="1"/>
+					      		<field name="from_account_id" attrs="{'readonly':[('from_readonly', '=', True)], 'required':[('from_readonly', '=', False)]}"/>
+					      		<field name="to_account_id" required="1"/>
+					      		<field name="amount" required="1" sum="Total"/>
+					      	</tree>
+					      </field>
+					   </page>
+					</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_expense_tree" model="ir.ui.view">
+			<field name="name">expense.expense.tree.view</field>
+			<field name="model">expense.expense</field>
+			<field name="arch" type="xml">
+			<tree>
+				<field name="date"/>
+				<field name="journal_id"/>
+				<field name="move_id"/>
+				<field name="amount_total"/>
+			</tree>
+			</field>
+		</record>
+
+
+		<record id="view_expense_search" model="ir.ui.view">
+			<field name="name">expense.expense.search.view</field>
+			<field name="model">expense.expense</field>
+			<field name="arch" type="xml">
+			<search>
+				<field name="date"/>
+				<field name="journal_id"/>
+				<field name="move_id"/>
+				<group expand="0" string="Group By">
+						<filter string="Date" name="group_date" domain="[]"  context="{'group_by':'date'}"/>
+						<filter string="Journal" icon="group_journal" domain="[]"  context="{'group_by':'journal_id'}"/>
+						<filter string="Journal Entry" icon="group_move" domain="[]"  context="{'group_by':'move_id'}"/>
+
+					</group>
+			</search>
+			</field>
+		</record>
+
+		<record id="action_expense_expense" model="ir.actions.act_window">
+			<field name="name">Expense</field>
+			<field name="res_model">expense.expense</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+			<field name="search_view_id" ref="expense_voucher.view_expense_search"/>
+		</record>
+
+
+		<record id="action_expense_expense_site" model="ir.actions.act_window">
+			<field name="name">Expense</field>
+			<field name="res_model">expense.expense</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+			<field name="search_view_id" ref="expense_voucher.view_expense_search"/>
+			<field name="domain">[('journal_type','=','general')]</field>
+			<field name="context">{'default_journal_type':'general','default_journal_id':76}</field>
+		</record>
+
+		<record id="action_expense_expense_cash" model="ir.actions.act_window">
+			<field name="name">Expense</field>
+			<field name="res_model">expense.expense</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+			<!--<field name="domain">[('journal_type','=','cash')]</field>-->
+			<field name="context">{'default_journal_type':'cash','default_journal_id':8}</field>
+			<field name="search_view_id" ref="expense_voucher.view_expense_search"/>
+		</record>
+
+		<record id="action_expense_expense_bank" model="ir.actions.act_window">
+			<field name="name">Expense</field>
+			<field name="res_model">expense.expense</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+			<field name="search_view_id" ref="expense_voucher.view_expense_search"/>
+			<field name="domain">[('journal_type','=','bank')]</field>
+			<field name="context">{'default_journal_type':'bank'}</field>
+		</record>
+
+    <menuitem action="action_expense_expense_cash"
+			name="Expense Voucher (Cash)" id="menu_expense_cash" parent="menu_expense"
+			sequence="9" />
+
+		<menuitem action="action_expense_expense_site"
+			name="Expense Voucher (Site)" id="menu_expense_site" parent="menu_expense"
+			sequence="9" />
+
+		<menuitem action="action_expense_expense_bank"
+			name="Expense Voucher (Bank)" id="menu_expense_bank" parent="menu_expense"
+			sequence="9" />
+
+		<!--<menuitem action="action_expense_expense"
+			name="Expense Voucher" id="menu_expensepo" parent="menu_expense"
+			sequence="9" />-->
+
+			
+			
+	<menuitem
+			name="Expense Voucher" id="menu_expense"   parent="hiworth_construction.menu_hiworth_finance_root"
+			sequence="9" />
+
+
+		
+</data>
+</openerp>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="sub_advance_type" model="ir.sequence.type">
+            <field name="name">Subcontractor Advance Type</field>
+            <field name="code">sub.advance.payment</field>
+        </record>
+
+        <record id="sub_advance" model="ir.sequence">
+            <field name="name">Subcontractor Advance</field>
+            <field name="code">sub.advance.payment</field>
+            <field name="prefix">Bill/</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="subcontractor_advance_tree_id" model="ir.ui.view">
+            <field name="name">Subcontractor Advance Payment Tree</field>
+            <field name="model">sub.advance.payment</field>
+            <field name="arch" type="xml">
+                <tree string="Advance Payment">
+                    <field name="partner_id"/>
+                    <field name="project_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="amount_total_paid"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="subcontractor_advance_form_id" model="ir.ui.view">
+            <field name="name">Subcontractor Advance Payment Form</field>
+            <field name="model">sub.advance.payment</field>
+            <field name="arch" type="xml">
+                <form string="Advance Payment">
+                    <header>
+                        <button name="button_verify" string="Verify" type="object" class="oe_highlight" states="draft"/>
+                        <button name="button_approve" string="Approve" type="object" class="oe_highlight" states="verified"/>
+                        <button name="button_pay" string="Approve" type="object" class="oe_highlight" states="approved"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <h1><field name="name" readonly="1" nolabel="1"/></h1>
+                    <group>
+                        <group>
+                            <field name="partner_id" attrs="{'readonly':[('state', '=', 'approved')]}"/>
+                            <field name="project_id" attrs="{'readonly':[('state', '=', 'approved')]}"/>
+                            <field name="work_order_no" attrs="{'readonly':[('state', '=', 'approved')]}"/>
+                        </group>
+                        <group>
+                            <field name="date_from" attrs="{'readonly':[('state', '=', 'approved')]}"/>
+                            <field name="date_to" attrs="{'readonly':[('state', '=', 'approved')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Details">
+                            <field name="sub_bill_line" attrs="{'readonly':[('state', '=', 'approved')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="rate"/>
+                                    <field name="sub_total" sum="AMOUNT"/>
+                                    <field name="remarks"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                <field name="amount_total"/>
+                                <field name="advance_percentage" attrs="{'readonly':[('state', '=', 'approved')]}"/>
+                                <field name="amount_total_paid" attrs="{'readonly':[('state', '=', 'approved')]}"/>
+                                <div class="oe_subtotal_footer_separator oe_inline">
+                                    <label for="amount_difference" />
+                                </div>
+                                <field name="amount_difference" nolabel="1" class="oe_subtotal_footer_separator"/>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="cked_verified_by" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="approved_by" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="subcontractor_advance_search">
+            <field name="name">Subcontractor Advance search</field>
+            <field name="model">sub.advance.payment</field>
+            <field name="arch" type="xml">
+                <search string="Membership">
+                    <field name="partner_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Sub Contractor" name="partner_id"
+                                context="{'group_by':'partner_id'}"/>
+                        <filter string="Date From" name="date_from"
+                                context="{'group_by':'date_from'}"/>
+                        <filter string="Date To" name="date_to"
+                                context="{'group_by':'date_to'}"/>
+                        <filter string="Checked And Verified By" name="cked_verified_by"
+                                context="{'group_by':'cked_verified_by'}"/>
+                        <filter string="Approved By" name="approved_by"
+                                context="{'group_by':'approved_by'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_subcontractor_advance" model="ir.actions.act_window">
+            <field name="name">Subcontractor Advance</field>
+            <field name="res_model">sub.advance.payment</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="subcontractor_advance_search"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_subcontractor_advance" name="Advance Payment" id="menu_subcontractor_advance" sequence="6" parent="hiworth_construction.main_menu_view_work_order"/>
+
+      
+    </data>
+</openerp>

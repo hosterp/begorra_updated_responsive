@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+            <record id="mess_expense_wizard_form_view" model="ir.ui.view">
+            <field name="name">Mess Expense Report</field>
+            <field name="model">mess.expense.report.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+
+                       <group>
+                           <field name="date_from"/>
+                           <field name="date_to"/>
+
+                       </group>
+
+                    <footer>
+                        <button name="action_print_report" type="object" string="Print Report"/>
+                        <button name="action_view_report" type="object" string="View Report"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+
+                </form>
+            </field>
+            </record>
+
+
+
+        <record id="action_mess_expense_wizard_view" model="ir.actions.act_window">
+            <field name="name">Mess Expense Report</field>
+            <field name="res_model">mess.expense.report.wizard</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="mess_expense_wizard_form_view"/>
+
+
+        </record>
+
+
+
+
+
+    </data>
+</openerp>

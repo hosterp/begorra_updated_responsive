@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+
+
+        <record id="hr_employee_view_mess_expense" model="ir.ui.view">
+            <field name="name">Employee -Mess Attendance</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <tree create="false" edit="false">
+                      <field name="name"/>
+                      <field name="user_category"/>
+                      <field name="attendance_category"/>
+                      <field name="work_phone"/>
+                      <field name="work_email"/>
+                      <field name="company_id" groups="base.group_multi_company"/>
+                      <!-- <field name="department_id"/>
+                      <field name="job_id"/> -->
+                      <button string="View Attendance" icon="gtk-redo" type="object" name="load_employee_mess_attendance" context="{'employee_id':id}"/>
+            </tree>
+            </field>
+            </record>
+
+
+
+    </data>
+</openerp>

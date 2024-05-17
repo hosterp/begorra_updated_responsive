@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+
+        <record id="tree_view_work_order" model="ir.ui.view">
+            <field name="name">form_view_work_order</field>
+            <field name="model">work.order.payment</field>
+            <field name="arch" type="xml">
+                <tree string="Work Order">
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="partner_id"/>
+
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="form_view_work_order_done" model="ir.ui.view">
+            <field name="name">form_view_work_order</field>
+            <field name="model">work.order.payment</field>
+            <field name="arch" type="xml">
+                <form string="Work Order">
+                    <header>
+
+                        <button name="action_advance" states="draft" string="Advance Pay"
+                                type="object" class="oe_highlight"/>
+                        <button name="action_cancel" states="approved,advance"
+                                string="Cancel" type="object" class="oe_highlight" />
+                        <button name="action_draft" states="cancel,reject" string="Set to Draft"
+                                type="object" class="oe_highlight" />
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved,start,done,paid"
+                               readonly="1" />
+                    </header>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="True" class="oe_inline" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+
+                            <field name="partner_id" required="True" options="{'no_create': True}"/>
+                            <field name="mobile"/>
+                        </group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="company_id"/>
+                            <field name="start_date" required="True" />
+                            <field name="end_date" required="True" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Master Plan">
+                            <field name="master_plan_line" nolabel="1">
+                                <tree>
+
+                                    <field name="line_id" invisible="1"/>
+                                    <field name="name"/>
+                                    <field name="category"/>
+                                    <field name="qty"/>
+                                    <field name="unit"/>
+                                    <field name="rate"/>
+                                    <field name="amt"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                <div class="oe_subtotal_footer_separator oe_inline">
+                                    <label for="amount_total" />
+                                </div>
+                                <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator"/>
+                            </group>
+
+                            <field name="reference" nolabel="1"/>
+                        </page>
+                        <page string="Payment Details">
+                            <group>
+                                <field name="advance_record"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="form_view_work_order_line" model="ir.ui.view">
+            <field name="name">form_view_work_order_line</field>
+            <field name="model">work.order.line.payment</field>
+            <field name="arch" type="xml">
+                <form string="Detailed Work Order">
+                    <group>
+                        <group>
+
+                            <field name="name"/>
+                            <field name="category"/>
+                            <field name="qty"/>
+                        </group>
+                        <group>
+                            <field name="unit"/>
+                            <field name="rate"/>
+                            <field name="amt"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Master Plan">
+                            <field name="detailed_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="detail_id" invisible="1"/>
+                                    <field name="date"/>
+                                    <field name="name"/>
+                                    <field name="side"/>
+                                    <field name="chain_from"/>
+                                    <field name="chain_to"/>
+                                    <field name="nos_x"/>
+                                    <field name="length"/>
+
+                                    <field name="breadth"/>
+
+                                    <field name="depth"/>
+                                    <field name="qty"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_work_order" model="ir.actions.act_window">
+            <field name="name">Work Done</field>
+            <field name="res_model">work.order.payment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!--            <field name="search_view_id" ref="view_task_search_form_changed" />-->
+        </record>
+
+        <menuitem action="action_view_work_order" id="menu_action_view_work_order"
+                  parent="hiworth_construction.main_menu_view_work_order" sequence="6"/>
+
+    </data>
+</openerp>

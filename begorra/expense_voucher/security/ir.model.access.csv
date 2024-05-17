@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_expense_admin,Grant Expense to admin,model_expense_expense,base.group_erp_manager,1,1,1,1
+access_expense_admin,Grant Expense to cashier,model_expense_expense,hiworth_hr_attendance.group_cashier,1,1,1,1
+access_expense_line_user,Grant Expense Line to User,model_expense_line,base.group_user,1,0,0,0
+access_expense_user,Grant Expense to User,model_expense_expense,base.group_user,1,0,0,0
+access_expense_line_user,Grant Expense Line to Admin,model_expense_line,base.group_erp_manager,1,1,1,1
+access_expense_line_user,Grant Expense Line to cashier,model_expense_line,hiworth_hr_attendance.group_cashier,1,1,1,1
+access_mou_admin,Grant Mou to admin,model_mou_mou,base.group_erp_manager,1,1,1,1
+access_mou_category_admin,Grant Mou Category to admin,model_mou_category,base.group_erp_manager,1,1,1,1
+access_mou_fleet_manager,Grant Mou to Fleet Manager,model_mou_mou,fleet.group_fleet_manager,1,1,1,1
+access_mou_category_fleet_manager,Grant Mou Category to Fleet Manager,model_mou_category,fleet.group_fleet_manager,1,1,1,1
+access_mou_user,Grant Mou to user,model_mou_mou,base.group_user,1,0,0,0
+access_mou_category_user,Grant Mou Category to user,model_mou_category,base.group_user,1,0,0,0

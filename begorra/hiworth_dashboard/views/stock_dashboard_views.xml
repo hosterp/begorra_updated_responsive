@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<openerp>
+	<data>
+
+		<record id="view_custom_stock_dasboard_kanban" model="ir.ui.view">
+	        <field name="name">custom.stock.dashboard.view</field>
+	  		<field name="model">stock.dashboard</field>
+	 		 <field name="arch" type="xml">
+	 		 	 <kanban class="oe_background_grey o_kanban_dashboard o_salesteam_kanban o_project_kanban " create="0">
+	 		 	<templates>
+          			<t t-name="kanban-box" string="HR"> 
+          				<field name="department_list"/>
+          				&lt;!&ndash; <t t-value="JSON.parse(record.name.raw_value)" t-set="department_list"/> &ndash;&gt;
+          				&lt;!&ndash; Use <t> tag instead of <span> for color change &ndash;&gt;
+            			<table style="">
+               				 &lt;!&ndash; <t  t-foreach="get_range" t-as="rang"> &ndash;&gt;
+               				 	<tr>
+               				 	<td><span>ffffffffffffffffffffffff</span>
+               				 	</td>
+               				 </tr>
+               				&lt;!&ndash; </t> &ndash;&gt;
+               			</table>
+               	    </t>
+               	 </templates>
+               	 </kanban>
+	  		</field>
+		</record>
+
+		<record id="stock_dashboard_form_view" model="ir.ui.view">
+      <field name="name">custom.stock.dashboard.form.view</field>
+      <field name="model">stock.dashboard</field>
+     <field name="arch" type="xml">
+           <form>
+               <field name="color"/>
+               <field name="name"/>
+          </form>
+     </field>
+ </record>
+
+ <record id="custom_stock_dashboard_action" model="ir.actions.act_window">
+    <field name="name">Dashboard</field>
+    <field name="res_model">stock.dashboard</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="view_type">form</field>
+    <field name="context">{}</field>
+    <field name="view_mode">kanban,form</field>
+</record>
+
+<menuitem id="stock_menu_hr_reporting" 
+	action="custom_stock_dashboard_action"
+	parent="hr.menu_hr_reporting" name="Stock DashBoard" sequence="40"/>
+
+
+		<?xml version="1.0" encoding="utf-8"?>
+&lt;!&ndash; vim:fdn=3:
+&ndash;&gt;
+
+	</data>
+</openerp>-->
+
+<openerp>
+    <data>
+        <template id="assets_backend" name="point_of_sale assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/hiworth_dashboard/static/src/js/stock_dashboard.js"></script>
+               <!--  <script type="text/javascript" src="/point_of_sale/static/src/js/db.js"></script> -->
+               <!-- <link rel="stylesheet" href="/hotel_reservation/static/src/css/room_summary.css"/>-->
+            </xpath>
+        </template>
+    </data>
+</openerp>

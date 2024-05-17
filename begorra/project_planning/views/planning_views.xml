@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+
+
+<!--
+		<record id="form_master_plan" model="ir.ui.view">
+			<field name="name">form.master.plan</field>
+			<field name="model">master.plan</field>
+			<field name="arch" type="xml">
+				<form string="Master Plan">
+					&lt;!&ndash; <sheet> &ndash;&gt;
+					<h1><center>MASTER PLAN</center></h1>
+					<group>
+						<field name="project_id"/>
+						<field name="location_id" required="True" options="{'no_create':1}" />
+						<field name="item_work_id" options="{'no_create':1}"/>
+						<field name="type"/>
+					</group>
+					<group col="4">
+
+						<label string="Length in KM" attrs="{'invisible':[('type','not in',['roads','drains'])]}"/>  &lt;!&ndash; Provide your condition inside [], if condition will be true the label will be invisible &ndash;&gt;
+						<label string="Nos" attrs="{'invisible':[('type','not in',['pear','pearcap','slab','guide'])]}"/> &lt;!&ndash; Provide reverse condition than above label. &ndash;&gt;
+						<label string="No:" attrs="{'invisible':[('type','not in',['culvert','piles','pilecap'])]}"/>
+						<label string="Running Meter/Linear" attrs="{'invisible':[('type','not in',['retaining_wall'])]}"/>
+						<field name="length_km" required="True" nolabel="1"/>
+						<field name="employee_id"/>
+
+						<field name="completion_date" />
+						<field name="target_date"  />
+
+						<field name="work_start_date" required="True" />
+					</group>
+					<group>
+						<notebook>
+							<page string="Master Plan">
+								<field name="master_plan_line" nolabel="1">
+									<tree editable="bottom">
+
+										<field name="product_id"/>
+										<field name="no_of_labours"/>
+										<field name="veh_categ_id" options="{'no_create':1}" widget="many2many_tags"/>
+										<field name="name"/>
+                                        <field name="side" />
+										<field name="chain_from" />
+                                        <field name="chain_to"/>
+                                        <field name="nos_x"/>
+                                        <field name="length"/>
+                                        <field name="w1"/>
+                                        <field name="w2"/>
+										<field name="aw" />
+										<field name="breadth" />
+										<field name="d1" />
+										<field name="d2" />
+										<field name="ad" />
+										<field name="depth" />
+                                        <field name="qty" />
+                                        <field name="qty_estimate" />
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</group>
+					&lt;!&ndash; </sheet> &ndash;&gt;
+				</form>
+			</field>
+		</record>
+
+
+		<record id="master_plan_search_view" model="ir.ui.view">
+			<field name="name">master.plan.search.view</field>
+			<field name="model">master.plan</field>
+			<field name="arch" type="xml">
+				<search string="Master Plan">
+					<field name="location_id" />
+
+					<field name="completion_date" />
+					<field name="target_date" />
+					<group expand="0" string="group by">
+						<filter name="groupby_name5" string="Site"
+								context="{'group_by':'site_id'}"/>
+
+						<filter name="groupby_compltion" context="{'group_by':'completion_date'}"
+								string="Complition date"/>
+						<filter name="groupby_target" context="{'group_by':'target_date'}"
+								string="Target date"/>
+					</group>
+
+				</search>
+
+			</field>
+		</record>
+
+
+
+		<record id="tree_master_plan_project" model="ir.ui.view">
+			<field name="name">tree master plan</field>
+			<field name="model">master.plan</field>
+			<field name="arch" type="xml">
+				<tree string="Master Plan">
+					<field name="location_id" />
+					<field name="length_km" />
+					<field name="employee_id"/>
+					<field name="completion_date" />
+					<field name="target_date" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_master_plan_project" model="ir.actions.act_window">
+			<field name="name">Master Plan</field>
+			<field name="res_model">master.plan</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>-->
+		<menuitem id="main_menu_hiworth_planning"
+				   parent="base.menu_main_pm"
+				  name="Planning" sequence="10"  groups="hiworth_hr_attendance.group_supervisor,base.group_erp_manager"/>
+
+
+		<!--<menuitem id="hiworth_master_plan_sub_menu" parent="main_menu_hiworth_planning"
+				  name="Master Plan" sequence="10" action="action_master_plan_project" groups="hiworth_hr_attendance.group_supervisor,base.group_erp_manager"/>
+
+	--></data>
+</openerp>

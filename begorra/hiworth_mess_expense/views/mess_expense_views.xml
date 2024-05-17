@@ -1,0 +1,233 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+            <record id="mess_expense_form_view" model="ir.ui.view">
+            <field name="name">Mess Expense</field>
+            <field name="model">mess.expense</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <div class="oe_right oe_button_box" name="buttons">
+
+                                <button class="oe_inline oe_stat_button" name='load_employee_mess_attendance' type="object"
+                                icon='fa-list' string="Attendance">
+
+                                </button>
+                            </div>
+
+                        <group class="oe_subtotal_footer oe_right">
+							<div class="oe_subtotal_footer_separator oe_inline">
+								<label for="total_man_power"/>
+							</div>
+							<field name="total_man_power" nolabel="1" class="oe_subtotal_footer_separator" readonly="1"/>
+							<div class="oe_subtotal_footer_separator oe_inline">
+
+								<label for="total_provision"/>
+							</div>
+							<field name="total_provision" nolabel="1" class="oe_subtotal_footer_separator"/>
+							<div class="oe_subtotal_footer_separator oe_inline">
+								<label for="total_vegetables"/>
+							</div>
+							<field name="total_vegetables" nolabel="1" class="oe_subtotal_footer_separator"/>
+
+
+
+							<div class="oe_subtotal_footer_separator oe_inline">
+								<label for="total_milk_curd"/>
+							</div>
+							<field name="total_milk_curd" nolabel="1" class="oe_subtotal_footer_separator"/>
+							<div class="oe_subtotal_footer_separator oe_inline">
+								<label for="purchase_packing_material"/>
+							</div>
+							<field name="purchase_packing_material" nolabel="1" class="oe_subtotal_footer_separator"/>
+							<div class="oe_subtotal_footer_separator oe_inline">
+								<label for="total_non_veg_purchase"/>
+							</div>
+							<field name="total_non_veg_purchase" nolabel="1" class="oe_subtotal_footer_separator"/>
+
+                            <div class="oe_subtotal_footer_separator oe_inline">
+								<label for="total_gas_cylinder"/>
+							</div>
+							<field name="total_gas_cylinder" nolabel="1" class="oe_subtotal_footer_separator"/>
+
+                            <div class="oe_subtotal_footer_separator oe_inline">
+								<label for="miscellaneous"/>
+							</div>
+							<field name="miscellaneous" nolabel="1" class="oe_subtotal_footer_separator"/>
+
+                            <div class="oe_subtotal_footer_separator oe_inline">
+								<label for="opening_stock"/>
+							</div>
+							<field name="opening_stock" nolabel="1" class="oe_subtotal_footer_separator"/>
+
+                            <div class="oe_subtotal_footer_separator oe_inline">
+								<label for="total_stock"/>
+							</div>
+							<field name="total_stock" nolabel="1" class="oe_subtotal_footer_separator"/>
+
+
+						</group>
+                        <group>
+
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="provision"/>
+
+                            <field name="packing_expense"/>
+
+
+                            <field name="miscellaneous_amount"/>
+
+
+                        </group>
+                        <notebook>
+                            <page string="Particulars">
+                                <field name="particular_expense_ids">
+                                    <form>
+                                        <group string="Gas">
+                                            <field name="gas_no"/>
+                            <field name="gas_rate"/>
+                            <field name="gas_total"/>
+
+                                        </group>
+                                        <group string="Milk">
+                                           <field name="milk"/>
+                            <field name="milk_rate"/>
+                            <field name="milk_amt"/>
+
+                                        </group>
+                                        <group string="Curd">
+                                            <field name="curd"/>
+                            <field name="curd_rate"/>
+                            <field name="curd_amt"/>
+
+                                        </group>
+                                        <group string="Cooking Water">
+                                            <field name="cooking_water"/>
+                            <field name="cooking_water_rate"/>
+                            <field name="cooking_water_amt"/>
+
+                                        </group>
+                                    </form>
+                                    <tree>
+                                        <field name="gas_total" string="Gas Amount"/>
+                                        <field name="milk_amt" string="Milk Amount"/>
+                                         <field name="curd_amt" string="Curd Amount"/>
+                                         <field name="cooking_water_amt" string="Cooking Water Amount"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+                        </notebook>
+                       <notebook>
+                           <page string="Vegetables">
+                                <field name="vegetables_expense_ids">
+                            <tree editable="bottom">
+                                <field name="product_id" domain="[('categ_id','=','VEG')]" context="{'default_categ_id':'VEG'}"/>
+                                <field name="product_qty"/>
+                                <field name="rate"/>
+                                <field name="total"/>
+                            </tree>
+                        </field>
+                           </page>
+
+                       </notebook>
+
+                        <notebook>
+                           <page string="Non Vegetables">
+                                <field name="non_vegetables_expense_ids">
+                            <tree editable="bottom">
+                                <field name="product_id" domain="[('categ_id','=','NON-VEG')]"/>
+                                <field name="product_qty"/>
+                                <field name="rate"/>
+                                <field name="total"/>
+                            </tree>
+                        </field>
+                           </page>
+
+                       </notebook>
+
+                        <!--<notebook>
+                            <page string="Mess Staff Attendance">
+                                <field name="attendance_ids">
+                                    <field name="Nam"
+
+                                </field>
+
+                            </page>
+
+                        </notebook>-->
+
+
+
+
+
+                    </sheet>
+                </form>
+            </field>
+            </record>
+
+        <record id="mess_expense_tree_view" model="ir.ui.view">
+            <field name="name">Mess Expense</field>
+            <field name="model">mess.expense</field>
+            <field name="arch" type="xml">
+                <tree>
+
+                        <field name="name"/>
+                        <field name="date"/>
+                        <field name="provision"/>
+                        <field name="total_stock"/>
+
+
+                </tree>
+            </field>
+            </record>
+
+             <record id="action_mess_expense_view" model="ir.actions.act_window">
+            <field name="name">Mess Expense</field>
+            <field name="res_model">mess.expense</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+
+                <menuitem name="Mess Expense"
+                          id="menu_mess_expense_root"
+                          sequence="50"
+                          groups="base.group_erp_manager,base.group_user"/>
+
+                <menuitem name="Mess Expense Daily Statement"
+                          id="menu_mess_expense_daily"
+                          parent="menu_mess_expense_root"
+                          sequence="1"
+                          groups="base.group_erp_manager,base.group_user"/>
+
+
+                <menuitem name="Mess Expense Daily Statement"
+                          id="menu_mess_expense_daily_statement"
+                          parent="menu_mess_expense_daily"
+                          action="action_mess_expense_view"
+                          sequence="2"
+                          groups="base.group_erp_manager,base.group_user"/>
+
+
+                <menuitem name="Report"
+                          id="mess_expense_report"
+                          parent="menu_mess_expense_root"
+                          sequence="3"
+                          groups="base.group_erp_manager,base.group_user"/>
+
+                <menuitem name="Mess Expense Report"
+                          id="menu_mess_expense_report"
+                          parent="hiworth_mess_expense.mess_expense_report"
+                          action="action_mess_expense_wizard_view"
+                          sequence="4"
+                          groups="base.group_erp_manager,base.group_user"/>
+
+    </data>
+</openerp>

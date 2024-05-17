@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_master_plan_user,access_master_plan_user,project_planning.model_master_plan,base.group_user,1,1,1,0
+access_master_plan_admin,access_master_plan_admin,project_planning.model_master_plan,base.erp_group_manager,1,1,1,1
+access_master_plan_supervisor,access_master_plan_supervisor,project_planning.model_master_plan,hiworth_hr_attendance.group_supervisor,1,1,1,1
+access_master_plan_manpower,access_master_plan_manpower,project_planning.model_master_plan_manpower,base.group_user,1,1,1,1
+access_master_plan_machinery,access_master_plan_machinery,project_planning.model_master_plan_machinery,base.group_user,1,1,1,1
+access_master_plan_material,access_master_plan_material,project_planning.model_master_plan_material,base.group_user,1,1,1,1

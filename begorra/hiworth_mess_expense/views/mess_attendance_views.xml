@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+            <record id="mess_attendance_form_view" model="ir.ui.view">
+            <field name="name">Mess Attendance</field>
+            <field name="model">mess.attendance</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                       <group>
+                           <field name="employee_id"/>
+                           <field name="date"/>
+                           <field name="attendance"/>
+
+                       </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+            </record>
+
+        <record id="mess_attendance_tree_view" model="ir.ui.view">
+            <field name="name">Mess Expense</field>
+            <field name="model">mess.attendance</field>
+            <field name="arch" type="xml">
+                <tree>
+
+                        <field name="employee_id"/>
+                           <field name="date"/>
+                           <field name="attendance"/>
+
+
+                </tree>
+            </field>
+            </record>
+
+             <record id="action_mess_attendance_view" model="ir.actions.act_window">
+            <field name="name">Mess Expense</field>
+            <field name="res_model">mess.attendance</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+
+
+
+
+    </data>
+</openerp>

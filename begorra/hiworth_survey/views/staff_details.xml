@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+
+        <record id="staff_movement_tree_id" model="ir.ui.view">
+            <field name="name">Staff Movement Tree</field>
+            <field name="model">staff.movement</field>
+            <field name="arch" type="xml">
+                <tree editable="top" create="true" string="Staff Movement">
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                    <field name="location_id"/>
+                    <field name="purpose_id"/>
+                    <field name="remark"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="staff_movement_form_id" model="ir.ui.view">
+            <field name="name">Staff Movement Form</field>
+            <field name="model">staff.movement</field>
+            <field name="arch" type="xml">
+                <form string="Staff Movement">
+                    <header>
+                        <button name="done" string="Done" type="object" class="oe_highlight" states="not"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="employee_id"/>
+                            <field name="location_id"/>
+                        </group>
+                        <group>
+                            <field name="purpose_id"/>
+                            <field name="remark"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="movement_purpose_tree_id" model="ir.ui.view">
+            <field name="name">Movement Purpose Tree</field>
+            <field name="model">movement.purpose</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom" string="Movement Purpose">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="movement_purpose_form_id" model="ir.ui.view">
+            <field name="name">Movement Purpose Form</field>
+            <field name="model">movement.purpose</field>
+            <field name="arch" type="xml">
+                <form string="Movement Purpose">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="staff_movement_search">
+            <field name="name">Staff Movement search</field>
+            <field name="model">staff.movement</field>
+            <field name="arch" type="xml">
+                <search string="Membership">
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                    <field name="location_id"/>
+                    <field name="purpose_id"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Site" name="site_id"
+                                context="{'group_by':'location_id'}"/>
+                        <filter string="Date" name="date"
+                                context="{'group_by':'date'}"/>
+                        <filter string="Employee" name="employee_id"
+                                context="{'group_by':'employee_id'}"/>
+                        <filter string="Purpose" name="purpose_id"
+                                context="{'group_by':'purpose_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <menuitem id="menu_hiworth_survey_department" parent="base.menu_main_pm"
+                  name="Survey Department" sequence="8" />
+
+        <record id="action_staff_movement" model="ir.actions.act_window">
+            <field name="name">Staff Movement</field>
+            <field name="res_model">staff.movement</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="staff_movement_search"/>
+        </record>
+
+        <menuitem action="action_staff_movement" name="Staff Movement" id="menu_staff_movement" sequence="4" parent="hiworth_survey.menu_hiworth_survey_department"/>
+
+        <record id="action_survey_staff" model="ir.actions.act_window">
+            <field name="name">Survey Staff</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('user_category', '=', 'survey_team')]</field>
+            <field name="context">{'default_user_category': 'survey_team'}</field>
+        </record>
+
+        <menuitem action="action_survey_staff" name="Staff Details" id="menu_survey_staff" sequence="10" parent="hiworth_survey.menu_hiworth_survey_department"/>
+
+        <record id="action_movement_purpose" model="ir.actions.act_window">
+            <field name="name">Movement Purpose</field>
+            <field name="res_model">movement.purpose</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="False" />
+        </record>
+
+        <menuitem parent="base.menu_definitions" action="action_movement_purpose" name="Purpose" id="menu_movement_purpose" sequence="1"/>
+
+    </data>
+</openerp>

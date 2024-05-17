@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hiworth_mess_expense_user,access_hiworth_mess_expense_user,model_mess_expense,base.group_user,1,1,1,1
+access_hiworth_mess_expense_admin,access_hiworth_mess_expense_admin,model_mess_expense,base.group_erp_manager,1,1,1,1
+access_hiworth_mess_attendance_user,access_hiworth_mess_attendance_user,model_mess_attendance,base.group_user,1,1,1,1
+access_hiworth_mess_attendance_admin,access_hiworth_mess_attendance_admin,model_mess_expense,base.group_erp_manager,1,1,1,1

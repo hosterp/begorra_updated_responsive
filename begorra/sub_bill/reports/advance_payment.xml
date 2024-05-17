@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+        <template id="advance_payment_report_template">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.internal_layout">
+                        <div class="page">
+                            <h2 class="text-center" >
+                                <center><span>SUBCONTRACTOR ADVANCE PAYMENT</span></center>
+                            </h2>
+                            <h2>
+                                Bill No : <span t-esc="o.name"/>
+                            </h2>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>Name Of The Contractor : <span t-esc="o.partner_id.name"/></td>
+                                    <td></td>
+                                    <td>Work Name : <span t-esc="o.project_id.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Work Order No : <span t-esc="o.work_order_no"/></td>
+                                    <td></td>
+                                    <td> Period From <span t-esc="o.date_from"/> To <span t-esc="o.date_to"/></td>
+                                </tr>
+                            </table>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Sl. No.
+                                        </th>
+                                        <th>
+                                            Item Description
+                                        </th>
+                                        <th>
+                                            Quantity
+                                        </th>
+                                        <th>
+                                            Qty
+                                        </th>
+                                        <th>
+                                            Rate
+                                        </th>
+                                        <th>
+                                            Amount
+                                        </th>
+                                        <th>
+                                            Remarks
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <t t-set="sl_no" t-value="1"/>
+                                <tbody>
+                                    <tr t-foreach="o.sub_bill_line" t-as="line">
+                                        <td>
+                                            <span t-esc="sl_no"/>
+                                        </td>
+                                        <t t-set="sl_no" t-value="sl_no+1"/>
+                                        <td>
+                                            <span t-field="line.product_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.qty"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.rate"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.sub_total"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.remarks"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-xs-4 pull-right">
+                                    <table class="table table-condensed">
+                                        <tr class="border-black">
+                                            <td><strong>Amount Total</strong></td>
+                                            <td class="text-right">
+                                                <span t-field="o.amount_total"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Advance Percentage</td>
+                                            <td class="text-right">
+                                                <span t-field="o.advance_percentage"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Advance Paid</td>
+                                            <td class="text-right">
+                                                <span t-field="o.amount_total_paid"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="border-black">
+                                            <td><strong>Amount Difference</strong></td>
+                                            <td class="text-right">
+                                                <span t-field="o.amount_difference"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>
+                                        Check &amp; Verified By : <span t-field="o.cked_verified_by.name"/>
+                                    </td>
+                                    <td>
+                                        Approved By : <span t-field="o.approved_by.name"/>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report id="report_advance_payment_action" string="Advance Report Print"
+                model="sub.advance.payment" report_type="qweb-pdf"
+                name="sub_bill.advance_payment_report_template"
+                file="sub_bill.advance_payment_report_template"/>
+
+        <report id="report_advance_payment_action_view" string="Advance Report View"
+                model="sub.advance.payment" report_type="qweb-html"
+                name="sub_bill.advance_payment_report_template"
+                file="sub_bill.advance_payment_report_template"/>
+
+    </data>
+</openerp>
