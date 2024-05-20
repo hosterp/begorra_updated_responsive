@@ -1829,8 +1829,13 @@ class purchase_order(models.Model):
 	delivery_char = fields.Char("Delivery",default="Immediate")
 	machine_bool = fields.Char("Machine")
 	machine_char = fields.Char("Machine")
+	warranty_bool = fields.Boolean('Warranty')
+	warranty_char = fields.Char('Warranty')
 	payment_bool = fields.Boolean("Payment")
-	payment_char = fields.Char("Payment",default="Through Bank Transfer Credit")
+	payment_char = fields.Selection([
+		('bank_transfer', 'Credit-shall be made through bank'),
+		('advance', 'Advance-shall be made through bank'),
+	], string="Payment", default='bank_transfer')
 	freight_bool = fields.Boolean("Freight")
 	freight_char = fields.Char("Freight",default="Extra")
 	items_list = fields.Char(string="Items",compute='compute_items_list')
@@ -1845,11 +1850,12 @@ class purchase_order(models.Model):
 	engine_no = fields.Char("Model No")
 	received_qty = fields.Float("Received Quantity")
 	rejected_qty = fields.Float("Rejected Quantity")
+	vehicle_machinery = fields.Many2one('vehicle.machinery', 'Vehicle/Machinery')
+	vehicle_machinery_bool = fields.Boolean("Vehicle/Machinery")
 	q_number=fields.Char('Q No')
 	q_date=fields.Date('Q Date')
 	tcs=fields.Float('TCS')
 	others=fields.Float('Others')
-
 
 
 

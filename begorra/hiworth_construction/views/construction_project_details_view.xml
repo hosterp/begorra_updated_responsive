@@ -678,32 +678,60 @@
 
 				</xpath>
 
-				<xpath expr="//notebook"
-					   position="after">
-							<group class="oe_inline" >
-							<field name="price_bool" attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
-							</group>
-							<field name="price_char" attrs="{'invisible':[('price_bool','=',False)]}"/>
-					<group class="oe_inline">
-							<field name="payment_bool" attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
-					</group>
-							<field name="payment_char" attrs="{'invisible':[('payment_bool','=',False)]}"/>
-					<group class="oe_inline">
-							<field name="freight_bool" attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
-					</group>
-							<field name="freight_char" attrs="{'invisible':[('freight_bool','=',False)]}"/>
-					<group class="oe_inline">
-							<field name="delivery_bool" attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
-					</group>
-							<field name="delivery_char" attrs="{'invisible':[('delivery_bool','=',False)]}"/>
-					<group class="oe_inline">
-							<field name="machine_bool" attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
-					</group>
-							<field name="machine_char" attrs="{'invisible':[('machine_bool','=',False)]}"/>
 
+                <xpath expr="//notebook"
+                       position="after">
+                    <group col="4">
+                        <field name="price_bool" attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
+                        <field name="price_char" attrs="{'invisible':[('price_bool','=',False)]}"/>
+                        <field name="payment_bool"
+                               attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
+                        <field name="payment_char" attrs="{'invisible':[('payment_bool','=',False)]}"/>
+                        <field name="freight_bool"
+                               attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
+                        <field name="freight_char" attrs="{'invisible':[('freight_bool','=',False)]}"/>
 
+                    </group>
+                    <group col="4">
+                        <field name="delivery_bool"
+                               attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
+                        <field name="delivery_char" attrs="{'invisible':[('delivery_bool','=',False)]}"/>
+                        <field name="warranty_bool"
+                               attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
+                        <field name="warranty_char" attrs="{'invisible':[('warranty_bool','=',False)]}"/>
+<!--                        <field name="vehicle_machinery_bool"-->
+<!--                               attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>-->
+<!--                        <field name="vehicle_machinery" attrs="{'invisible':[('vehicle_machinery_bool','=',False)]}"/>-->
+                    </group>
+                    <!--                    <group  col="4">-->
+                    <!--                        <field name="transport_bool"-->
+                    <!--                               attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>-->
+                    <!--                        <field name="transport_char" attrs="{'invisible':[('transport_bool','=',False)]}"/>-->
 
-				</xpath>
+                    <!--                        <field name="service_bool"-->
+                    <!--                               attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>-->
+                    <!--                        <field name="service_char" attrs="{'invisible':[('service_bool','=',False)]}"/>-->
+                    <!--                        <field name="tyres_bool" attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>-->
+                    <!--                        <field name="tyres_char" attrs="{'invisible':[('tyres_bool','=',False)]}"/>-->
+                    <!--                        <field name="accessory_bool"-->
+                    <!--                               attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>-->
+                    <!--                        <field name="accessory_char" attrs="{'invisible':[('accessory_bool','=',False)]}"/>-->
+                    <!--                        <field name="permenent_reg_bool"-->
+                    <!--                               attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>-->
+                    <!--                        <field name="permenent_reg_char" attrs="{'invisible':[('permenent_reg_bool','=',False)]}"/>-->
+                    <!--                        <field name="fastag_bool"-->
+                    <!--                               attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>-->
+                    <!--                        <field name="fastag_char" attrs="{'invisible':[('fastag_bool','=',False)]}"/>-->
+                    <!--                    </group>-->
+
+<!--                    <field name="terms_ids" string="Terms&amp;Conditions">-->
+<!--                        <tree editable="bottom">-->
+<!--                            <field name="terms_id" invisible="1"/>-->
+<!--                            <field name="term"/>-->
+<!--                            <field name="condition"/>-->
+<!--                        </tree>-->
+<!--                    </field>-->
+                </xpath>
 
 
 				<xpath expr="//group/group/field[@name='company_id']" position="attributes">
