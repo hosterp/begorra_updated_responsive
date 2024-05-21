@@ -699,9 +699,9 @@
                         <field name="warranty_bool"
                                attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
                         <field name="warranty_char" attrs="{'invisible':[('warranty_bool','=',False)]}"/>
-<!--                        <field name="vehicle_machinery_bool"-->
-<!--                               attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>-->
-<!--                        <field name="vehicle_machinery" attrs="{'invisible':[('vehicle_machinery_bool','=',False)]}"/>-->
+                        <field name="vehicle_machinery_bool"
+                               attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
+                        <field name="vehicle_machinery" attrs="{'invisible':[('vehicle_machinery_bool','=',False)]}"/>
                     </group>
                     <!--                    <group  col="4">-->
                     <!--                        <field name="transport_bool"-->
@@ -724,13 +724,13 @@
                     <!--                        <field name="fastag_char" attrs="{'invisible':[('fastag_bool','=',False)]}"/>-->
                     <!--                    </group>-->
 
-<!--                    <field name="terms_ids" string="Terms&amp;Conditions">-->
-<!--                        <tree editable="bottom">-->
-<!--                            <field name="terms_id" invisible="1"/>-->
-<!--                            <field name="term"/>-->
-<!--                            <field name="condition"/>-->
-<!--                        </tree>-->
-<!--                    </field>-->
+                    <field name="terms_ids" string="Terms&amp;Conditions">
+                        <tree editable="bottom">
+                            <field name="terms_id" invisible="1"/>
+                            <field name="term"/>
+                            <field name="condition"/>
+                        </tree>
+                    </field>
                 </xpath>
 
 

@@ -727,38 +727,38 @@
                                                         </p>
                                                     </td>
                                                 </tr>
-<!--                                                <tr t-if="o.warranty_bool==True">-->
-<!--                                                    <td style="padding: 0px 0px 0px 15px;">-->
-<!--                                                        <strong>Warranty</strong>-->
-<!--                                                    </td>-->
-<!--                                                    <td style="padding: 0px 0px 0px 15px;">-->
-<!--                                                        <p>:-->
-<!--                                                            <span t-field="o.warranty_char"/>-->
-<!--                                                        </p>-->
-<!--                                                    </td>-->
-<!--                                                </tr>-->
-<!--                                                <tr t-if="o.vehicle_machinery_bool==True">-->
-<!--                                                    <td style="padding: 0px 0px 0px 15px;">-->
-<!--                                                        <strong>Vehicle/Machinery</strong>-->
-<!--                                                    </td>-->
-<!--                                                    <td style="padding: 0px 0px 0px 15px;">-->
-<!--                                                        <p>:-->
-<!--                                                            <span t-field="o.vehicle_machinery"/>-->
-<!--                                                        </p>-->
-<!--                                                    </td>-->
-<!--                                                </tr>-->
-<!--                                                <tr t-if="o.terms_ids" t-foreach="o.terms_ids" t-as="t">-->
-<!--                                                    <td style="padding: 0px 0px 0px 15px;">-->
-<!--                                                        <strong>-->
-<!--                                                            <span t-esc="t.term"/>-->
-<!--                                                        </strong>-->
-<!--                                                    </td>-->
-<!--                                                    <td style="padding: 0px 0px 0px 15px;">-->
-<!--                                                        <p>:-->
-<!--                                                            <span t-esc="t.condition"/>-->
-<!--                                                        </p>-->
-<!--                                                    </td>-->
-<!--                                                </tr>-->
+                                                <tr t-if="o.warranty_bool==True">
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <strong>Warranty</strong>
+                                                    </td>
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <p>:
+                                                            <span t-field="o.warranty_char"/>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr t-if="o.vehicle_machinery_bool==True">
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <strong>Vehicle/Machinery</strong>
+                                                    </td>
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <p>:
+                                                            <span t-field="o.vehicle_machinery"/>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr t-if="o.terms_ids" t-foreach="o.terms_ids" t-as="t">
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <strong>
+                                                            <span t-esc="t.term"/>
+                                                        </strong>
+                                                    </td>
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <p>:
+                                                            <span t-esc="t.condition"/>
+                                                        </p>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>

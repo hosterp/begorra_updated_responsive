@@ -478,10 +478,6 @@
 			</field>
 		</record>
 
-
-
-
-
 		<menuitem id="menu_goods_recieve_report"
 				  action="action_goods_receive_report"
 				  name="GRR Through PO"
@@ -504,11 +500,11 @@
 						<group col="4" >
 							<field name="grr_no" readonly="1" string="GRR NO"/>
 							<field name="Date" string="Invoice Date" attrs="{'readonly':[('state','in',['cancel'])]}"/>
+							<field name="invoice_date" string="Date" attrs="{'readonly':[('state','in',['cancel'])]}"/>
 						</group>
 						<group col="4">
 
 							<field name="supplier_id" attrs="{'readonly':[('state','in',['cancel'])]}"/>
-							<field name="invoice_date" string="Date" attrs="{'readonly':[('state','in',['cancel'])]}"/>
 							<field name="invoice_no" attrs="{'readonly':[('state','in',['cancel'])]}"/>
 
 							<field name="mr_slip" attrs="{'readonly':[('state','in',['cancel'])]}"/>

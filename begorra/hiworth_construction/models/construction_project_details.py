@@ -1604,10 +1604,23 @@ class purchase_item_category(models.Model):
 	name = fields.Char('Name')
 	account_id = fields.Many2one('account.account','Related Account')
 
+class TermsCondition(models.Model):
+	_name = 'terms.condition'
+
+	terms_id = fields.Many2one('purchase.order')
+	term = fields.Char("Terms")
+	condition = fields.Char("Conditions")
+
+class vehicle_machinery(models.Model):
+	_name = 'vehicle.machinery'
+	_rec_name = 'vehicle_machinery_field'
+
+	vehicle_machinery_field=fields.Char('Vehicle/Machinery')
 class purchase_order(models.Model):
 	_inherit = 'purchase.order'
 	_order = 'id desc'
 
+	terms_ids = fields.One2many('terms.condition', 'terms_id')
 
 	@api.model
 	def _needaction_domain_get(self):
