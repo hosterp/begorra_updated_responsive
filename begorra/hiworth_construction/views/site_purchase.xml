@@ -12,6 +12,9 @@
 						<button name="confirm_purchase" type="object" class="oe_highlight" string="Request"
 								states="draft"
 								/>
+						<button name="rejected_status" type="object" class="oe_highlight" string="Rejected"
+								states="confirm,approved1,verified,approved2"
+							/>
 						<button name="%(action_view_stock_history)d" states="draft,confirm,approved1,processing"
                             	string="View Stock history" type="action" />
 						<button name="approve_purchase1" type="object" class="oe_highlight" string="Approve"

@@ -252,6 +252,7 @@ class SitePurchase(models.Model):
     storekeeper_purchase = fields.Boolean('Store Keeper Purchase')
     state = fields.Selection([('draft', 'Draft'),
                               ('confirm', 'Requested'),
+                              ('rejected', 'Rejected'),
                               ('approved1', 'Approved By PM'),
                               ('verified','Planning/P&M'),
                               ('approved2', 'Approved By GM'),
@@ -316,6 +317,9 @@ class SitePurchase(models.Model):
     decalration = fields.Boolean("Read and Understood below message")
 
 
+    @api.multi
+    def rejected_status(self):
+            self.state='rejected'
 
 
     @api.onchange('project_id')
