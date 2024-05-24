@@ -65,6 +65,7 @@
                             <field name="fund_available"  attrs="{'readonly':[('state','not in',['requested'])],'required':[('fund_available','=',True)]}"/>
                             <field name="fund_shortage"  attrs="{'readonly':[('state','not in',['requested'])],'required':[('fund_shortage','=',True)]}"/>
                             <field name="expected_date"  attrs="{'readonly':[('state','not in',['requested'])]}"/>
+                            <field name="remarks"/>
 
                         </group>
                     </group>

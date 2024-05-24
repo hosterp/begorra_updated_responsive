@@ -1869,6 +1869,7 @@ class purchase_order(models.Model):
 	q_date=fields.Date('Q Date')
 	tcs=fields.Float('TCS')
 	others=fields.Float('Others')
+	remarks = fields.Text('Remarks', related='mpr_id.remarks', store=True)
 
 
 

@@ -35,6 +35,12 @@ class PurchaseComparison(models.Model):
                             'uom':mpr_line.unit.id}))
                 rec.comparison_line = values
 
+
+    # @api.onchange('mpr_id')
+    # def remarks_value(self):
+    #     data = self.env['site.purchase'].search([])
+    #     for i in data:
+    #         print(i.name, 'dataaa..................................')
     # @api.one
     # def button_request(self):
     #    
@@ -423,10 +429,15 @@ class PurchaseComparison(models.Model):
     mpr_gm = fields.Many2one('res.users',"General Manager",related='mpr_id.dgm_id')
 
     tax_id1 = fields.Many2one('account.tax', 'GST')
+    remarks = fields.Text('Remarks', related='mpr_id.remarks', store=True)
     # tax_id2 = fields.Many2one('account.tax', 'GST')
     # tax_id3 = fields.Many2one('account.tax', 'GST')
     # tax_id4 = fields.Many2one('account.tax', 'GST')
     # tax_id5 = fields.Many2one('account.tax', 'GST')
+
+
+
+
 
     p_n_f1 =fields.Float('P&F')
     p_n_f2 =fields.Float('P&F')
