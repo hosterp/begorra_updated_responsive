@@ -1637,14 +1637,22 @@ class purchase_order(models.Model):
 	def create(self, cr, uid, vals, context=None):
 		if vals.get('name', '/') == '/':
 			project = self.pool.get('project.project').browse(cr,uid,vals['project_id']).project_no
-			self.pool.get('project.project').browse(cr,uid,vals['project_id']).po_no +=1
-			po_no=str(self.pool.get('project.project').browse(cr,uid,vals['project_id']).po_no).zfill(3)
+			# self.pool.get('project.project').browse(cr,uid,vals['project_id']).po_no +=1
+			print(project,'po project...................')
+			global_po_no = self.pool.get('ir.sequence').get(cr, uid, 'purchase.order')
+			# po_no=str(self.pool.get('project.project').browse(cr,uid,vals['project_id']).po_no).zfill(4)
+			numeric_po_no = global_po_no.lstrip('PO')
+			print(numeric_po_no, 'po_no..............................')
+			print(global_po_no,'po_no..............................')
 			mpr = self.pool.get('site.purchase').browse(cr,uid,vals['mpr_id'])
-			date_year = '/'+str(datetime.datetime.today().year) + '-' + str((datetime.datetime.today() + timedelta(days=365)).year)
+			print(mpr,'mpr..........................................')
+			# date_year = '/'+str(datetime.datetime.today().year) + '-' + str((datetime.datetime.today() + timedelta(days=365)).year)
+			date_year = '/'+str(datetime.datetime.today().year)
+			print(date_year,'date_year.................................')
 			if mpr.vehicle_purchase != True:
-				vals['name'] = project + '/'+ 'CIVIL/' +  'PO' + po_no + date_year
+				vals['name'] = project + '/'+ 'PO/' + str(numeric_po_no).zfill(3) + date_year
 			else:
-				vals['name'] = project + '/' + 'MECH/' + 'PO' + po_no + date_year
+				vals['name'] = project + '/' + 'PO/' + str(numeric_po_no).zfill(3) + date_year
 		context = dict(context or {}, mail_create_nolog=True)
 		order = super(purchase_order, self).create(cr, uid, vals, context=context)
 		self.message_post(cr, uid, [order], body=_("RFQ created"), context=context)

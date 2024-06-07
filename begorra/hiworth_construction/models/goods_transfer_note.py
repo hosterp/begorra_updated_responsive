@@ -505,7 +505,15 @@ class GoodsTransferNoteIn(models.Model):
                 transfer_list.append(transfer_dict)
 
         return transfer_list
-        
+
+
+class GrrNoCounter(models.Model):
+    _name = 'grr.no.counter'
+    _description = 'GRR Number Counter'
+
+    name = fields.Char(string='Counter Name', default='GRR Counter')
+    last_grr_no = fields.Integer(string='Last GRR Number', default=0)
+
 class GoodsRecieveReport(models.Model):
 
     _name = "goods.recieve.report"
@@ -546,10 +554,18 @@ class GoodsRecieveReport(models.Model):
     def create(self,vals):
         if vals.get('grr_no',False)==False:
             project = self.env['project.project'].browse(vals['project_id'])
-            project.grr_no+=1
-            grr_no=str(project.grr_no).zfill(3)
-            
-            vals['grr_no'] = 'GRR/'  + grr_no + "/"+  str(datetime.now().year)
+            counter = self.env['grr.no.counter'].search([], limit=1)
+            if not counter:
+                counter = self.env['grr.no.counter'].create({'name': 'GRR Counter'})
+            counter.last_grr_no += 1
+            grr_no = str(counter.last_grr_no).zfill(3)
+
+            vals['grr_no'] = 'GRR/' + grr_no + '/' + str(datetime.now().year)
+            counter.write({'last_grr_no': counter.last_grr_no})
+            # project.grr_no+=1
+            # grr_no=str(project.grr_no).zfill(3)
+            #
+            # vals['grr_no'] = 'GRR/'  + grr_no + "/"+  str(datetime.now().year)
             vals['project_id'] =project.id
             supplier =self.env['res.partner'].browse(vals['supplier_id'])
             if supplier and supplier.is_fuel_station:
@@ -575,7 +591,6 @@ class GoodsRecieveReport(models.Model):
             stock = self.env['stock.picking'].create({
 
                 'source_location_id': rec.supplier_location_id.id,
-
                 'site': rec.project_location_id.id,
                 'order_date': rec.Date,
                 'account_id': rec.project_location_id.related_account.id,

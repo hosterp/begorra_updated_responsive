@@ -550,9 +550,59 @@ class SitePurchase(models.Model):
 
         return res
 
+    # @api.model
+    # def create(self, vals):
+    #     # Ensure supervisor_id is set
+    #     if not vals.get('supervisor_id'):
+    #         user = self.env['res.users'].sudo().browse(self.env.user.id)
+    #         if user:
+    #             if user.employee_id or user.id == 1:
+    #                 vals['supervisor_id'] = user.employee_id.id if user.id != 1 else self.env['hr.employee'].search(
+    #                     [('id', '=', 1)]).id
+    #             else:
+    #                 raise Warning(_('User must be linked with an employee.'))
+    #
+    #     # Ensure site is set
+    #     if not vals.get('site') and vals.get('site_id'):
+    #         site = self.env['partner.daily.statement'].browse(vals['site_id'])
+    #         if site:
+    #             vals['site'] = site.location_ids.id
+    #
+    #     result = super(SitePurchase, self).create(vals)
+    #
+    #     # Generate MPR number if not already set
+    #     if not result.name:
+    #         sequence_code = 'site.purchase'  # replace with your actual sequence code
+    #         mpr_no = self.env['ir.sequence'].next_by_code(sequence_code)
+    #         if not mpr_no:
+    #             raise Warning(_('Unable to generate MPR number. Please configure the sequence properly.'))
+    #
+    #         # Determine the barcode prefix based on project name
+    #         if result.project_id.name == 'CENTRAL STORE':
+    #             barcode = 'CS'
+    #         elif result.project_id.name == 'BIDPL/CENTRAL WORKSHOP':
+    #             barcode = 'CW'
+    #         else:
+    #             barcode = 'S&P'
+    #
+    #         # Construct the MPR number
+    #         result.name = str('MPR-')+ str(barcode)+str (mpr_no)
+    #
+    #         # Ensure the MPR NO is unique
+    #         if self.env['site.purchase'].search_count([('name', '=', result.name)]) > 1:
+    #             raise Warning(_('MPR NO already exists'))
+    #
+    #         result.order_date = fields.Datetime.now()
+    #
+    #         # Validate requested quantities
+    #         for rec in result.req_list:
+    #             if rec.requested_quantity == 0:
+    #                 raise Warning(_('Requested quantity must be greater than zero'))
+    #
+    #     return result
+
     @api.model
     def create(self, vals):
-
         if vals.get('supervisor_id') == False:
             user = self.env['res.users'].sudo().search([('id', '=', self.env.user.id)])
             if user:
@@ -569,15 +619,20 @@ class SitePurchase(models.Model):
 
         result = super(SitePurchase, self).create(vals)
         if result.name == False:
-
-            result.project_id.mpr_no +=1
+            sequence_code = 'site.purchase'  # replace with your actual sequence code
+            mpr_no = self.env['ir.sequence'].next_by_code(sequence_code)
+            if not mpr_no:
+                raise Warning(_('Unable to generate MPR number. Please configure the sequence properly.'))
+            # result.project_id.mpr_no +=1
             barcode =result.project_id.location_id.loc_barcode
             if result.project_id.name == 'CENTRAL STORE':
                 barcode = 'CS'
             if result.project_id.name == 'BIDPL/CENTRAL WORKSHOP':
                 barcode = 'CW'
-
-            result.name = str('MPR-') +str(barcode) +  str(result.project_id.mpr_no).zfill(3)  + '/' + str(datetime.now().year)
+            elif result.project_id.name:
+                barcode = 'S&P'
+            # result.name = str('MPR-') + str(barcode) + str(mpr_no) + '/' + str(datetime.now().year)
+            result.name = str('MPR-') + str(barcode) + str(mpr_no)
             if len(self.env['site.purchase'].search([('name','=',result.name)]))>1:
                 raise except_orm(_('Warning'), _('MPR NO Already Exists'))
             result.order_date = fields.Datetime.now()
