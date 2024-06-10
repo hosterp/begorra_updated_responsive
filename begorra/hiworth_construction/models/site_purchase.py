@@ -632,7 +632,7 @@ class SitePurchase(models.Model):
             elif result.project_id.name:
                 barcode = 'S&P'
             # result.name = str('MPR-') + str(barcode) + str(mpr_no) + '/' + str(datetime.now().year)
-            result.name = str('MPR-') + str(barcode) + str(mpr_no)
+            result.name = str('MPR-')+ str(mpr_no)
             if len(self.env['site.purchase'].search([('name','=',result.name)]))>1:
                 raise except_orm(_('Warning'), _('MPR NO Already Exists'))
             result.order_date = fields.Datetime.now()
