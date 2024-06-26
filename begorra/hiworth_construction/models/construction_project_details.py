@@ -1650,9 +1650,11 @@ class purchase_order(models.Model):
 			date_year = '/'+str(datetime.datetime.today().year)
 			print(date_year,'date_year.................................')
 			if mpr.vehicle_purchase != True:
-				vals['name'] = project + '/'+ 'PO/' + str(numeric_po_no).zfill(3) + date_year
+				# vals['name'] = project + '/'+ 'PO/' + str(numeric_po_no).zfill(3) + date_year
+				vals['name'] = 'BIDPL'+ '/'+ 'S&P/' + str(numeric_po_no).zfill(3) + date_year
 			else:
-				vals['name'] = project + '/' + 'PO/' + str(numeric_po_no).zfill(3) + date_year
+				# vals['name'] = project + '/' + 'PO/' + str(numeric_po_no).zfill(3) + date_year
+				vals['name'] = 'BIDPL'+ '/'+ 'S&P/' + str(numeric_po_no).zfill(3) + date_year
 		context = dict(context or {}, mail_create_nolog=True)
 		order = super(purchase_order, self).create(cr, uid, vals, context=context)
 		self.message_post(cr, uid, [order], body=_("RFQ created"), context=context)
@@ -1687,7 +1689,7 @@ class purchase_order(models.Model):
 			self.minimum_planned_date = self.date_order
 
 	@api.multi
-	@api.depends('order_line','round_off_amount','discount_amount')
+	@api.depends('order_line','round_off_amount','discount_amount','amount_untaxed')
 	def compute_gst(self):
 		for rec in self:
 			rec.sgst_tax = 0.0
@@ -1698,7 +1700,7 @@ class purchase_order(models.Model):
 					rec.sgst_tax += line.sgst_tax
 					rec.cgst_tax += line.cgst_tax
 					rec.igst_tax += line.igst_tax
-			rec.amount_total2 = round(rec.sgst_tax + rec.cgst_tax +rec.igst_tax+rec.amount_untaxed + rec.packing_charge + rec.loading_charge + rec.transporting_charge+rec.round_off_amount - rec.discount_amount, 2)
+			rec.amount_total2 = round(rec.sgst_tax + rec.cgst_tax +rec.igst_tax+rec.amount_untaxed + rec.packing_charge + rec.loading_charge + rec.transporting_charge+rec.round_off_amount+rec.tcs+rec.others - rec.discount_amount, 2)
 			rec.amount_tax = rec.sgst_tax + rec.cgst_tax + rec.igst_tax
 			if rec.amount_total2 == 0.0:
 				rec.amount_total2 =rec.amount_total
@@ -2010,6 +2012,7 @@ class purchase_order(models.Model):
 		wGenerator = Number2Words()
 		if amount_total2 >= 0.0:
 			amount_to_text = wGenerator.convertNumberToWords(amount_total2) + ' Only'
+			amount_to_text = amount_to_text.replace('Lac', 'Lakh')
 			return amount_to_text
 
 	@api.multi
@@ -2855,6 +2858,7 @@ class res_partner(models.Model):
 	tds_applicable = fields.Boolean(default=False,string='TDS Applicable')
 	tender_contractor = fields.Boolean("Tender Contractor")
 	shipping_location = fields.Boolean("Shipping Location" ,default=False)
+	address=fields.Text('Address')
 
 class stock_picking(models.Model):
 	_inherit="stock.picking"

@@ -589,7 +589,7 @@
 					<field name="q_date"/>
 					<field name="location_id" groups="stock.group_locations"
 						   on_change="onchange_location_id(location_id, context)" invisible="1" />
-					<field name="remarks" readonly="1"/>
+					<field name="remarks"/>
 				</xpath>
 				<xpath expr="//notebook/page/field/tree/field[@name='name']"
 					   position="after">
