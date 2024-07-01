@@ -863,7 +863,7 @@
                                                 </tr>
                                                 <tr t-if="o.terms_ids" t-foreach="o.terms_ids" t-as="t">
                                                     <td colspan="2" style="padding: 0 0 0 15px;white-space: nowrap;">
-                                                        <span style="display: inline-block;padding-right: 85px;">
+                                                        <span style="display: inline-block;padding-right: 5px;">
                                                             <strong>
                                                                 <span t-esc="t.term"/>
                                                             </strong>
