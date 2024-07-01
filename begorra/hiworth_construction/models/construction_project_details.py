@@ -1880,6 +1880,8 @@ class purchase_order(models.Model):
 	tcs=fields.Float('TCS')
 	others=fields.Float('Others')
 	remarks = fields.Text('Remarks', related='mpr_id.remarks', store=True)
+	dest_address=fields.Text('Text')
+
 
 
 
