@@ -742,15 +742,7 @@
                             <div class="col-xs-12" style="font-size: 12px;" align="left">
                                 <p/>
                             </div>
-                            <div class="col-xs-12 oe_inline" align="left">
-                                <p></p>
-                            </div>
-                            <div class="col-xs-12 oe_inline" align="left">
-                                <p></p>
-                            </div>
-                            <div class="col-xs-12 oe_inline" align="left">
-                                <p></p>
-                            </div>
+
                             <div class="col-xs-12" style="font-size: 14px;" align="left">
                                 <strong>
                                     <p>Terms &amp; Conditions</p>
@@ -784,96 +776,78 @@
                                                 <!--                                                    </td>-->
                                                 <!--                                                </tr>-->
                                                 <tr t-if="o.price_bool">
-                                                    <td colspan="2" style="padding: 0 0 0 15px; white-space: nowrap;">
-                                                        <span style="display: inline;padding-right: 80px;">
-                                                            <strong>Price</strong>
-                                                        </span>
-                                                        <span style="display: inline;padding-right: 5px;">
-                                                            <strong>:</strong>
-                                                        </span>
-                                                        <span style="display: inline;">
-                                                            <t t-esc="o.price_char"/>
-                                                        </span>
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <strong>Price</strong>
                                                     </td>
+                                                    <td style="display: inline-block; white-space: nowrap;">
+                                                        <p>:
+                                                            <span t-esc="o.price_char"/>
+                                                        </p>
+                                                    </td>
+
                                                 </tr>
                                                 <tr t-if="o.payment_bool">
-                                                    <td colspan="2" style="padding: 0 0 0 15px; white-space: nowrap;">
-                                                        <span style="display: inline;padding-right: 56px;">
-                                                            <strong>Payment</strong>
-                                                        </span>
-                                                        <span style="display: inline;padding-right: 5px;">
-                                                            <strong>:</strong>
-                                                        </span>
-                                                        <span style="display: inline;">
-                                                            <t t-esc="o.payment_char"/>
-                                                        </span>
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <strong>Payment</strong>
                                                     </td>
+                                                    <td style="display: inline-block; white-space: nowrap;">
+                                                        <p>:
+                                                            <span t-esc="o.payment_char"/>
+                                                        </p>
+                                                    </td>
+
                                                 </tr>
                                                 <tr t-if="o.freight_bool">
-                                                    <td colspan="2" style="padding: 0 0 0 15px; white-space: nowrap;">
-                                                        <span style="display: inline;padding-right: 66px;">
-                                                            <strong>Freight</strong>
-                                                        </span>
-                                                        <span style="display: inline;padding-right: 5px;">
-                                                            <strong>:</strong>
-                                                        </span>
-                                                        <span style="display: inline;">
-                                                            <t t-esc="o.freight_char"/>
-                                                        </span>
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <strong>Freight</strong>
                                                     </td>
+                                                    <td style="display: inline-block; white-space: nowrap;">
+                                                        <p>:
+                                                            <span t-esc="o.freight_char"/>
+                                                        </p>
+                                                    </td>
+
                                                 </tr>
                                                 <tr t-if="o.delivery_bool">
-                                                    <td colspan="2" style="padding: 0 0 0 15px; white-space: nowrap;">
-                                                        <span style="display: inline;padding-right: 58px;">
-                                                            <strong>Delivery</strong>
-                                                        </span>
-                                                        <span style="display: inline;padding-right: 5px;">
-                                                            <strong>:</strong>
-                                                        </span>
-                                                        <span style="display: inline;">
-                                                            <t t-esc="o.delivery_char"/>
-                                                        </span>
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <strong>Delivery</strong>
+                                                    </td>
+                                                    <td style="display: inline-block; white-space: nowrap;">
+                                                        <p>:
+                                                            <span t-esc="o.delivery_char"/>
+                                                        </p>
                                                     </td>
                                                 </tr>
                                                 <tr t-if="o.warranty_bool">
-                                                    <td colspan="2" style="padding: 0 0 0 15px; white-space: nowrap;">
-                                                        <span style="display: inline;padding-right: 54px;">
-                                                            <strong>Warranty</strong>
-                                                        </span>
-                                                        <span style="display: inline;padding-right: 5px;">
-                                                            <strong>:</strong>
-                                                        </span>
-                                                        <span style="display: inline;">
-                                                            <t t-esc="o.warranty_char"/>
-                                                        </span>
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <strong>Warranty</strong>
+                                                    </td>
+                                                    <td style="display: inline-block; white-space: nowrap;">
+                                                        <p>:
+                                                            <span t-esc="o.warranty_char"/>
+                                                        </p>
                                                     </td>
                                                 </tr>
-                                                <tr t-if="o.vehicle_machinery_bool">
-                                                    <td colspan="2" style="padding: 0 0 0 15px; white-space: nowrap;">
-                                                        <span style="display: inline;">
-                                                            <strong>Vehicle/Machinery</strong>
-                                                        </span>
-                                                        <span style="display: inline;padding-right: 5px;">
-                                                            <strong>:</strong>
-                                                        </span>
-                                                        <span style="display: inline;">
-                                                            <t t-esc="o.vehicle_machinery.display_name"/>
-                                                        </span>
+                                                <tr t-if="o.vehicle_machinery_bool==True">
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <strong>Vehicle/Machinery</strong>
+                                                    </td>
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <p>:
+                                                            <span t-field="o.vehicle_machinery"/>
+                                                        </p>
                                                     </td>
                                                 </tr>
                                                 <tr t-if="o.terms_ids" t-foreach="o.terms_ids" t-as="t">
-                                                    <td colspan="2" style="padding: 0 0 0 15px;white-space: nowrap;">
-                                                        <span style="display: inline-block;padding-right: 5px;">
-                                                            <strong>
-                                                                <span t-esc="t.term"/>
-                                                            </strong>
-                                                        </span>
-                                                        <span style="display: inline;padding-right: 5px;">
-                                                            <strong>:</strong>
-                                                        </span>
-                                                        <span style="display: inline-block;">
+                                                    <td style="padding: 0px 0px 0px 15px;">
+                                                        <strong>
+                                                            <span t-esc="t.term"/>
+                                                        </strong>
+                                                    </td>
+                                                    <td style="display: inline-block; white-space: nowrap;">
+                                                        <p>:
                                                             <span t-esc="t.condition"/>
-                                                        </span>
+                                                        </p>
                                                     </td>
                                                 </tr>
 
@@ -928,12 +902,7 @@
                             <div class="col-xs-12 oe_inline" align="left">
                                 <p></p>
                             </div>
-                            <div class="col-xs-12 oe_inline" align="left">
-                                <p></p>
-                            </div>
-                            <div class="col-xs-12 oe_inline" align="left">
-                                <p></p>
-                            </div>
+
                             <div class="col-xs-12" style="font-size: 17px;" align="left">
                                 <strong>
                                     <p>For Begorra Infrastructure &amp; Developers Pvt.Ltd.</p>

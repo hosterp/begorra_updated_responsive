@@ -1855,10 +1855,7 @@ class purchase_order(models.Model):
 	warranty_bool = fields.Boolean('Warranty')
 	warranty_char = fields.Char('Warranty')
 	payment_bool = fields.Boolean("Payment")
-	payment_char = fields.Selection([
-		('bank_transfer', 'Credit-shall be made through bank'),
-		('advance', 'Advance-shall be made through bank'),
-	], string="Payment", default='bank_transfer')
+	payment_char = fields.Char('Payment')
 	freight_bool = fields.Boolean("Freight")
 	freight_char = fields.Char("Freight",default="Extra")
 	items_list = fields.Char(string="Items",compute='compute_items_list')
