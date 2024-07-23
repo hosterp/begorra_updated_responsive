@@ -151,15 +151,21 @@
                                             <tr>
                                                 <td>
                                                     <span t-field="o.partner_id.street"/>
-                                                    <span>,</span>
-                                                    <span t-field="o.partner_id.street2"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                      <span t-field="o.partner_id.street2"/>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
                                                     <span t-field="o.partner_id.post"/>
-                                                    <span>,</span>
-                                                    <span t-field="o.partner_id.city"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                      <span t-field="o.partner_id.city"/>
                                                 </td>
                                             </tr>
                                         </table>
@@ -216,40 +222,26 @@
                                             </td>
                                             <tr>
                                                 <td>
-                                                    <p>M/S.Begorra Infrastructure &amp; Developers Pvt Ltd</p>
-                                                </td>
-                                            </tr>
-                                            <!--                                            </tr>-->
-                                            <tr t-if="o.dest_address">
-                                                <td>
-                                                    <span t-field="o.dest_address"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span t-field="o.dest_address_id.street"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span t-field="o.dest_address_id.street2"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span t-field="o.dest_address_id.post"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span t-field="o.dest_address_id.city"/>
-                                                    <span>,</span>
-                                                    <span t-field="o.dest_address_id.state_id"/>
-                                                </td>
-                                            </tr>
-                                            <tr t-if="o.dest_address_id.phone">
-                                                <td>
-                                                    <span t-esc="'Contact No: ' + (o.dest_address_id.phone or '')"/>
+                                                   M/S.Begorra Infrastructure &amp; Developers Pvt Ltd<br/>
+                                                    <t t-if="o.dest_address">
+                                                        <span t-field="o.dest_address"/>
+                                                        <br/>
+                                                    </t>
+<!--                                                    <span t-field="o.dest_address_id.street"/>-->
+<!--                                                    <br/>-->
+<!--                                                    <span t-field="o.dest_address_id.street2"/>-->
+<!--                                                    <br/>-->
+<!--                                                    <span t-field="o.dest_address_id.post"/>-->
+<!--                                                    <br/>-->
+<!--                                                    <span t-field="o.dest_address_id.city"/>-->
+<!--                                                    <span>,</span>-->
+<!--                                                    <span t-field="o.dest_address_id.state_id"/>-->
+<!--                                                    <br/>-->
+<!--                                                    <t t-if="o.dest_address_id.phone">-->
+<!--                                                        Contact No:-->
+<!--                                                        <span t-field="o.dest_address_id.phone"/>-->
+<!--                                                        <br/>-->
+<!--                                                    </t>-->
                                                 </td>
                                             </tr>
                                         </table>
