@@ -2040,18 +2040,46 @@ class purchase_order(models.Model):
 			'context':context,
 		}
 
+	approver_id = fields.Many2one('res.users', string='PO Approved')
+	approved_date = fields.Datetime(string='PO Approved Date')
+	mpr_approved_date = fields.Datetime('Purchase Manager Approved Date', related='mpr_id.approved_date')
+	mpr_verified_date = fields.Datetime('Planning/P&M Verified Date', related='mpr_id.verified_date')
+	mpr_approved_date1 = fields.Datetime('GM Approved date', related='mpr_id.approved_date1')
+	mpr_purchase_manager_id = fields.Many2one('res.users', "Purchase Manager", related='mpr_id.project_manager')
+	mpr_planning_id = fields.Many2one('res.users', "Planning/P&M", related='mpr_id.planning_manager')
+	mpr_gm = fields.Many2one('res.users', "General Manager", related='mpr_id.dgm_id')
 	@api.multi
 	def button_approve(self):
-		for rec in self:
-			rec.state = 'confirmed'
-			for user in self.env['res.users'].search([]):
-				if user.has_group('hiworth_construction.group_purchase_manager'):
-					self.env['popup.notifications'].sudo().create({
-						'name': user.id,
-						'status': 'draft',
-						'message': 'You have a Purchase Order To Confirm',
+		Notification = self.env['popup.notifications']
+		User = self.env['res.users']
 
-					})
+		for rec in self:
+			# Update record state
+			rec.state = 'confirmed'
+			rec.approver_id = self.env.user.id
+			rec.approved_date =fields.Datetime.now()
+
+			# Notify users in the 'group_purchase_manager' group
+			users_list = User.search(
+				[('groups_id', 'in', [self.env.ref('hiworth_construction.group_purchase_manager').id])])
+			for user in users_list:
+				Notification.sudo().create({
+					'name': user.id,
+					'status': 'draft',
+					'message': 'Purchase Order confirmed by {self.env.user.name} on {rec.approved_date.strftime("%Y-%m-%d %H:%M:%S")}',
+				})
+	# @api.multi
+	# def button_approve(self):
+	# 	for rec in self:
+	# 		rec.state = 'confirmed'
+	# 		for user in self.env['res.users'].search([]):
+	# 			if user.has_group('hiworth_construction.group_purchase_manager'):
+	# 				self.env['popup.notifications'].sudo().create({
+	# 					'name': user.id,
+	# 					'status': 'draft',
+	# 					'message': 'You have a Purchase Order To Confirm',
+	#
+	# 				})
 
 
 	@api.multi
@@ -2073,7 +2101,7 @@ class purchase_order(models.Model):
 
 				})
 
-   
+
 
 	def view_invoice(self, cr, uid, ids, context=None):
 		'''
