@@ -1,3 +1,6 @@
 .bigText {
     height:300px;
 }
+.page-break {
+    page-break-after: always;
+}

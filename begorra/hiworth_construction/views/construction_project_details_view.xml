@@ -629,7 +629,7 @@
                 </xpath>
                 <xpath expr="//notebook/page/field/tree/field[@name='price_unit']"
                        position="replace">
-                    <field name="expected_rate" string="Expected Rate" required="1"/>
+                    <field name="expected_rate" string="Rate(INR)" required="1"/>
                     <field name="product_qty"
                            on_change="onchange_product_id(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id,parent.date_order,parent.fiscal_position,date_planned,name,False,parent.state,context)"
                            string="Received Qty" widget="char" readonly="1" required="0" invisible="1"/>
