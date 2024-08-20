@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Inherit the web.layout template -->
+        <template id="custom_web_layout" inherit_id="web.layout">
+            <!-- Change the page title -->
+            <xpath expr="//title" position="replace">
+                <title>Begorra</title>
+            </xpath>
+
+            <!-- Optional: Modify the entire head tag or add meta tags -->
+            <xpath expr="//head" position="inside">
+                <meta name="description" content="Custom Odoo Page Description"/>
+                <link rel="icon" href="/your_module/static/src/img/favicon.ico" type="image/x-icon"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>
