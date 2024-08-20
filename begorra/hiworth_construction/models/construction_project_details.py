@@ -1878,7 +1878,8 @@ class purchase_order(models.Model):
 	others=fields.Float('Others')
 	remarks = fields.Text('Remarks', related='mpr_id.remarks', store=True)
 	dest_address=fields.Text('Text')
-
+	supervisor_id = fields.Many2one('hr.employee', 'User', related='mpr_id.supervisor_id')
+	site = fields.Many2one('stock.location', 'Location',related='mpr_id.site')
 
 
 

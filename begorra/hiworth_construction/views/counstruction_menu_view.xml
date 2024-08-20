@@ -2,6 +2,7 @@
 <openerp>
 	<data>
 
+
 		<menuitem id="menu_stock_warehouse_reports" name="Reports"
 				  parent="stock.menu_stock_root" sequence="2" />
 

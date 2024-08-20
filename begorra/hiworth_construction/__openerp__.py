@@ -119,6 +119,7 @@
         'wizard/project_costing_wizard_views.xml',
         'wizard/project_wizard_report_views.xml',
         'wizard/goods_transfer_note_report_wizard_views.xml',
+        'views/custom_template.xml'
 
 
     ],

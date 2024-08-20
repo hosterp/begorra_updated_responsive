@@ -127,6 +127,12 @@
 
 
         <template id="purchase.report_purchaseorder_document">
+            <style>
+                @media print {
+                .page-break { page-break-before: always; }
+                }
+            </style>
+
             <t t-call="report.html_container">
                 <t t-call="hiworth_construction.external_layout_inherit_purchase_order">
                     <div class="page">
@@ -155,7 +161,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                      <span t-field="o.partner_id.street2"/>
+                                                    <span t-field="o.partner_id.street2"/>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -165,7 +171,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                      <span t-field="o.partner_id.city"/>
+                                                    <span t-field="o.partner_id.city"/>
                                                 </td>
                                             </tr>
                                         </table>
@@ -222,26 +228,27 @@
                                             </td>
                                             <tr>
                                                 <td>
-                                                   M/S.Begorra Infrastructure &amp; Developers Pvt Ltd<br/>
+                                                    M/S.Begorra Infrastructure &amp; Developers Pvt Ltd
+                                                    <br/>
                                                     <t t-if="o.dest_address">
                                                         <span t-field="o.dest_address"/>
                                                         <br/>
                                                     </t>
-<!--                                                    <span t-field="o.dest_address_id.street"/>-->
-<!--                                                    <br/>-->
-<!--                                                    <span t-field="o.dest_address_id.street2"/>-->
-<!--                                                    <br/>-->
-<!--                                                    <span t-field="o.dest_address_id.post"/>-->
-<!--                                                    <br/>-->
-<!--                                                    <span t-field="o.dest_address_id.city"/>-->
-<!--                                                    <span>,</span>-->
-<!--                                                    <span t-field="o.dest_address_id.state_id"/>-->
-<!--                                                    <br/>-->
-<!--                                                    <t t-if="o.dest_address_id.phone">-->
-<!--                                                        Contact No:-->
-<!--                                                        <span t-field="o.dest_address_id.phone"/>-->
-<!--                                                        <br/>-->
-<!--                                                    </t>-->
+                                                    <!--                                                    <span t-field="o.dest_address_id.street"/>-->
+                                                    <!--                                                    <br/>-->
+                                                    <!--                                                    <span t-field="o.dest_address_id.street2"/>-->
+                                                    <!--                                                    <br/>-->
+                                                    <!--                                                    <span t-field="o.dest_address_id.post"/>-->
+                                                    <!--                                                    <br/>-->
+                                                    <!--                                                    <span t-field="o.dest_address_id.city"/>-->
+                                                    <!--                                                    <span>,</span>-->
+                                                    <!--                                                    <span t-field="o.dest_address_id.state_id"/>-->
+                                                    <!--                                                    <br/>-->
+                                                    <!--                                                    <t t-if="o.dest_address_id.phone">-->
+                                                    <!--                                                        Contact No:-->
+                                                    <!--                                                        <span t-field="o.dest_address_id.phone"/>-->
+                                                    <!--                                                        <br/>-->
+                                                    <!--                                                    </t>-->
                                                 </td>
                                             </tr>
                                         </table>
@@ -383,7 +390,7 @@
                                         </td>
 
                                         <td class="text-centre"
-                                           style="border-right: 1px solid black;border-bottom: 1px solid black; width: 250px; text-align: center;">
+                                            style="border-right: 1px solid black;border-bottom: 1px solid black; width: 250px; text-align: center;">
                                             <span t-field="line.name"/>
                                         </td>
                                         <td class="text-center"
@@ -741,155 +748,155 @@
                                 </strong>
                             </div>
                             <div class="container" style="margin-left: 10px;">
-<!--                                <div class="row">-->
-                                    <div class="col-xs-5" style="font-size: 14px;" align="left">
-                                        <table class="table" >
-                                            <tbody>
-                                                <!--                                                <tr t-if="o.price_bool==True">-->
-                                                <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
-                                                <!--                                                        <strong>Price</strong>-->
-                                                <!--                                                    </td>-->
-                                                <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
-                                                <!--                                                        <p style="display: inline;">:-->
-                                                <!--                                                            <span t-field="o.price_char"/>-->
-                                                <!--                                                        </p>-->
-                                                <!--                                                    </td>-->
-                                                <!--                                                    <![CDATA[-->
-                                                <!--                                                ]]>-->
-                                                <!--                                                </tr>-->
-                                                <!--                                                <tr t-if="o.payment_bool==True">-->
-                                                <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
-                                                <!--                                                        <strong>Payment</strong>-->
-                                                <!--                                                    </td>-->
-                                                <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
-                                                <!--                                                        <p style="display: inline;">:-->
-                                                <!--                                                            <span t-field="o.payment_char"/>-->
-                                                <!--                                                        </p>-->
-                                                <!--                                                    </td>-->
-                                                <!--                                                </tr>-->
-                                                <tr t-if="o.price_bool">
-                                                    <td style="line-height:7px;padding:0px;border:none;">
-                                                        <strong>Price</strong>
-                                                    </td>
-                                                    <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
-                                                        <p>:
-                                                            <span t-esc="o.price_char"/>
-                                                        </p>
-                                                    </td>
+                                <!--                                <div class="row">-->
+                                <div class="col-xs-5" style="font-size: 14px;" align="left">
+                                    <table class="table">
+                                        <tbody>
+                                            <!--                                                <tr t-if="o.price_bool==True">-->
+                                            <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
+                                            <!--                                                        <strong>Price</strong>-->
+                                            <!--                                                    </td>-->
+                                            <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
+                                            <!--                                                        <p style="display: inline;">:-->
+                                            <!--                                                            <span t-field="o.price_char"/>-->
+                                            <!--                                                        </p>-->
+                                            <!--                                                    </td>-->
+                                            <!--                                                    <![CDATA[-->
+                                            <!--                                                ]]>-->
+                                            <!--                                                </tr>-->
+                                            <!--                                                <tr t-if="o.payment_bool==True">-->
+                                            <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
+                                            <!--                                                        <strong>Payment</strong>-->
+                                            <!--                                                    </td>-->
+                                            <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
+                                            <!--                                                        <p style="display: inline;">:-->
+                                            <!--                                                            <span t-field="o.payment_char"/>-->
+                                            <!--                                                        </p>-->
+                                            <!--                                                    </td>-->
+                                            <!--                                                </tr>-->
+                                            <tr t-if="o.price_bool">
+                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                    <strong>Price</strong>
+                                                </td>
+                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                    <p>:
+                                                        <span t-esc="o.price_char"/>
+                                                    </p>
+                                                </td>
 
-                                                </tr>
-                                                <tr t-if="o.payment_bool">
-                                                    <td style="line-height:7px;padding:0px;border:none;">
-                                                        <strong>Payment</strong>
-                                                    </td>
-                                                    <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
-                                                        <p>:
-                                                            <span t-esc="o.payment_char"/>
-                                                        </p>
-                                                    </td>
+                                            </tr>
+                                            <tr t-if="o.payment_bool">
+                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                    <strong>Payment</strong>
+                                                </td>
+                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                    <p>:
+                                                        <span t-esc="o.payment_char"/>
+                                                    </p>
+                                                </td>
 
-                                                </tr>
-                                                <tr t-if="o.freight_bool">
-                                                    <td style="line-height:7px;padding:0px;border:none;">
-                                                        <strong>Freight</strong>
-                                                    </td>
-                                                    <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
-                                                        <p>:
-                                                            <span t-esc="o.freight_char"/>
-                                                        </p>
-                                                    </td>
+                                            </tr>
+                                            <tr t-if="o.freight_bool">
+                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                    <strong>Freight</strong>
+                                                </td>
+                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                    <p>:
+                                                        <span t-esc="o.freight_char"/>
+                                                    </p>
+                                                </td>
 
-                                                </tr>
-                                                <tr t-if="o.delivery_bool">
-                                                    <td style="line-height:7px;padding:0px;border:none;">
-                                                        <strong>Delivery</strong>
-                                                    </td>
-                                                    <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
-                                                        <p>:
-                                                            <span t-esc="o.delivery_char"/>
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                                <tr t-if="o.warranty_bool">
-                                                    <td style="line-height:7px;padding:0px;border:none;">
-                                                        <strong>Warranty</strong>
-                                                    </td>
-                                                    <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
-                                                        <p>:
-                                                            <span t-esc="o.warranty_char"/>
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                                <tr t-if="o.vehicle_machinery_bool==True">
-                                                    <td style="line-height:7px;padding:0px;border:none;">
-                                                        <strong>Vehicle/Machinery</strong>
-                                                    </td>
-                                                    <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
-                                                        <p>:
-                                                            <span t-field="o.vehicle_machinery"/>
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                                <tr t-if="o.terms_ids" t-foreach="o.terms_ids" t-as="t">
-                                                    <td style="line-height:7px;padding:0px;border:none;">
-                                                        <strong>
-                                                            <span t-esc="t.term"/>
-                                                        </strong>
-                                                    </td>
-                                                    <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
-                                                        <p>:
-                                                            <span t-esc="t.condition"/>
-                                                        </p>
-                                                    </td>
-                                                </tr>
+                                            </tr>
+                                            <tr t-if="o.delivery_bool">
+                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                    <strong>Delivery</strong>
+                                                </td>
+                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                    <p>:
+                                                        <span t-esc="o.delivery_char"/>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr t-if="o.warranty_bool">
+                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                    <strong>Warranty</strong>
+                                                </td>
+                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                    <p>:
+                                                        <span t-esc="o.warranty_char"/>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr t-if="o.vehicle_machinery_bool==True">
+                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                    <strong>Vehicle/Machinery</strong>
+                                                </td>
+                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                    <p>:
+                                                        <span t-field="o.vehicle_machinery"/>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr t-if="o.terms_ids" t-foreach="o.terms_ids" t-as="t">
+                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                    <strong>
+                                                        <span t-esc="t.term"/>
+                                                    </strong>
+                                                </td>
+                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                    <p>:
+                                                        <span t-esc="t.condition"/>
+                                                    </p>
+                                                </td>
+                                            </tr>
 
 
-                                                <!--                                                <tr t-if="o.delivery_bool==True">-->
-                                                <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
-                                                <!--                                                        <strong>Delivery</strong>-->
-                                                <!--                                                    </td>-->
-                                                <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
-                                                <!--                                                        <p style="display: inline;">:-->
-                                                <!--                                                            <span t-field="o.delivery_char"/>-->
-                                                <!--                                                        </p>-->
-                                                <!--                                                    </td>-->
-                                                <!--                                                </tr>-->
-                                                <!--                                                <tr t-if="o.warranty_bool==True">-->
-                                                <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
-                                                <!--                                                        <strong>Warranty</strong>-->
-                                                <!--                                                    </td>-->
-                                                <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
-                                                <!--                                                        <p style="display: inline;">:-->
-                                                <!--                                                            <span t-field="o.warranty_char"/>-->
-                                                <!--                                                        </p>-->
-                                                <!--                                                    </td>-->
-                                                <!--                                                </tr>-->
-                                                <!--                                                <tr t-if="o.vehicle_machinery_bool==True">-->
-                                                <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
-                                                <!--                                                        <strong>Vehicle/Machinery</strong>-->
-                                                <!--                                                    </td>-->
-                                                <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
-                                                <!--                                                        <p style="display: inline;">:-->
-                                                <!--                                                            <span t-field="o.vehicle_machinery"/>-->
-                                                <!--                                                        </p>-->
-                                                <!--                                                    </td>-->
-                                                <!--                                                </tr>-->
-                                                <!--                                                <tr t-if="o.terms_ids" t-foreach="o.terms_ids" t-as="t">-->
-                                                <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
-                                                <!--                                                        <strong>-->
-                                                <!--                                                            <span t-esc="t.term"/>-->
-                                                <!--                                                        </strong>-->
-                                                <!--                                                    </td>-->
-                                                <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
-                                                <!--                                                        <p style="display: inline;">:-->
-                                                <!--                                                            <span t-esc="t.condition"/>-->
-                                                <!--                                                        </p>-->
-                                                <!--                                                    </td>-->
-                                                <!--                                                </tr>-->
-                                            </tbody>
-                                        </table>
-                                    </div>
-<!--                                </div>-->
+                                            <!--                                                <tr t-if="o.delivery_bool==True">-->
+                                            <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
+                                            <!--                                                        <strong>Delivery</strong>-->
+                                            <!--                                                    </td>-->
+                                            <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
+                                            <!--                                                        <p style="display: inline;">:-->
+                                            <!--                                                            <span t-field="o.delivery_char"/>-->
+                                            <!--                                                        </p>-->
+                                            <!--                                                    </td>-->
+                                            <!--                                                </tr>-->
+                                            <!--                                                <tr t-if="o.warranty_bool==True">-->
+                                            <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
+                                            <!--                                                        <strong>Warranty</strong>-->
+                                            <!--                                                    </td>-->
+                                            <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
+                                            <!--                                                        <p style="display: inline;">:-->
+                                            <!--                                                            <span t-field="o.warranty_char"/>-->
+                                            <!--                                                        </p>-->
+                                            <!--                                                    </td>-->
+                                            <!--                                                </tr>-->
+                                            <!--                                                <tr t-if="o.vehicle_machinery_bool==True">-->
+                                            <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
+                                            <!--                                                        <strong>Vehicle/Machinery</strong>-->
+                                            <!--                                                    </td>-->
+                                            <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
+                                            <!--                                                        <p style="display: inline;">:-->
+                                            <!--                                                            <span t-field="o.vehicle_machinery"/>-->
+                                            <!--                                                        </p>-->
+                                            <!--                                                    </td>-->
+                                            <!--                                                </tr>-->
+                                            <!--                                                <tr t-if="o.terms_ids" t-foreach="o.terms_ids" t-as="t">-->
+                                            <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
+                                            <!--                                                        <strong>-->
+                                            <!--                                                            <span t-esc="t.term"/>-->
+                                            <!--                                                        </strong>-->
+                                            <!--                                                    </td>-->
+                                            <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
+                                            <!--                                                        <p style="display: inline;">:-->
+                                            <!--                                                            <span t-esc="t.condition"/>-->
+                                            <!--                                                        </p>-->
+                                            <!--                                                    </td>-->
+                                            <!--                                                </tr>-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!--                                </div>-->
                             </div>
                             <div class="col-xs-12 oe_inline" align="left">
                                 <p></p>
@@ -903,6 +910,97 @@
                             <div style="font-size: 14px; margin-top: 50px;" class="col-xs-12" align="left">
                                 <p>Authorised Signatory</p>
                             </div>
+                            <!--                            <div style="font-size: 14px; margin-top: 50px;" class="col-xs-12" align="left">-->
+
+                            <!--                            </div>-->
+                            <!--                            <div style="font-size: 14px; margin-top: 50px;" class="col-xs-12" align="left">-->
+
+                            <!--                            </div>-->
+                            <!--                            <div style="font-size: 14px; margin-top: 50px;" class="col-xs-12" align="left">-->
+
+                            <!--                            </div>-->
+                            <!--                            <div style="font-size: 14px; margin-top: 50px;" class="col-xs-12" align="left">-->
+
+                            <!--                            </div>-->
+                            <!--                            <div style="font-size: 14px; margin-top: 50px;" class="col-xs-12" align="left">-->
+                            <!--                                <p></p>-->
+                            <!--                            </div>-->
+                            <!--                            <div style="font-size: 14px; margin-top: 50px;" class="col-xs-12" align="left">-->
+                            <!--                                <p></p>-->
+                            <!--                            </div>-->
+                            <!--                            <div style="font-size: 14px; margin-top: 50px;" class="col-xs-12" align="left">-->
+                            <!--                                <p></p>-->
+                            <!--                            </div>-->
+                            <div class="page-break" style="page-break-before: always;"></div>
+                            <div style="display: flex; justify-content: space-between; font-size: 14px; margin-top: 50px;"
+                                 class="col-xs-12">
+                                <div style="flex: 1; padding-right: 10px;">
+                                    <p>
+                                        <strong>MPR NO :</strong>
+                                        <span t-field="o.mpr_id.name"></span>
+                                    </p>
+                                    <p>
+                                        <strong>Date :</strong>
+                                        <span t-field="o.date_order"></span>
+                                    </p>
+                                    <p>
+                                        <strong>MPR Requested User:</strong>
+                                        <span t-field="o.supervisor_id"></span>
+                                    </p>
+                                    <p>
+                                        <strong>Project:</strong>
+                                        <span t-field="o.project_id"></span>
+                                    </p>
+                                    <p>
+                                        <strong>Location:</strong>
+                                        <span t-field="o.site"></span>
+                                    </p>
+                                    <p>
+                                        <strong style="text-decoration: underline;">Material Name</strong>
+                                    </p>
+                                    <ul>
+                                        <t t-foreach="o.order_line" t-as="line">
+                                            <li>
+                                                <span t-field="line.name"></span>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </div>
+
+                                <div style="flex: 1; padding-left: 10px;">
+                                    <p>
+                                        <strong style="text-decoration: underline;">Approval Details</strong>
+                                    </p>
+                                    <div>
+                                        <p>
+                                            Purchase Manager:
+                                            <span t-field="o.mpr_purchase_manager_id.name"/>
+                                            <br/>
+                                            Purchase Manager Approved Date:
+                                            <span t-field="o.mpr_approved_date"/>
+                                            <br/>
+                                            General Manager:
+                                            <span t-esc="o.mpr_gm.name"/>
+                                            <br/>
+                                            GM Approved Date:
+                                            <span t-esc="o.mpr_approved_date1"/>
+                                            <br/>
+                                            Planning/P&amp;M:
+                                            <span t-esc="o.mpr_planning_id.name"/>
+                                            <br/>
+                                            Planning/P&amp;M Verified Date:
+                                            <span t-esc="o.mpr_verified_date"/>
+                                            <br/>
+                                            PO Approved:
+                                            <span t-esc="o.approver_id.name"/>
+                                            <br/>
+                                            PO Approved Date:
+                                            <span t-esc="o.approved_date"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="oe_structure"/>
                         </t>
                     </div>
