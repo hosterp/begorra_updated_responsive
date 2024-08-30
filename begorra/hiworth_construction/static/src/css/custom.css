@@ -24,10 +24,15 @@
 }
 
 /* Flexbox for the button groups */
-.oe_view_manager_buttons, .oe_view_manager_sidebar, .oe_view_manager_switch {
+.oe_view_manager_buttons{
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: flex-start;
+}
+.oe_view_manager_sidebar, .oe_view_manager_switch {
+   display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 
@@ -95,6 +100,8 @@
     }
 
     .oe_view_manager_buttons, .oe_view_manager_sidebar, .oe_view_manager_switch {
+        display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         flex-direction: column;
         align-items: center;
