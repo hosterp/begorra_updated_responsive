@@ -1,0 +1,135 @@
+.oe_form_field,
+.oe_form_field_one2many,
+.oe_form_group,
+.oe_subtotal_footer,
+.oe_right {
+    box-sizing: border-box;
+}
+
+/* head button */
+/* Default layout for larger screens */
+.oe_view_manager_header {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.oe_header_row {
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.oe_header_row td {
+    flex: 1;
+    padding: 10px;
+}
+
+/* Flexbox for the button groups */
+.oe_view_manager_buttons, .oe_view_manager_sidebar, .oe_view_manager_switch {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+
+@media (max-width:430px){
+/*.openerp .oe_form .oe_form_required input:not([disabled]):not([readonly]), .openerp .oe_form .oe_form_required select:not([disabled]):not([readonly]), .openerp .oe_form .oe_form_required textarea:not([disabled]):not([readonly]) {background-color: #fff !important;} */
+    .openerp .oe_form .oe_form_group .oe_form_group_cell.oe_group_right {
+    display: block !important;
+    }
+    .oe_form_group_cell {
+        display: block;
+        width: 100%;
+    }
+    .oe_form_group_cell_label {
+        width: 100%;
+        text-align: left;
+        padding-bottom: 5px;
+    }
+    .oe_form_group_row {
+        display: block;
+        margin-bottom: 10px;
+    }
+    .oe_form_field {
+        display: block;
+        width: 100%;
+    }
+
+    .openerp .oe_searchview {
+       min-width: 238px !important;
+    }
+    .oe_form_group, .oe_subtotal_footer, .oe_right {
+        padding: 5px;
+        margin: 5px 0;
+    }
+
+    .oe_form_group {
+        /* Example: Ensure elements take full width */
+        width: 100%;
+    }
+
+    .oe_subtotal_footer {
+        /* Example: Adjust font size and padding for mobile */
+        font-size: 14px;
+        padding: 8px 0;
+    }
+
+    .oe_right {
+        /* Example: Adjust alignment for mobile */
+        text-align: center;
+        margin-top: 8px;
+    }
+    /*head button*/
+    .oe_view_manager_header {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .oe_header_row {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .oe_header_row td {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .oe_view_manager_buttons, .oe_view_manager_sidebar, .oe_view_manager_switch {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .oe_view_manager_pager {
+        justify-content: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .oe_view_title {
+        text-align: center;
+    }
+
+/* switcher button invisible*/
+    .oe_view_manager_switch,
+    .oe_view_manager_pager {
+        display: none;
+    }
+
+
+/* sub total */
+    .oe_form_group.oe_subtotal_footer.oe_right {
+        float: none;
+        width: 100%; /* Take up full width on mobile */
+        margin-right: 0;
+        margin-left: 200px;
+        text-align: Center; /* Center the content horizontally */
+        padding: 10px; /* Add padding for better spacing */
+        box-sizing: border-box; /* Ensure padding doesn't affect the element's width */
+    }
+
+
+
+}
+
+

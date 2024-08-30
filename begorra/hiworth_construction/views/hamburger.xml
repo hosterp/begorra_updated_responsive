@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3:-->
+<openerp>
+    <data>
+    <template id="custom_hamburger_menu">
+        <div id="hamburger_menu_container">
+            <button id="hamburger_menu" class="o_menu_toggle">
+                <span class="menu_icon"></span>
+            </button>
+            <div id="submenu_container">
+                <!-- Submenu items will be dynamically loaded or included here -->
+                <a href="/your_module/page1" class="submenu_link">Page 1</a>
+                <a href="/your_module/page2" class="submenu_link">Page 2</a>
+                <!-- Add more links as needed -->
+            </div>
+        </div>
+    </template>
+    </data>
+</openerp>
