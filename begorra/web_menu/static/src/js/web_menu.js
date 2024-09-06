@@ -40,8 +40,8 @@ openerp.web_menu = function(instance){
             this.$el.on('click', 'a[data-menu]', this.on_top_menu_click);
             $(".oe_menu_unfold").hide()
             $(document).click(function(e) {
-                if(! $(e.target).hasClass("oe_menu_text") &&  !$(e.target).hasClass("oe_menu_toggler") &&  !$(e.target).hasClass("oe_secondary_submenu")  
-                        &&  !$(e.target).hasClass("oe_secondary_menu_section") &&  !$(e.target).hasClass("oe_secondary_menu") && self.folded){ 
+                if(! $(e.target).hasClass("oe_menu_text") &&  !$(e.target).hasClass("oe_menu_toggler") &&  !$(e.target).hasClass("oe_secondary_submenu")
+                        &&  !$(e.target).hasClass("oe_secondary_menu_section") &&  !$(e.target).hasClass("oe_secondary_menu") && self.folded){
                   self.$secondary_menus.hide();
                 }
             });
@@ -91,7 +91,7 @@ openerp.web_menu = function(instance){
          * Automatically called when 'menu_bound' event is triggered and on window resizing.
          *
          * @param {string} behavior If set to 'all_outside', all the items are displayed. If set to
-         * 'all_inside', all the items are hidden under the more item. If not set, only the 
+         * 'all_inside', all the items are hidden under the more item. If not set, only the
          * overflowing items are hidden.
          */
         reflow: function(behavior) {
@@ -249,7 +249,7 @@ openerp.web_menu = function(instance){
                 this.open_menu(menu_id);
             }
         },
-        
+
         /**
          * Process a click on a menu item
          *
@@ -342,4 +342,11 @@ openerp.web_menu = function(instance){
             this.menu_click($(ev.currentTarget).data('menu'), needaction);
         },
     });
+
 }
+
+
+
+
+
+

@@ -10,7 +10,7 @@
 			<field name="inherit_id" ref="purchase.purchase_order_form" />
 			<field name="arch" type="xml">
 				<xpath expr="//notebook/page/group[1]" position="after">
-					<div style="width: 50%%">
+					<div id="notbook_2">
                                 <field name="voucher_ids" readonly="1" >
                                     <tree editable="bottom" string="Voucher Payments">
                                         <field name="date"/>

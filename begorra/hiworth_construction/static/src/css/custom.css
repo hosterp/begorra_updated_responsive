@@ -6,6 +6,26 @@
     box-sizing: border-box;
 }
 
+/* menu sticky*/
+.o_header {
+  position: static;
+}
+
+/* note book style*/
+/*
+.openerp .oe_notebook_page {
+    padding: 0;
+    max-height: 100vh; /* Limit height to viewport height */
+  /*  overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+  /*  box-sizing: border-box; /* Ensure padding is included in the element's total height and width */
+/*} */
+
+
+/*new note table*/
+
+
+
+
 /* head button */
 /* Default layout for larger screens */
 .oe_view_manager_header {
@@ -36,7 +56,7 @@
 }
 
 
-@media (max-width:430px){
+@media (max-width:480px){
 /*.openerp .oe_form .oe_form_required input:not([disabled]):not([readonly]), .openerp .oe_form .oe_form_required select:not([disabled]):not([readonly]), .openerp .oe_form .oe_form_required textarea:not([disabled]):not([readonly]) {background-color: #fff !important;} */
     .openerp .oe_form .oe_form_group .oe_form_group_cell.oe_group_right {
     display: block !important;
@@ -129,11 +149,75 @@
         float: none;
         width: 100%; /* Take up full width on mobile */
         margin-right: 0;
-        margin-left: 200px;
+        margin-left: 160px;
         text-align: Center; /* Center the content horizontally */
         padding: 10px; /* Add padding for better spacing */
         box-sizing: border-box; /* Ensure padding doesn't affect the element's width */
     }
+
+
+    /* menu scoll*/
+
+    #oe_main_menu_placeholder {
+        position: relative; /* Ensures the menu scrolls with the page */
+        overflow-y: auto; /* Enables vertical scrolling within the menu */
+        max-height: 100vh; /* Ensures the menu does not exceed the viewport height */
+    }
+
+
+    .oe_application_menu_placeholder {
+        max-height: calc(100vh - 60px); /* Adjust based on header height */
+        overflow-y: auto;
+    }
+
+    .oe_application_menu_placeholder > li:nth-of-type(n+8) {
+        display: none; /* Hide all items beyond the 7th */
+    }
+
+    .oe_application_menu_placeholder .menu_more_container {
+        display: block;
+    }
+
+    #notebook_page_33 > div[style="width: 50%"] {
+        width: 100% !important;
+    }
+
+
+    .oe_view_manager_wrapper {
+    max-width: 100%;
+    overflow-x: auto; /* Enable horizontal scrolling if the content overflows */
+    }
+
+    .oe_view_manager_wrapper table {
+    width: 100%; /* Ensure the table takes the full width */
+    table-layout: fixed; /* Make sure table cells adjust according to the content */
+        }
+
+
+    .openerp .oe_list_content {
+    width: 200%;
+    }
+
+
+    /* text field when click on edit*/
+
+    .openerp .oe_form .oe_form_field_text.oe_inline, .openerp .oe_form .oe_form_field_text.oe_inline > textarea {
+    width: 259px;
+    }
+
+
+
+    .openerp .oe_list_content > tbody > tr > td.oe_list_field_cell {
+    padding: 3px 6px;
+    white-space: normal;
+    word-break: break-all;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+    margin-right: 4px;
+    margin-left: -3px;
+
+}
 
 
 
