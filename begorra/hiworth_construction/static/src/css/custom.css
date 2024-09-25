@@ -6,7 +6,6 @@
     box-sizing: border-box;
 }
 
-
 /* head button */
 /* Default layout for larger screens */
 .oe_view_manager_header {
@@ -35,4 +34,252 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+
+@media (max-width:480px){
+/*.openerp .oe_form .oe_form_required input:not([disabled]):not([readonly]), .openerp .oe_form .oe_form_required select:not([disabled]):not([readonly]), .openerp .oe_form .oe_form_required textarea:not([disabled]):not([readonly]) {background-color: #fff !important;} */
+    .openerp .oe_form .oe_form_group .oe_form_group_cell.oe_group_right {
+    display: block !important;
+    }
+    .oe_form_group_cell {
+        display: block;
+        width: 100%;
+    }
+    .oe_form_group_cell_label {
+        width: 100%;
+        text-align: left;
+        padding-bottom: 5px;
+    }
+    .oe_form_group_row {
+        display: block;
+        margin-bottom: 10px;
+    }
+    .oe_form_field {
+        display: block;
+        width: 100%;
+    }
+
+    .openerp .oe_searchview {
+       min-width: 238px !important;
+    }
+    .oe_form_group, .oe_subtotal_footer, .oe_right {
+        padding: 5px;
+        margin: 5px 0;
+    }
+
+    .oe_form_group {
+        /* Example: Ensure elements take full width */
+        width: 100%;
+    }
+
+    .oe_subtotal_footer {
+        /* Example: Adjust font size and padding for mobile */
+        font-size: 14px;
+        padding: 8px 0;
+    }
+
+    .oe_right {
+        /* Example: Adjust alignment for mobile */
+        text-align: center;
+        margin-top: 8px;
+    }
+    /*head button*/
+    .oe_view_manager_header {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .oe_header_row {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .oe_header_row td {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .oe_view_manager_buttons, .oe_view_manager_sidebar, .oe_view_manager_switch {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .oe_view_manager_pager {
+        justify-content: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .oe_view_title {
+        text-align: center;
+    }
+
+/* switcher button invisible*/
+    .oe_view_manager_switch,
+    .oe_view_manager_pager {
+        display: none;
+    }
+
+
+/* sub total */
+    .oe_form_group.oe_subtotal_footer.oe_right {
+        float: none;
+        width: 100%; /* Take up full width on mobile */
+        margin-right: 0;
+        margin-left: 16%;
+        text-align: Center; /* Center the content horizontally */
+        padding: 10px; /* Add padding for better spacing */
+        box-sizing: border-box; /* Ensure padding doesn't affect the element's width */
+        margin-top: 25px;
+    }
+
+     ul.nav.navbar-nav.navbar-left.oe_application_menu_placeholder.active {
+    overflow: scroll;
+    height: 200px;
+    }
+
+
+
+    .responsive-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box; /* Include padding and border in width */
+    }
+
+    .responsive-table td + td {
+        border-top: 1px solid #ddd; /* Add border between stacked cells */
+    }
+
+    .responsive-table .oe_form_group_cell_label {
+        width: 100%;
+        text-align: right;
+        font-weight: bold;
+    }
+
+    .responsive-table .oe_form_group_cell {
+        width: 100%;
+    }
+
+
+
+
+
+    .oe_view_manager_wrapper {
+    max-width: 100%;
+    overflow-x: auto; /* Enable horizontal scrolling if the content overflows */
+    }
+
+    .oe_view_manager_wrapper table {
+    width: 100%; /* Ensure the table takes the full width */
+    table-layout: fixed; /* Make sure table cells adjust according to the content */
+        }
+
+
+    .openerp .oe_list_content {
+    width: 200%;
+    }
+
+     #notebook_page_33 > div[style="width: 50%"] {
+        width: 100% !important;
+    }
+
+
+    /* text field when click on edit*/
+
+    .openerp .oe_form .oe_form_field_text.oe_inline, .openerp .oe_form .oe_form_field_text.oe_inline > textarea {
+    width: 259px;
+    }
+
+
+
+    .openerp .oe_list_content > tbody > tr > td.oe_list_field_cell {
+    padding: 3px 6px;
+    white-space: normal;
+    word-break: break-all;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+    margin-right: 4px;
+    margin-left: -3px;
+
+    }
+
+
+    .openerp .oe_form .oe_form_group .oe_form_group_cell.oe_group_right {
+    padding-left: 0px;
+    }
+
+    .openerp .oe_form td.oe_form_group_cell_label label {
+    line-height: 18px;
+    display: block;
+    min-width: 150px;
+    font-weight: bold !important;
+    margin-top: -14px;
+    }
+
+
+    .openerp .oe_form td.oe_form_group_cell_label {
+    border-right: 1px solid #ddd;
+    padding: 0px 0px;
+    }
+
+
+    .openerp .oe_form .oe_form_label_help[for], .openerp .oe_form .oe_form_label[for] {
+    white-space: nowrap;
+    padding-right: 8px;
+    margin-top: -10px;
+    text-align: justify;
+    }
+
+    .openerp .oe_form td.oe_form_group_cell + .oe_form_group_cell {
+    padding: 0px 0 0px 8px;
+    }
+
+
+    span.oe_form_field.oe_form_field_float.oe_form_field_monetary {
+    margin-left: 165px;
+    margin-top: -21px;
+    }
+
+ /*   span.oe_form_field.oe_form_field_float.oe_form_field_monetary.oe_subtotal_footer_separator {
+        margin-top: -31px;
+        margin-left: 122px;
+    } */
+    span.oe_form_field.oe_form_field_float.oe_form_field_monetary.oe_subtotal_footer_separator {
+        margin-top: -31px;
+        margin-left: 122px;
+    }
+
+
+    .openerp div.ui-tabs {
+    padding: 3px 0px 3px 0px;
+    margin-top: -36px;
+    }
+
+    .openerp .oe_form .oe_form_button {
+    margin: 0px;
+    }
+
+    .openerp .oe_view_manager table.oe_view_manager_header .oe_header_row:last-child td {
+    padding-top: 0px;
+    }
+    .transport .oe_form_char_content{
+    margin-left:160px
+    }
+
+    span.oe_form_field.oe_form_field_float.transport {
+    margin-top: -21px;
+    margin-left: 5px;
+    }
+
+
+    input#oe-field-input-37 {
+    margin-left: 158px;
+    }
+
+}
+
 

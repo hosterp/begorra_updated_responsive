@@ -396,7 +396,7 @@
                                         <td class="text-center"
                                             style="border-right: 1px solid black;border-bottom: 1px solid black; width: 50px;">
                                             <!--                                            <span t-esc="line.required_qty"/>-->
-                                            <span t-esc="str(int(line.required_qty))"/>
+                                            <span t-esc="str(float(line.required_qty))"/>
                                         </td>
                                         <td class="text-center"
                                             style="border-right: 1px solid black;border-bottom: 1px solid black;width: 50px;">

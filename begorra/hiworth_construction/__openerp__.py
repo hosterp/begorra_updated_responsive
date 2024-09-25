@@ -40,6 +40,7 @@
         'views/counstruction_menu_view.xml',
         'views/export_tree_view.xml',
          #'security/security.xml',
+
     
         'report/product_to_location_report.xml',
         'report/stock_move_report.xml',
@@ -120,12 +121,14 @@
         'wizard/project_wizard_report_views.xml',
         'wizard/goods_transfer_note_report_wizard_views.xml',
         'views/custom_template.xml',
+        'views/view_port.xml',
 
 
 
     ],
     'js': [
         'static/src/js/submenu.js',
+
     ],
 
     # 'qweb': [

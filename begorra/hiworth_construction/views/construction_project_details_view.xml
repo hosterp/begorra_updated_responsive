@@ -658,7 +658,7 @@
                            widget="monetary" options="{'currency_field': 'currency_id'}"/>
                     <field name="loading_charge" attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"
                            widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                    <field name="transporting_charge"
+                    <field name="transporting_charge" class="transport"
                            attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
                     <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"
                            attrs="{'invisible':['|','|',('sgst_tax','!=',0),('cgst_tax','!=',0),

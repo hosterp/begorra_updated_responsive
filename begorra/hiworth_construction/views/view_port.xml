@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="Custom Backend Assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/hiworth_construction/static/src/css/custom.css"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!--                <meta name="viewport" content="width=1024, user-scalable=no"/>-->
+            </xpath>
+        </template>
+    </data>
+</openerp>
