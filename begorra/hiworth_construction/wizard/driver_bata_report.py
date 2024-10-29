@@ -352,11 +352,11 @@ class BillReportXlsx(ReportXlsx):
                     driver_name = []
                     for category in self.env['vehicle.category.type'].search([], order='priority asc'):
 
-
+                        print('5................................................................')
 
                         for vehicle in self.env['fleet.vehicle'].search([('vehicle_categ_id', '=', category.id)],
                                                                         order='name asc'):
-
+                            print('6.....................................................')
                             for driver in self.env['hr.employee'].search(
                                 [('user_category', 'in', ['tppdriver', 'tpoperators_helpers']),
                                  ('cost_type', 'in', ['wages', 'salary_bata'])]):
@@ -364,6 +364,7 @@ class BillReportXlsx(ReportXlsx):
                                     [('date', '>=', date_from), ('date', '<=', date_to),
                                      ('vehicle_no', '=', vehicle.id), ('driver_name', '=', driver.id)])
                                 if driver_daily:
+                                    print('7---------------------------------------------')
                                     if driver not in driver_list:
                                         driver_list.append(driver)
                                     if driver.name not in driver_name:
@@ -623,6 +624,7 @@ class BillReportXlsx(ReportXlsx):
                             [('date', '>=', date_from), ('date', '<=', date_to),
                              ('driver_name', '=', rec.driver_id.id)],order='date asc,vehicle_no asc')
                         for driver in f_driver_daily:
+                            print('8..........................................................................')
                             sl_count = 0
                             total = 0
                             worksheet.merge_range('G%s:O%s' % (vehicle_row, vehicle_row), driver.vehicle_no.name,
@@ -687,6 +689,7 @@ class BillReportXlsx(ReportXlsx):
                         first_row = new_row
                         ot_count = 0
                         for driver_line in driver_stmt_line:
+                            print('9........................................................................')
                             worksheet.merge_range('A%s:F%s' % (spec - 1, spec - 1),
                                                   driver_line.line_id.driver_name.name, bold)
                             worksheet.merge_range('G%s:O%s' % (spec - 1, spec - 1),
@@ -776,26 +779,64 @@ class BillReportXlsx(ReportXlsx):
                         new_row += 2
 
                 else:
-                    driver_list = []
-                    driver_name = []
-                    for category in self.env['vehicle.category.type'].search([], order='priority asc'):
+                    # Define date range filter in advance to limit repeated querying
+                    date_range_filter = [('date', '>=', date_from), ('date', '<=', date_to)]
 
+                    # Fetch all driver daily statements within date range once
+                    driver_daily_statements = self.env['driver.daily.statement'].search(date_range_filter)
+
+                    # Pre-process statements by vehicle and driver for quick lookup
+                    driver_daily_map = {}
+                    for statement in driver_daily_statements:
+                        vehicle_id = statement.vehicle_no.id
+                        driver_id = statement.driver_name.id
+                        if vehicle_id not in driver_daily_map:
+                            driver_daily_map[vehicle_id] = set()
+                        driver_daily_map[vehicle_id].add(driver_id)
+
+                    # List to store unique drivers
+                    driver_list = []
+
+                    # Loop over categories and vehicles
+                    for category in self.env['vehicle.category.type'].search([], order='priority asc'):
+                        print(category.name,category.id,category.priority,'2..................................................................')
                         for vehicle in self.env['fleet.vehicle'].search([('vehicle_categ_id', '=', category.id)],
                                                                         order='name asc'):
+                            print(vehicle.name,'3............................................................')
 
+                            # Loop through relevant drivers only
                             for driver in self.env['hr.employee'].search(
                                     [('user_category', 'in', ['tppdriver', 'tpoperators_helpers']),
                                      ('cost_type', 'in', ['wages', 'salary_bata'])]):
-                                driver_daily = self.env['driver.daily.statement'].search(
-                                    [('date', '>=', date_from), ('date', '<=', date_to),
-                                     ('vehicle_no', '=', vehicle.id), ('driver_name', '=', driver.id)])
-                                if driver_daily:
+
+                                # Check if the driver has a daily statement within the date range for this vehicle
+                                if driver.id in driver_daily_map.get(vehicle.id, set()):
+                                    # Add driver to list if not already added
                                     if driver not in driver_list:
                                         driver_list.append(driver)
+                                        print(driver_list,driver.name,'driver_list.......................................................')
+
+                    # driver_list = []
+                    # driver_name = []
+                    # for category in self.env['vehicle.category.type'].search([], order='priority asc'):
+                    #     print('2..................................................................')
+                    #     for vehicle in self.env['fleet.vehicle'].search([('vehicle_categ_id', '=', category.id)],
+                    #                                                         order='name asc'):
+                    #             print('3............................................................')
+                    #             for driver in self.env['hr.employee'].search(
+                    #                     [('user_category', 'in', ['tppdriver', 'tpoperators_helpers']),
+                    #                      ('cost_type', 'in', ['wages', 'salary_bata'])]):
+                    #                 driver_daily = self.env['driver.daily.statement'].search(
+                    #                     [('date', '>=', date_from), ('date', '<=', date_to),
+                    #                      ('vehicle_no', '=', vehicle.id), ('driver_name', '=', driver.id)])
+                    #                 if driver_daily:
+                    #                     if driver not in driver_list:
+                    #                         driver_list.append(driver)
+                    #                         print(driver_list,'driver_list.......................................................')
 
 
                     for driver in driver_list:
-
+                        print('4..........................................................................')
                         vehicle_row = 0
                         driver_daily = self.env['driver.daily.statement'].search(
                             [('date', '>=', date_from), ('date', '<=', date_to), ('driver_name', '=', driver.id),
@@ -845,7 +886,7 @@ class BillReportXlsx(ReportXlsx):
                             from_date = date_from
                             project_dict ={}
                             for rangeg in range(date_diff.days + 1):
-
+                                print('11..........................................................................')
                                 sl_count = 0
                                 total = 0
                                 driver_dl = self.env['driver.daily.statement'].search(
@@ -854,6 +895,7 @@ class BillReportXlsx(ReportXlsx):
                                  ],order='date asc,vehicle_no asc')
 
                                 for driver_d in driver_dl:
+                                    print('12...........................................................')
                                     pro_sub = 0
                                     pro_deposit = 0
                                     pro_total =0
@@ -951,6 +993,7 @@ class BillReportXlsx(ReportXlsx):
                                         total += 0
                                         driver_deposit += 0
                                         pro_deposit = 0
+                                        worksheet.set_column('Q:Q', 17)
                                         worksheet.write('O%s' % (new_row), 0, regular)
                                         worksheet.write("P%s" % (new_row), total, regular)
                                         worksheet.write("Q%s" % (new_row), driver_d.remark or '', regular)

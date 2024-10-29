@@ -1796,7 +1796,8 @@ class purchase_order(models.Model):
 		('approved', 'Order Placed'),
 		('except_picking', 'Shipping Exception'),
 		('except_invoice', 'Invoice Exception'),
-		('done', 'Received'),
+		('done', 'Approved & Received'),
+		('received', 'Received'),
 		('paid', 'Paid'),
 		('cancel', 'Cancelled')
 	]
@@ -1881,7 +1882,12 @@ class purchase_order(models.Model):
 	supervisor_id = fields.Many2one('hr.employee', 'User', related='mpr_id.supervisor_id')
 	site = fields.Many2one('stock.location', 'Location',related='mpr_id.site')
 
-
+	@api.multi
+	def received_button(self):
+		if self.state=='draft':
+			self.state='received'
+		else:
+			pass
 
 	@api.multi
 	def wkf_confirm_order(self):

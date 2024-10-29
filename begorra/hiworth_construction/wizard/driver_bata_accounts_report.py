@@ -72,17 +72,21 @@ class BillReportXlsx(ReportXlsx):
             driver_list = []
             for category in self.env['vehicle.category.type'].search([], order='priority asc'):
                 vehicle_row = new_row
+                print(category.name,category.priority,'1 accounts............................................................')
                 for vehicle in self.env['fleet.vehicle'].search([('vehicle_categ_id', '=', category.id)],
                                                                 order='name asc'):
+                    # print('2 accounts............................................................')
                     vehicle_total = 0
                     first_row = new_row + 1
                     for driver in self.env['hr.employee'].search(
                             [('user_category', 'in', ['tppdriver', 'tpoperators_helpers']),
                              ('cost_type', 'in', ['wages', 'salary_bata'])]):
+                        # print(driver.name,'3 accounts............................................................')
                         if driver.id not in driver_list:
                             driver_daily = self.env['driver.daily.statement'].search(
                                 [('date', '>=', date_from), ('date', '<=', date_to), ('vehicle_no', '=', vehicle.id),
                                  ('driver_name', '=', driver.id)])
+                            # print('4 accounts............................................................')
                             if len(driver_daily) != 0:
                                 driver_daily = self.env['driver.daily.statement'].search(
                                     [('date', '>=', date_from), ('date', '<=', date_to),
@@ -136,6 +140,7 @@ class BillReportXlsx(ReportXlsx):
                                 new_row += 1
                                 count += 1
                                 driver_list.append(driver.id)
+
             worksheet.merge_range("A%s:C%s" % (new_row, new_row), "Total", bold)
             worksheet.write("D%s" % new_row, amount_total, bold)
             worksheet.write("E%s" % new_row, deposit_total, bold)
@@ -143,3 +148,5 @@ class BillReportXlsx(ReportXlsx):
 
 
 BillReportXlsx('report.Driver Bata Accounts.xlsx', 'driver.bata.accounts.report')
+
+

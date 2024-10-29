@@ -658,7 +658,7 @@
                            widget="monetary" options="{'currency_field': 'currency_id'}"/>
                     <field name="loading_charge" attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"
                            widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                    <field name="transporting_charge" class="transport"
+                    <field name="transporting_charge"
                            attrs="{'readonly':[('state','in',['confirmed','approved','done'])]}"/>
                     <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"
                            attrs="{'invisible':['|','|',('sgst_tax','!=',0),('cgst_tax','!=',0),
@@ -853,6 +853,8 @@
                 <xpath expr="//header/button[@string='Confirm Order']"
                        position="after">
                     <button name="button_approve" class="oe_highlight" string="Approve"
+                            groups="hiworth_construction.group_ceo" type="object" states="draft"/>
+                    <button name="received_button" class="oe_highlight" string="Received"
                             groups="hiworth_construction.group_ceo" type="object" states="draft"/>
                     <button name="%(action_view_purchase_history)d" states="draft,confirmed,approved,done"
                             string="View Purchase history" type="action"/>
