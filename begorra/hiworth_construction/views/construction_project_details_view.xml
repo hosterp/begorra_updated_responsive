@@ -549,6 +549,18 @@
         <menuitem id="menu_purchase_item_category" action="action_purchase_item_category"
                   parent="main_menu_purchase_item_category"
                   sequence="10"/>
+        <record id="purchase_order_tree_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.tree.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <!-- Update the colors and fonts attributes in the existing tree view -->
+                <tree position="attributes">
+                    <attribute name="fonts">bold:message_unread==True</attribute>
+                    <attribute name="colors">grey:state=='cancel';orange:state=='confirmed';red:state=='draft';green:state=='done';blue:state=='received'</attribute>
+                </tree>
+            </field>
+        </record>
 
         <record id="purchase_order_form_changed" model="ir.ui.view">
             <field name="name">purchase.order.form.changed</field>
@@ -823,7 +835,7 @@
                        position="replace">
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,approved,done,paid,cancel"
                            statusbar_colors='{"except_picking":"red","except_invoice":"red","confirmed":"blue"}'
-                           readonly="1"/>
+                           readonly="1" class="custom_state"/>
                 </xpath>
                 <xpath expr="//header/button[@string='Print RFQ']"
                        position="attributes">
