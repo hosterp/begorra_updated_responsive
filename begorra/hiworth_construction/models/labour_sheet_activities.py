@@ -1,6 +1,7 @@
 from openerp import fields, models, api,_
 from datetime import datetime,timedelta
 from openerp.exceptions import except_orm, ValidationError
+from lxml import etree
 
 
 class LabourSheet(models.Model):
@@ -22,6 +23,21 @@ class LabourSheet(models.Model):
 class LabourSheetActivities(models.Model):
 
 	_name = 'labour.activities.sheet'
+
+	@api.model
+	def fields_view_get(self, view_id=None, view_type='form', toolbar=False,
+						submenu=False):
+		res = super(LabourSheetActivities, self).fields_view_get(
+			view_id=view_id, view_type=view_type, toolbar=toolbar,
+			submenu=submenu)
+		if view_type == 'form':
+			# Check if user is in group that allow creation
+			has_my_group = self.env.user.has_group('hiworth_hr_attendance.group_admin')
+			if not has_my_group:
+				root = etree.fromstring(res['arch'])
+				root.set('edit', 'false')
+				res['arch'] = etree.tostring(root)
+		return res
 
 	@api.depends('ot_rate','over_time')
 	def compute_ot_amount(self):

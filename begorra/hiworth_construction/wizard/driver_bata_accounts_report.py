@@ -53,93 +53,115 @@ class BillReportXlsx(ReportXlsx):
         date_from = datetime.strptime(invoices.from_date, "%Y-%m-%d")
         date_to = datetime.strptime(invoices.to_date, "%Y-%m-%d")
         worksheet.merge_range("A1:F1",
-                              "BATA(%s TO %s)" % (date_from.strftime("%d-%m-%Y"), date_to.strftime("%d-%m-%Y")), boldc)
+                              "DRIVER BATA ACCOUNTS(%s TO %s)" % (date_from.strftime("%d-%m-%Y"), date_to.strftime("%d-%m-%Y")), boldc)
 
         count = 1
         for rec in invoices:
             total = 0
             amount_total = 0
             deposit_total = 0
-            worksheet.write("A2", "SL No", bold)
-            worksheet.write("B2", "VEHICLE", bold)
-            worksheet.write("C2", "NAME", bold)
+            worksheet.write("A2", "SL No", boldc)
+            worksheet.write("B2", "VEHICLE", boldc)
+            worksheet.write("C2", "NAME", boldc)
 
-            worksheet.write("D2", "AMOUNT", bold)
-            worksheet.write("E2", "DEPOSIT", bold)
-            worksheet.write("F2", "TOTAL", bold)
-            vehicle_row = 0
-            driver_daily = [1]
+            worksheet.write("D2", "AMOUNT", boldc)
+            worksheet.write("E2", "DEPOSIT", boldc)
+            worksheet.write("F2", "TOTAL", boldc)
+            worksheet.set_column('C:C', 25)
+            date_range_filter = [('date', '>=', date_from), ('date', '<=', date_to)]
+
+            # Fetch all driver daily statements within date range once
+            driver_daily_statements = self.env['driver.daily.statement'].search(date_range_filter)
+
+            # Pre-process statements by vehicle and driver for quick lookup
+            driver_daily_map = {}
+            for statement in driver_daily_statements:
+                vehicle_id = statement.vehicle_no.id
+                driver_id = statement.driver_name.id
+                if vehicle_id not in driver_daily_map:
+                    driver_daily_map[vehicle_id] = set()
+                driver_daily_map[vehicle_id].add(driver_id)
+
+            # List to store unique drivers
             driver_list = []
+            vehicle_row = new_row
+            # Loop over categories and vehicles
             for category in self.env['vehicle.category.type'].search([], order='priority asc'):
-                vehicle_row = new_row
-                print(category.name,category.priority,'1 accounts............................................................')
+                print(category.name, category.id, category.priority,
+                      '2..................................................................')
+
                 for vehicle in self.env['fleet.vehicle'].search([('vehicle_categ_id', '=', category.id)],
                                                                 order='name asc'):
-                    # print('2 accounts............................................................')
-                    vehicle_total = 0
+                    print(vehicle.name, '3............................................................')
+                    vehicle_total=0
                     first_row = new_row + 1
+                    # Loop through relevant drivers only
                     for driver in self.env['hr.employee'].search(
                             [('user_category', 'in', ['tppdriver', 'tpoperators_helpers']),
                              ('cost_type', 'in', ['wages', 'salary_bata'])]):
+
+                        # Check if the driver has a daily statement within the date range for this vehicle
+                        if driver.id in driver_daily_map.get(vehicle.id, set()):
+
                         # print(driver.name,'3 accounts............................................................')
-                        if driver.id not in driver_list:
-                            driver_daily = self.env['driver.daily.statement'].search(
-                                [('date', '>=', date_from), ('date', '<=', date_to), ('vehicle_no', '=', vehicle.id),
-                                 ('driver_name', '=', driver.id)])
-                            # print('4 accounts............................................................')
-                            if len(driver_daily) != 0:
+                            if driver.id not in driver_list:
                                 driver_daily = self.env['driver.daily.statement'].search(
-                                    [('date', '>=', date_from), ('date', '<=', date_to),
+                                    [('date', '>=', date_from), ('date', '<=', date_to), ('vehicle_no', '=', vehicle.id),
                                      ('driver_name', '=', driver.id)])
-                                worksheet.write("B%s" % vehicle_row, category.name, bold)
-                                if vehicle_row == new_row:
+                                # print('4 accounts............................................................')
+                                if len(driver_daily) != 0:
+                                    driver_daily = self.env['driver.daily.statement'].search(
+                                        [('date', '>=', date_from), ('date', '<=', date_to),
+                                         ('driver_name', '=', driver.id)])
+                                    # worksheet.write("B%s" % vehicle_row, category.name, bold)
+                                    # if vehicle_row == new_row:
+                                    #     new_row += 1
+                                rent = 0
+                                rent_driver = 0
+                                ot = 0
+                                ot_amt = 0
+                                amt = 0
+                                deposit = 0
+                                for daily in driver_daily:
+                                    rent_driver = daily.driver_bata
+                                    ot += daily.ot_time
+                                    ot_amt += daily.ot_rate
+                                    if len(daily.driver_stmt_line) >= 1:
+                                        for line in daily.driver_stmt_line:
+                                            rent = line.bata_driver
+                                            deposit += line.km_deposit
+                                            amt += line.bata_driver
+                                        amt += daily.deposit
+
+                                    if len(daily.driver_stmt_line) == 0:
+                                        amt += daily.deposit + daily.driver_bata
+                                    amt += daily.ot_amt
+
+                                if len(driver_daily) != 0:
+                                    # if first_row == new_row:
+
+                                    worksheet.write("A%s" % (new_row), count, regular)
+                                    worksheet.write("B%s" % (new_row), vehicle.name, regular)
+                                    # else:
+                                    #     worksheet.write("A%s" % (first_row), count, regular)
+                                    #     worksheet.write("B%s" % (first_row), vehicle.name, regular)
+                                    # worksheet.merge_range("A%s:A%s" % (first_row,new_row), count, regular)
+                                    # worksheet.merge_range("B%s:B%s" % (first_row,new_row), vehicle.name, regular)
+                                    worksheet.write("C%s" % (new_row), driver.name, regular)
+
+                                    worksheet.write("D%s" % (new_row), amt, regular)
+                                    worksheet.write("E%s" % (new_row), deposit, regular)
+                                    driver_total = amt + deposit
+                                    vehicle_total += driver_total
+                                    total += driver_total
+                                    amount_total += amt
+                                    deposit_total += deposit
+                                    worksheet.write("F%s" % (new_row), driver_total, regular)
+                                    # else:
+                                    #     worksheet.merge_range("F%s:F%s"%(first_row,new_row),vehicle_total,regular)
                                     new_row += 1
-                            rent = 0
-                            rent_driver = 0
-                            ot = 0
-                            ot_amt = 0
-                            amt = 0
-                            deposit = 0
-                            for daily in driver_daily:
-                                rent_driver = daily.driver_bata
-                                ot += daily.ot_time
-                                ot_amt += daily.ot_rate
-                                if len(daily.driver_stmt_line) >= 1:
-                                    for line in daily.driver_stmt_line:
-                                        rent = line.bata_driver
-                                        deposit += line.km_deposit
-                                        amt += line.bata_driver
-                                    amt += daily.deposit
-
-                                if len(daily.driver_stmt_line) == 0:
-                                    amt += daily.deposit + daily.driver_bata
-                                amt += daily.ot_amt
-
-                            if len(driver_daily) != 0:
-                                # if first_row == new_row:
-
-                                worksheet.write("A%s" % (new_row), count, regular)
-                                worksheet.write("B%s" % (new_row), vehicle.name, regular)
-                                # else:
-                                #     worksheet.write("A%s" % (first_row), count, regular)
-                                #     worksheet.write("B%s" % (first_row), vehicle.name, regular)
-                                # worksheet.merge_range("A%s:A%s" % (first_row,new_row), count, regular)
-                                # worksheet.merge_range("B%s:B%s" % (first_row,new_row), vehicle.name, regular)
-                                worksheet.write("C%s" % (new_row), driver.name, regular)
-
-                                worksheet.write("D%s" % (new_row), amt, regular)
-                                worksheet.write("E%s" % (new_row), deposit, regular)
-                                driver_total = amt + deposit
-                                vehicle_total += driver_total
-                                total += driver_total
-                                amount_total += amt
-                                deposit_total += deposit
-                                worksheet.write("F%s" % (new_row), driver_total, regular)
-                                # else:
-                                #     worksheet.merge_range("F%s:F%s"%(first_row,new_row),vehicle_total,regular)
-                                new_row += 1
-                                count += 1
-                                driver_list.append(driver.id)
+                                    count += 1
+                                    driver_list.append(driver.id)
 
             worksheet.merge_range("A%s:C%s" % (new_row, new_row), "Total", bold)
             worksheet.write("D%s" % new_row, amount_total, bold)
