@@ -19,12 +19,20 @@
         <template id="external_layout_header_inherit_purchase_order">
             <div class="header">
                 <div class="row">
-                    <div class="col-xs-3">
-                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
-                             style="max-height: 40px;"/>
-                    </div>
-                    <div class="col-xs-9 text-left" style="font-size: 18px;margin-top:30px;"
-                         t-field="company.rml_header1"/>
+                    <t t-foreach="docs" t-as="o">
+                        <div class="col-xs-3">
+                            <t t-if="docs and docs[0].project_id and docs[0].project_id.project_logo">
+                                <img t-att-src="'data:image/png;base64,' + docs[0].project_id.project_logo"
+                                     style="max-height: 40px;"/>
+                            </t>
+                            <t t-if="not (docs and docs[0].project_id and docs[0].project_id.project_logo) and company.logo">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
+                                     style="max-height: 40px;"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-9 text-left" style="font-size: 18px;margin-top:30px;"
+                             t-field="company.rml_header1"/>
+                    </t>
                 </div>
                 <div class="col-xs-12 text-center" style="font-size: 20px;margin-top:10px;">
                     <div style="border-style:solid;">
@@ -228,8 +236,6 @@
                                             </td>
                                             <tr>
                                                 <td>
-                                                    M/S.Begorra Infrastructure &amp; Developers Pvt Ltd
-                                                    <br/>
                                                     <t t-if="o.dest_address">
                                                         <span t-field="o.dest_address"/>
                                                         <br/>
@@ -263,29 +269,10 @@
                                             <!--                                            </tr>-->
                                             <tr>
                                                 <td>
-                                                    <span t-field="o.company_id.rml_header1"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span t-field="o.company_id.street"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span t-field="o.company_id.street2"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span t-field="o.company_id.city"/>
-                                                    <span>,</span>
-                                                    <span t-field="o.company_id.country_id"/>
-                                                </td>
-                                            </tr>
-                                            <tr t-if="o.company_id.gst_no">
-                                                <td>GST No:
-                                                    <span t-field="o.company_id.gst_no"/>
+                                                    <t t-if="o.billing_address">
+                                                        <span t-field="o.billing_address"/>
+                                                        <br/>
+                                                    </t>
                                                 </td>
                                             </tr>
                                         </table>
@@ -750,7 +737,7 @@
                             <div class="container" style="margin-left: 10px;">
                                 <!--                                <div class="row">-->
                                 <div class="col-xs-5" style="font-size: 14px;" align="left">
-                                    <table class="table">
+                                    <table class="table" style="200px;">
                                         <tbody>
                                             <!--                                                <tr t-if="o.price_bool==True">-->
                                             <!--                                                    <td style="padding: 0px 0px 0px 15px;display: inline-block;">-->
@@ -775,10 +762,10 @@
                                             <!--                                                    </td>-->
                                             <!--                                                </tr>-->
                                             <tr t-if="o.price_bool">
-                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                <td style="line-height:auto;padding:0px;border:none;">
                                                     <strong>Price</strong>
                                                 </td>
-                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                <td style="display: inline-block; white-space: nowrap;line-height:auto;padding:0px;border:none;">
                                                     <p>:
                                                         <span t-esc="o.price_char"/>
                                                     </p>
@@ -786,10 +773,10 @@
 
                                             </tr>
                                             <tr t-if="o.payment_bool">
-                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                <td style="line-height:auto;padding:0px;border:none;">
                                                     <strong>Payment</strong>
                                                 </td>
-                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                <td style="display: inline-block; white-space: nowrap;line-height:auto;padding:0px;border:none;">
                                                     <p>:
                                                         <span t-esc="o.payment_char"/>
                                                     </p>
@@ -797,10 +784,10 @@
 
                                             </tr>
                                             <tr t-if="o.freight_bool">
-                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                <td style="line-height:auto;padding:0px;border:none;">
                                                     <strong>Freight</strong>
                                                 </td>
-                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                <td style="display: inline-block; white-space: nowrap;line-height:auto;padding:0px;border:none;">
                                                     <p>:
                                                         <span t-esc="o.freight_char"/>
                                                     </p>
@@ -808,42 +795,42 @@
 
                                             </tr>
                                             <tr t-if="o.delivery_bool">
-                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                <td style="line-height:auto;padding:0px;border:none;">
                                                     <strong>Delivery</strong>
                                                 </td>
-                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                <td style="display: inline-block; white-space: nowrap;line-height:auto;padding:0px;border:none;">
                                                     <p>:
                                                         <span t-esc="o.delivery_char"/>
                                                     </p>
                                                 </td>
                                             </tr>
                                             <tr t-if="o.warranty_bool">
-                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                <td style="line-height:auto;padding:0px;border:none;">
                                                     <strong>Warranty</strong>
                                                 </td>
-                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                <td style="display: inline-block; white-space: nowrap;line-height:auto;padding:0px;border:none;">
                                                     <p>:
                                                         <span t-esc="o.warranty_char"/>
                                                     </p>
                                                 </td>
                                             </tr>
                                             <tr t-if="o.vehicle_machinery_bool==True">
-                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                <td style="line-height:auto;padding:0px;border:none;">
                                                     <strong>Vehicle/Machinery</strong>
                                                 </td>
-                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                <td style="display: inline-block; white-space: nowrap;line-height:auto;padding:0px;border:none;">
                                                     <p>:
                                                         <span t-field="o.vehicle_machinery"/>
                                                     </p>
                                                 </td>
                                             </tr>
                                             <tr t-if="o.terms_ids" t-foreach="o.terms_ids" t-as="t">
-                                                <td style="line-height:7px;padding:0px;border:none;">
+                                                <td style="line-height:auto;padding:0px;border:none;">
                                                     <strong>
                                                         <span t-esc="t.term"/>
                                                     </strong>
                                                 </td>
-                                                <td style="display: inline-block; white-space: nowrap;line-height:7px;padding:0px;border:none;">
+                                                <td style="display: inline-block; white-space: nowrap;line-height:auto;padding:0px;border:none;">
                                                     <p>:
                                                         <span t-esc="t.condition"/>
                                                     </p>
