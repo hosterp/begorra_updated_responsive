@@ -675,6 +675,81 @@ class Request_Item_list(models.Model):
                 rec.unit = rec.item_id.uom_id.id
                 # rec.available_quantity = 0.0
 
+    # working...
+    @api.onchange('unit')
+    def onchange_unit(self):
+        for rec in self:
+            if rec.unit and rec.item_id:
+                # Update the uom_id of the related product using write
+                rec.item_id.write({'uom_id': rec.unit})
+                print('Updated unit:...........', rec.unit)
+
+    # @api.onchange('unit')
+    # def onchange_unit(self):
+    #     for rec in self:
+    #         if rec.unit and rec.item_id:
+    #             # Assuming rec.unit is a unit of measure object, get its ID
+    #             unit_id = rec.unit.id if rec.unit else False
+    #
+    #             # Deactivate the product (optional step)
+    #             rec.item_id.write({'active': False})
+    #
+    #             # Change the UoM using the ID of the UoM
+    #             rec.item_id.write({'uom_id': unit_id})
+    #
+    #             # Reactivate the product (optional step)
+    #             rec.item_id.write({'active': True})
+    #
+    #             print('Product UoM changed successfully.')
+
+    @api.onchange('unit')
+    def onchange_unit(self):
+        for rec in self:
+            if rec.unit and rec.item_id:
+                # Get the UoM ID (unit) and product ID
+                unit_id = rec.unit.id if rec.unit else False
+                product_id = rec.item_id.id
+
+                # Check if the product has been used in a stock move
+                if self._is_product_used_in_stock_move(product_id):
+                    # Deactivate the product before making changes
+                    self._deactivate_product(rec.item_id)
+
+                if unit_id:
+                    # Perform raw SQL query to update the uom_id in product_template
+                    query_template = """
+                        UPDATE product_template
+                        SET uom_id = %s
+                        WHERE id = %s
+                    """
+                    self.env.cr.execute(query_template, (unit_id, rec.item_id.product_tmpl_id.id))
+
+                    print('Updated unit in template:', rec.unit)
+
+                # Reactivate the product after updating the unit
+                if self._is_product_used_in_stock_move(product_id):
+                    self._reactivate_product(rec.item_id)
+
+    def _is_product_used_in_stock_move(self, product_id):
+        """Check if the product has been used in a stock move."""
+        self.env.cr.execute("""
+            SELECT COUNT(*)
+            FROM stock_move
+            WHERE product_id = %s AND state = 'done'
+        """, (product_id,))
+        result = self.env.cr.fetchone()
+        return result[0] > 0
+
+    def _deactivate_product(self, product):
+        """Deactivate the product by setting active = False."""
+        product.write({'active': False})
+        print("Deactivated product: {product.name}")
+
+    def _reactivate_product(self, product):
+        """Reactivate the product by setting active = True."""
+        product.write({'active': True})
+        print("Reactivated product: {product.name}")
+
     @api.depends('item_id')
     def compute_available(self):
         for rec in self:

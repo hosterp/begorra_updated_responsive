@@ -19,12 +19,20 @@
         <template id="external_layout_header_inherit_purchase_order">
             <div class="header">
                 <div class="row">
-                    <div class="col-xs-3">
-                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
-                             style="max-height: 40px;"/>
-                    </div>
-                    <div class="col-xs-9 text-left" style="font-size: 18px;margin-top:30px;"
-                         t-field="company.rml_header1"/>
+                    <t t-foreach="docs" t-as="o">
+                        <div class="col-xs-3">
+                            <t t-if="docs and docs[0].project_id and docs[0].project_id.project_logo">
+                                <img t-att-src="'data:image/png;base64,' + docs[0].project_id.project_logo"
+                                     style="max-height: 40px;"/>
+                            </t>
+                            <t t-if="not (docs and docs[0].project_id and docs[0].project_id.project_logo) and company.logo">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
+                                     style="max-height: 40px;"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-9 text-left" style="font-size: 18px;margin-top:30px;"
+                             t-field="company.rml_header1"/>
+                    </t>
                 </div>
                 <div class="col-xs-12 text-center" style="font-size: 20px;margin-top:10px;">
                     <div style="border-style:solid;">
@@ -228,8 +236,6 @@
                                             </td>
                                             <tr>
                                                 <td>
-                                                    M/S.Begorra Infrastructure &amp; Developers Pvt Ltd
-                                                    <br/>
                                                     <t t-if="o.dest_address">
                                                         <span t-field="o.dest_address"/>
                                                         <br/>
@@ -263,29 +269,10 @@
                                             <!--                                            </tr>-->
                                             <tr>
                                                 <td>
-                                                    <span t-field="o.company_id.rml_header1"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span t-field="o.company_id.street"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span t-field="o.company_id.street2"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span t-field="o.company_id.city"/>
-                                                    <span>,</span>
-                                                    <span t-field="o.company_id.country_id"/>
-                                                </td>
-                                            </tr>
-                                            <tr t-if="o.company_id.gst_no">
-                                                <td>GST No:
-                                                    <span t-field="o.company_id.gst_no"/>
+                                                    <t t-if="o.billing_address">
+                                                        <span t-field="o.billing_address"/>
+                                                        <br/>
+                                                    </t>
                                                 </td>
                                             </tr>
                                         </table>

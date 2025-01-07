@@ -867,8 +867,9 @@ class project(models.Model):
 	bill_details_ids = fields.One2many('bill.details','project_id',"Bill Details")
 	general_expense_details_ids = fields.One2many('genral.expense.project','project_id',"General Expense Project")
 	ts_approved_date = fields.Date("TS Approved")
-
-
+	shipping_address=fields.Text('Shipping Address')
+	billing_address=fields.Text('Billing Address')
+	project_logo = fields.Binary('Image', attachment=True)
 	@api.model
 	def default_get(self, vals):
 		res = super(project, self).default_get(vals)
@@ -1878,9 +1879,18 @@ class purchase_order(models.Model):
 	tcs=fields.Float('TCS')
 	others=fields.Float('Others')
 	remarks = fields.Text('Remarks', related='mpr_id.remarks', store=True)
-	dest_address=fields.Text('Text')
+	dest_address=fields.Text('Text',compute='_compute_project_shipping_address',store=True)
+	project_logo=fields.Binary('Logo',compute='_compute_project_shipping_address',store=True)
+	billing_address=fields.Text('Text',compute='_compute_project_shipping_address',store=True)
 	supervisor_id = fields.Many2one('hr.employee', 'User', related='mpr_id.supervisor_id')
 	site = fields.Many2one('stock.location', 'Location',related='mpr_id.site')
+
+	@api.depends('project_id')
+	def _compute_project_shipping_address(self):
+		for order in self:
+			order.dest_address = order.project_id.shipping_address
+			order.billing_address = order.project_id.billing_address
+			order.project_logo = order.project_id.project_logo
 
 	@api.multi
 	def received_button(self):
