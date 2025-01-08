@@ -106,7 +106,8 @@
                                 <span t-field="o.project_id.company_website"/>
                             </li>
                         </ul>
-                        <ul t-if="not(o.project_id and o.project_id.po_name) and not company.custom_footer" class="list-inline">
+                        <ul t-if="not(o.project_id and o.project_id.po_name) and not company.custom_footer"
+                            class="list-inline">
                             <li t-if="company.street">
                                 <span t-field="company.street"/>
                             </li>
@@ -919,9 +920,16 @@
                             </div>
 
                             <div class="col-xs-12" style="font-size: 17px;" align="left">
-                                <strong>
-                                    <p>For Begorra Infrastructure &amp; Developers Pvt.Ltd.</p>
-                                </strong>
+                                <t t-if="o.project_id and o.project_id.po_name">
+                                    <strong>
+                                        <span t-esc="'For '+o.project_id.po_name"/>
+                                    </strong>
+                                </t>
+                                <t t-if="not(o.project_id and o.project_id.po_name)">
+                                    <strong>
+                                        <p>For Begorra Infrastructure &amp; Developers Pvt.Ltd.</p>
+                                    </strong>
+                                </t>
                             </div>
                             <div style="font-size: 14px; margin-top: 50px;" class="col-xs-12" align="left">
                                 <p>Authorised Signatory</p>
