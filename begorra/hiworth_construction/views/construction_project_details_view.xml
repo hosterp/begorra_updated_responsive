@@ -430,6 +430,12 @@
                                 <field name="po_name" string="Company Name"/>
                             </h1>
                         </div>
+                        <div>
+                            <label for="company_short" class="oe_edit_only" string="Company Short Name"/>
+                            <h1>
+                                <field name="company_short" string="Company Short Name"/>
+                            </h1>
+                        </div>
                         <label for="name" class="oe_edit_only" string="Project Name"/>
                         <h1>
                             <field name="name" string="Project Name"/>

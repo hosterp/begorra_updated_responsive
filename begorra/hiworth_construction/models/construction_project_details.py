@@ -875,6 +875,7 @@ class project(models.Model):
 	company_email=fields.Char('Company Email')
 	company_ph=fields.Char('Company phone Number')
 	company_website=fields.Char('Company website')
+	company_short=fields.Char('Company Short Form')
 	@api.model
 	def default_get(self, vals):
 		res = super(project, self).default_get(vals)
@@ -1642,7 +1643,7 @@ class purchase_order(models.Model):
 
 	def create(self, cr, uid, vals, context=None):
 		if vals.get('name', '/') == '/':
-			project = self.pool.get('project.project').browse(cr,uid,vals['project_id']).project_no
+			project = self.pool.get('project.project').browse(cr,uid,vals['project_id']).company_short
 			# self.pool.get('project.project').browse(cr,uid,vals['project_id']).po_no +=1
 			print(project,'po project...................')
 			global_po_no = self.pool.get('ir.sequence').get(cr, uid, 'purchase.order')
@@ -1656,8 +1657,11 @@ class purchase_order(models.Model):
 			date_year = '/'+str(datetime.datetime.today().year)
 			print(date_year,'date_year.................................')
 			if mpr.vehicle_purchase != True:
+				if project:
 				# vals['name'] = project + '/'+ 'PO/' + str(numeric_po_no).zfill(3) + date_year
-				vals['name'] = 'BIDPL'+ '/'+ 'S&P/' + str(numeric_po_no).zfill(3) + date_year
+					vals['name'] = project+ '/'+ 'S&P/' + str(numeric_po_no).zfill(3) + date_year
+				else:
+					vals['name'] = 'BIDPL'+ '/'+ 'S&P/' + str(numeric_po_no).zfill(3) + date_year
 			else:
 				# vals['name'] = project + '/' + 'PO/' + str(numeric_po_no).zfill(3) + date_year
 				vals['name'] = 'BIDPL'+ '/'+ 'S&P/' + str(numeric_po_no).zfill(3) + date_year
