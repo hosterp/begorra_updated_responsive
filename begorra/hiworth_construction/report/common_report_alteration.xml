@@ -473,7 +473,7 @@
                                             <!--                                                <t t-set="tax_rate" t-value="line.price_subtotal + line.cgst_tax + line.igst_tax"/>-->
                                             <!--                                                <span t-esc="net_price"/>-->
                                             <!--                                            </t>-->
-                                            <span t-field="line.total"
+                                            <span t-field="line.price_subtotal"
                                                   t-field-options='{"display_currency": "o.currency_id", "decimal_places": 2}'/>
 
                                         </td>
