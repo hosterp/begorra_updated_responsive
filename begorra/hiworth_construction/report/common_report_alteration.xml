@@ -30,14 +30,14 @@
                                      style="max-height: 55px;"/>
                             </t>
                         </div>
-                        <div class="col-xs-9 text-left" style="font-size: 18px; margin-top:30px;text-align:center;margin-left:12%;">
+                        <div class="col-xs-9 text-left" style="font-size: 18px; margin-top:30px;">
                             <!-- Check if a specific new header exists -->
                             <t t-if="o.project_id and o.project_id.po_name">
-                                <span t-esc="o.project_id.po_name"/>
+                                <span style="text-align:center;margin-left:12%;" t-esc="o.project_id.po_name"/>
                             </t>
                             <!-- Fallback to the original header -->
                             <t t-if="not(o.project_id and o.project_id.po_name) and company.rml_header1">
-                                <span t-field="company.rml_header1"/>
+                                <span style="text-align:center;margin-left:12%;" t-field="company.rml_header1"/>
                             </t>
                         </div>
                         <!--                        <div class="col-xs-9 text-left" style="font-size: 18px;margin-top:30px;"-->
