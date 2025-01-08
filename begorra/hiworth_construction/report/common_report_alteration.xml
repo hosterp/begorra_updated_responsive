@@ -88,23 +88,42 @@
             </style>
             <div class="footer">
                 <div class="text-left">
-                    <ul t-if="not company.custom_footer" class="list-inline">
-                        <li t-if="company.street">
-                            <span t-field="company.street"/>
-                        </li>
-                        <li t-if="company.phone">Tel:
-                            <span t-field="company.phone"/>
-                        </li>
-                        <li t-if="company.fax">Fax:
-                            <span t-field="company.fax"/>
-                        </li>
-                        <li t-if="company.email">Email:
-                            <span t-field="company.email"/>
-                        </li>
-                        <li t-if="company.website">visit us:
-                            <span t-field="company.website"/>
-                        </li>
-                    </ul>
+                    <t t-foreach="docs" t-as="o">
+                        <ul t-if="o.project_id and o.project_id.po_name" class="list-inline">
+                            <li t-if="o.project_id.company_address">
+                                <span t-field="o.project_id.company_address"/>
+                            </li>
+                            <li t-if="o.project_id.company_ph">Tel:
+                                <span t-field="o.project_id.company_ph"/>
+                            </li>
+                            <!--                        <li t-if="company.fax">Fax:-->
+                            <!--                            <span t-field="company.fax"/>-->
+                            <!--                        </li>-->
+                            <li t-if="o.project_id.company_email">Email:
+                                <span t-field="o.project_id.company_email"/>
+                            </li>
+                            <li t-if="o.project_id.company_website">visit us:
+                                <span t-field="o.project_id.company_website"/>
+                            </li>
+                        </ul>
+                        <ul t-if="not(o.project_id and o.project_id.po_name) and not company.custom_footer" class="list-inline">
+                            <li t-if="company.street">
+                                <span t-field="company.street"/>
+                            </li>
+                            <li t-if="company.phone">Tel:
+                                <span t-field="company.phone"/>
+                            </li>
+                            <li t-if="company.fax">Fax:
+                                <span t-field="company.fax"/>
+                            </li>
+                            <li t-if="company.email">Email:
+                                <span t-field="company.email"/>
+                            </li>
+                            <li t-if="company.website">visit us:
+                                <span t-field="company.website"/>
+                            </li>
+                        </ul>
+                    </t>
                     <t t-if="company.custom_footer">
                         <span t-raw="company.rml_footer"/>
                     </t>

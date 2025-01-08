@@ -871,6 +871,10 @@ class project(models.Model):
 	billing_address=fields.Text('Billing Address')
 	project_logo = fields.Binary('Image', attachment=True)
 	po_name=fields.Char('Company Name')
+	company_address=fields.Char('Company Address')
+	company_email=fields.Char('Company Email')
+	company_ph=fields.Char('Company phone Number')
+	company_website=fields.Char('Company website')
 	@api.model
 	def default_get(self, vals):
 		res = super(project, self).default_get(vals)
