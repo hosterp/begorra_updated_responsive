@@ -420,6 +420,12 @@
                                 <field name="project_no" string="Project Number"/>
                             </h1>
                         </div>
+                        <div>
+                            <label for="po_name" class="oe_edit_only" string="Company Name"/>
+                            <h1>
+                                <field name="po_name" string="Company Name"/>
+                            </h1>
+                        </div>
                         <label for="name" class="oe_edit_only" string="Project Name"/>
                         <h1>
                             <field name="name" string="Project Name"/>

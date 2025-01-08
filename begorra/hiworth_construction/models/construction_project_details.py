@@ -870,6 +870,7 @@ class project(models.Model):
 	shipping_address=fields.Text('Shipping Address')
 	billing_address=fields.Text('Billing Address')
 	project_logo = fields.Binary('Image', attachment=True)
+	po_name=fields.Char('Company Name')
 	@api.model
 	def default_get(self, vals):
 		res = super(project, self).default_get(vals)
