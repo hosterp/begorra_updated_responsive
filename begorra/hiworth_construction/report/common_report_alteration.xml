@@ -30,7 +30,7 @@
                                      style="max-height: 55px;"/>
                             </t>
                         </div>
-                        <div class="col-xs-9 text-left" style="font-size: 18px; margin-top:30px;">
+                        <div class="col-xs-9 text-left" style="font-size: 18px; margin-top:30px;text-align:center;margin-left:12%;">
                             <!-- Check if a specific new header exists -->
                             <t t-if="o.project_id and o.project_id.po_name">
                                 <span t-esc="o.project_id.po_name"/>
