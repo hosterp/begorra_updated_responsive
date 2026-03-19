@@ -464,6 +464,7 @@
 					<field name="Date"/>
 					<field name="purchase_id"/>
 					<field name="mpr_id"/>
+					<field name="invoice_no"/>
 
 					<group>
 						<filter string="GRR NO" name="grr_no" domain="[]" context="{'group_by':'grr_no'}"/>
@@ -472,6 +473,7 @@
 						<filter string="Project" name="project_id" domain="[]" context="{'group_by':'project_id'}"/>
 						<filter string="Purchase" name="purchase_id" domain="[]" context="{'group_by':'purchase_id'}"/>
 						<filter string="MPR" name="mpr_id" domain="[]" context="{'group_by':'mpr_id'}"/>
+						<filter string="invoice" name="invoice_no" domain="[]" context="{'group_by':'invoice_id'}"/>
 
 					</group>
 				</search>

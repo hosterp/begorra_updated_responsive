@@ -121,7 +121,7 @@ class BillReportXlsx(ReportXlsx):
 
         worksheet.set_column('A:A', 13)
         worksheet.set_column('B:B', 25)
-        worksheet.set_column('D:S', 13)
+        worksheet.set_column('C:S', 13)
 
 
 
@@ -132,9 +132,9 @@ class BillReportXlsx(ReportXlsx):
         for rec in invoices:
             date_from = datetime.strptime(invoices.from_date, "%Y-%m-%d")
             date_to = datetime.strptime(invoices.to_date, "%Y-%m-%d")
-            worksheet.merge_range('A1:P1', 'BEGORRA INFRASTRUCTURE & DEVELOPERS PVT LTD', boldc)
+            worksheet.merge_range('A1:R1', 'BEGORRA INFRASTRUCTURE & DEVELOPERS PVT LTD', boldc)
 
-            worksheet.merge_range('A2:P2', 'Details From %s To %s' % (date_from.strftime("%d-%m-%Y"),date_to.strftime("%d-%m-%Y")),boldc)
+            worksheet.merge_range('A2:R2', 'Details From %s To %s' % (date_from.strftime("%d-%m-%Y"),date_to.strftime("%d-%m-%Y")),boldc)
 
             f_driver_daily = []
             driver_total = 0
@@ -152,27 +152,30 @@ class BillReportXlsx(ReportXlsx):
 
 
                     if len(driver_daily) != 0:
-                        worksheet.merge_range('A%s:F%s' % (new_row, new_row), rec.driver_id.name, boldc)
+                        worksheet.merge_range('A%s:H%s' % (new_row, new_row), rec.driver_id.name, boldc)
                         vehicle_row = new_row
 
                         new_row += 1
                         worksheet.write('A%s' % (new_row), 'Date', bold)
                         worksheet.write('B%s' % (new_row), 'Vehicle', bold)
-                        worksheet.write('C%s' % (new_row), 'Total KM', bold)
-                        worksheet.write('D%s' % (new_row), 'Time IN', bold)
-                        worksheet.write('E%s' % (new_row), 'Time OUT', bold)
-                        worksheet.write('F%s' % (new_row), 'Site', bold)
-                        worksheet.write('G%s' % (new_row), 'From', bold)
-                        worksheet.write('H%s' % (new_row), 'To', bold)
-                        worksheet.write('I%s' % (new_row), 'Trip ', bold)
-                        worksheet.write('J%s' % (new_row), 'Rent', bold)
-                        worksheet.write('K%s' % (new_row), 'OT', bold)
+                        worksheet.write('C%s' % (new_row), 'Start KM', bold)
+                        worksheet.write('D%s' % (new_row), 'End KM', bold)
+                        worksheet.write('E%s' % (new_row), 'Total KM', bold)
+                        worksheet.write('F%s' % (new_row), 'Time IN', bold)
+                        worksheet.write('G%s' % (new_row), 'Time OUT', bold)
+                        worksheet.write('H%s' % (new_row), 'Site', bold)
+                        worksheet.write('I%s' % (new_row), 'From', bold)
+                        worksheet.write('J%s' % (new_row), 'To', bold)
+                        worksheet.write('K%s' % (new_row), 'Trip ', bold)
 
-                        worksheet.write('L%s' % (new_row), 'OT Amount', bold)
-                        worksheet.write('M%s' % (new_row), 'Food Allowance', bold)
-                        worksheet.write('N%s' % (new_row), 'Subtotal', bold)
-                        worksheet.write('O%s' % (new_row), 'Deposit/KM', bold)
-                        worksheet.write('P%s' % (new_row), 'Total', bold)
+                        worksheet.write('L%s' % (new_row), 'Rent', bold)
+                        worksheet.write('M%s' % (new_row), 'OT', bold)
+                        worksheet.write('N%s' % (new_row), 'OT Amount', bold)
+                        worksheet.write('O%s' % (new_row), 'Food Allowance', bold)
+                        worksheet.write('P%s' % (new_row), 'Subtotal', bold)
+                        worksheet.write('Q%s' % (new_row), 'Deposit/KM', bold)
+                        worksheet.write('R%s' % (new_row), 'Total', bold)
+                        worksheet.write('S%s' % (new_row), 'Remarks', bold)
                         spec = new_row
                         new_row += 1
                         driver_subtotal = 0
@@ -193,13 +196,15 @@ class BillReportXlsx(ReportXlsx):
                             for driver in f_driver_daily:
                                 sl_count = 0
                                 total = 0
-                                worksheet.merge_range('G%s:O%s' % (vehicle_row, vehicle_row), driver.vehicle_no.name, boldc)
-                                worksheet.write('M%s' % (new_row), driver.deposit, regular)
+                                worksheet.merge_range('I%s:Q%s' % (vehicle_row, vehicle_row), driver.vehicle_no.name, boldc)
+                                worksheet.write('O%s' % (new_row), driver.deposit, regular)
 
                                 if len(driver.driver_stmt_line)==0:
                                     worksheet.write('A%s' % (new_row), datetime.strptime(driver.date, "%Y-%m-%d").strftime("%d-%m-%Y"), regular)
                                     worksheet.write('B%s' % (new_row), driver.vehicle_no.name, regular)
-                                    worksheet.write('C%s' % (new_row), driver.running_km, regular)
+                                    worksheet.write('C%s' % (new_row), driver.start_km, regular)
+                                    worksheet.write('D%s' % (new_row), driver.actual_close_km, regular)
+                                    worksheet.write('E%s' % (new_row), driver.running_km, regular)
                                     if driver.start_time:
                                         from_zone = tz.gettz('UTC')
                                         to_zone = tz.gettz('Asia/Kolkata')
@@ -211,7 +216,7 @@ class BillReportXlsx(ReportXlsx):
                                         central = datetime.strptime(central.strftime("%Y-%m-%d %H:%M:%S"), '%Y-%m-%d %H:%M:%S').strftime(
                             "%d-%m-%Y %H:%M:%S")
 
-                                        worksheet.write('D%s' % (new_row), central, regular)
+                                        worksheet.write('F%s' % (new_row), central, regular)
                                     if driver.end_time:
 
                                         utc = datetime.strptime(driver.end_time, '%Y-%m-%d %H:%M:%S')
@@ -219,33 +224,34 @@ class BillReportXlsx(ReportXlsx):
                                         central = utc.astimezone(to_zone)
                                         central = datetime.strptime(central.strftime("%Y-%m-%d %H:%M:%S"), '%Y-%m-%d %H:%M:%S').strftime(
                             "%d-%m-%Y %H:%M:%S")
-                                        worksheet.write('E%s' % (new_row), central, regular)
+                                        worksheet.write('G%s' % (new_row), central, regular)
                                     if first_row == new_row:
-                                        worksheet.write('F%s' % (new_row), driver.project_id.name, regular)
+                                        worksheet.write('H%s' % (new_row), driver.project_id.name, regular)
                                     else:
-                                        worksheet.merge_range('F%s:F%s' % (first_row,new_row), driver.project_id.name, regular)
-                                    worksheet.write('G%s' % (new_row), '', regular)
-                                    worksheet.write('H%s' % (new_row), '', regular)
+                                        worksheet.merge_range('H%s:H%s' % (first_row,new_row), driver.project_id.name, regular)
+                                    worksheet.write('I%s' % (new_row), '', regular)
+                                    worksheet.write('J%s' % (new_row), '', regular)
 
-                                    worksheet.write('I%s' % (new_row), 1, regular)
+                                    worksheet.write('K%s' % (new_row), 1, regular)
 
-                                    worksheet.write('J%s' % (new_row), driver.driver_bata, regular)
+                                    worksheet.write('L%s' % (new_row), driver.driver_bata, regular)
 
-                                    worksheet.write('K%s' % (new_row), driver.ot_time, regular)
+                                    worksheet.write('M%s' % (new_row), driver.ot_time, regular)
 
                                     total += driver.driver_bata * 1 + (driver.ot_time * driver.ot_rate)
-                                    worksheet.write('L%s' % (new_row),(driver.ot_time * driver.ot_rate), regular)
-                                    worksheet.write('N%s' % (new_row),total, regular)
+                                    worksheet.write('N%s' % (new_row),(driver.ot_time * driver.ot_rate), regular)
+                                    worksheet.write('P%s' % (new_row),total, regular)
                                     driver_subtotal+=total
                                     total += 0
                                     driver_deposit += 0
-                                    worksheet.write('O%s' % (new_row),0, regular)
+                                    worksheet.write('Q%s' % (new_row),0, regular)
 
                                     pro_total += total
                                     if first_row == new_row:
-                                        worksheet.write("P%s" % (new_row), pro_total, regular)
+                                        worksheet.write("R%s" % (new_row), pro_total, regular)
                                     else:
-                                        worksheet.merge_range("P%s:P%s" % (first_row,new_row), pro_total, regular)
+                                        worksheet.merge_range("R%s:R%s" % (first_row,new_row), pro_total, regular)
+                                    worksheet.write("S%s" % (new_row), driver.remark or '', regular)
                                     driver_total += total
                                     count += 1
                                     new_row += 1
@@ -257,13 +263,13 @@ class BillReportXlsx(ReportXlsx):
                             date = invoices.to_date
                             # first_row = new_row
                             for driver_line in driver_stmt_line:
-                                worksheet.merge_range('A%s:F%s' % (spec - 1, spec - 1),
+                                worksheet.merge_range('A%s:H%s' % (spec - 1, spec - 1),
                                                       driver_line.line_id.driver_name.name, bold)
-                                worksheet.merge_range('G%s:O%s' % (spec - 1, spec - 1), driver_line.line_id.vehicle_no.name,
+                                worksheet.merge_range('I%s:Q%s' % (spec - 1, spec - 1), driver_line.line_id.vehicle_no.name,
                                                       bold)
                                 total = 0
                                 if driver_line.invoice_date != date:
-                                    worksheet.write('M%s' % (new_row), driver_line.line_id.deposit, regular)
+                                    worksheet.write('O%s' % (new_row), driver_line.line_id.deposit, regular)
                                     total += driver_line.line_id.deposit
 
                                     date = driver_line.invoice_date
@@ -278,7 +284,9 @@ class BillReportXlsx(ReportXlsx):
                                 # worksheet.write('F%s' % (new_row), driver.start_km, regular)
                                 # worksheet.write('G%s' % (new_row), driver.actual_close_km, regular)
                                 worksheet.write('B%s' % (new_row), driver_line.line_id.vehicle_no.name, regular)
-                                worksheet.write('C%s' % (new_row), driver_line.line_id.running_km, regular)
+                                worksheet.write('C%s' % (new_row), driver_line.line_id.start_km, regular)
+                                worksheet.write('D%s' % (new_row), driver_line.line_id.actual_close_km, regular)
+                                worksheet.write('E%s' % (new_row), driver_line.line_id.running_km, regular)
 
                                 if driver_line.line_id.start_time:
                                     from_zone = tz.gettz('UTC')
@@ -292,7 +300,7 @@ class BillReportXlsx(ReportXlsx):
                                                                 '%Y-%m-%d %H:%M:%S').strftime(
                                         "%d-%m-%Y %H:%M:%S")
 
-                                    worksheet.write('D%s' % (new_row), central, regular)
+                                    worksheet.write('F%s' % (new_row), central, regular)
                                 if driver_line.line_id.end_time:
                                     from_zone = tz.gettz('UTC')
                                     to_zone = tz.gettz('Asia/Kolkata')
@@ -305,46 +313,47 @@ class BillReportXlsx(ReportXlsx):
                                                                 '%Y-%m-%d %H:%M:%S').strftime(
                                         "%d-%m-%Y %H:%M:%S")
 
-                                    worksheet.write('E%s' % (new_row), central, regular)
+                                    worksheet.write('G%s' % (new_row), central, regular)
                                 if first_row != new_row:
-                                    worksheet.merge_range('F%s:F%s' % (first_row, new_row), driver_line.project_id.name,
+                                    worksheet.merge_range('H%s:H%s' % (first_row, new_row), driver_line.project_id.name,
                                                           regular)
                                 else:
-                                    worksheet.write("F%s" % (new_row), driver_line.project_id.name, regular)
-                                worksheet.write('G%s' % (new_row),
+                                    worksheet.write("H%s" % (new_row), driver_line.project_id.name, regular)
+                                worksheet.write('I%s' % (new_row),
                                                 driver_line.from_id2 and driver_line.from_id2.name or driver_line.location_id.name,
                                                 regular)
-                                worksheet.write('H%s' % (new_row), driver_line.to_id2.name, regular)
-                                worksheet.write('I%s' % (new_row), 1, regular)
+                                worksheet.write('J%s' % (new_row), driver_line.to_id2.name, regular)
+                                worksheet.write('K%s' % (new_row), 1, regular)
 
-                                worksheet.write('J%s' % (new_row), driver_line.bata_driver, regular)
+                                worksheet.write('L%s' % (new_row), driver_line.bata_driver, regular)
 
-                                worksheet.write('K%s' % (new_row), driver_line.line_id.ot_time, regular)
+                                worksheet.write('M%s' % (new_row), driver_line.line_id.ot_time, regular)
 
-                                worksheet.write('L%s' % (new_row),
+                                worksheet.write('N%s' % (new_row),
                                                 (driver_line.line_id.ot_time * driver_line.line_id.ot_rate), regular)
 
                                 total += driver_line.bata_driver * 1 + (
                                             driver_line.line_id.ot_time * driver_line.line_id.ot_rate)
 
-                                worksheet.write('N%s' % (new_row), total, regular)
+                                worksheet.write('P%s' % (new_row), total, regular)
                                 driver_subtotal += total
-                                worksheet.write('O%s' % (new_row), driver_line.km_deposit, regular)
+                                worksheet.write('Q%s' % (new_row), driver_line.km_deposit, regular)
                                 total += driver_line.km_deposit
                                 driver_deposit += driver_line.km_deposit
                                 pro_total += total
                                 if first_row != new_row:
-                                    worksheet.merge_range('P%s:P%s' % (first_row, new_row), pro_total, regular)
+                                    worksheet.merge_range('R%s:R%s' % (first_row, new_row), pro_total, regular)
                                 else:
-                                    worksheet.write("P%s" % (new_row), pro_total, regular)
+                                    worksheet.write("R%s" % (new_row), pro_total, regular)
+                                worksheet.write("S%s" % (new_row), driver_line.remarks, regular)
                                 driver_total += total
                                 count += 1
                                 new_row += 1
                     if len(f_driver_daily) != 0:
-                        worksheet.merge_range('A%s:F%s' % (new_row, new_row), "Total", boldc)
-                        worksheet.write('N%s'%(new_row),driver_subtotal,boldc)
-                        worksheet.write('O%s' % (new_row), driver_deposit, boldc)
-                        worksheet.write('P%s' % (new_row), driver_total, boldc)
+                        worksheet.merge_range('A%s:H%s' % (new_row, new_row), "Total", boldc)
+                        worksheet.write('P%s'%(new_row),driver_subtotal,boldc)
+                        worksheet.write('Q%s' % (new_row), driver_deposit, boldc)
+                        worksheet.write('R%s' % (new_row), driver_total, boldc)
                         new_row += 2
 
                 else:
@@ -381,27 +390,29 @@ class BillReportXlsx(ReportXlsx):
                         vehicle_row = new_row
 
                         if len(driver_daily) != 0:
-                            worksheet.merge_range('A%s:F%s' % (new_row, new_row), driver.name, boldc)
+                            worksheet.merge_range('A%s:H%s' % (new_row, new_row), driver.name, boldc)
 
                             new_row += 1
                             worksheet.write('A%s' % (new_row), 'Date', bold)
                             worksheet.write('B%s' % (new_row), 'Vehicle No', bold)
-                            worksheet.write('C%s' % (new_row), 'Total KM', bold)
-                            worksheet.write('D%s' % (new_row), 'Time IN', bold)
-                            worksheet.write('E%s' % (new_row), 'Time OUT', bold)
-                            worksheet.write('F%s' % (new_row), 'Site', bold)
-                            worksheet.write('G%s' % (new_row), 'From', bold)
-                            worksheet.write('H%s' % (new_row), 'To', bold)
-                            worksheet.write('I%s' % (new_row), 'Trip ', bold)
-                            worksheet.write('J%s' % (new_row), 'Rent', bold)
-                            worksheet.write('K%s' % (new_row), 'OT', bold)
+                            worksheet.write('C%s' % (new_row), 'Start KM', bold)
+                            worksheet.write('D%s' % (new_row), 'End KM', bold)
+                            worksheet.write('E%s' % (new_row), 'Total KM', bold)
+                            worksheet.write('F%s' % (new_row), 'Time IN', bold)
+                            worksheet.write('G%s' % (new_row), 'Time OUT', bold)
+                            worksheet.write('H%s' % (new_row), 'Site', bold)
+                            worksheet.write('I%s' % (new_row), 'From', bold)
+                            worksheet.write('J%s' % (new_row), 'To', bold)
+                            worksheet.write('K%s' % (new_row), 'Trip ', bold)
+                            worksheet.write('L%s' % (new_row), 'Rent', bold)
+                            worksheet.write('M%s' % (new_row), 'OT', bold)
 
-                            worksheet.write('L%s' % (new_row), 'OT Amount', bold)
-                            worksheet.write('M%s' % (new_row), 'Food Allowance', bold)
-                            worksheet.write('N%s' % (new_row), 'Subtotal', bold)
-                            worksheet.write('O%s' % (new_row), 'Deposit/KM', bold)
-                            worksheet.write('P%s' % (new_row), 'Total', bold)
-                            worksheet.write('Q%s' % (new_row), 'Remarks', bold)
+                            worksheet.write('N%s' % (new_row), 'OT Amount', bold)
+                            worksheet.write('O%s' % (new_row), 'Food Allowance', bold)
+                            worksheet.write('P%s' % (new_row), 'Subtotal', bold)
+                            worksheet.write('Q%s' % (new_row), 'Deposit/KM', bold)
+                            worksheet.write('R%s' % (new_row), 'Total', bold)
+                            worksheet.write('S%s' % (new_row), 'Remarks', bold)
                             spec = new_row
                             new_row += 1
                             driver_subtotal = 0
@@ -423,15 +434,17 @@ class BillReportXlsx(ReportXlsx):
                                 for driver_d in f_driver_daily:
                                     sl_count = 0
                                     total=0
-                                    worksheet.merge_range('G%s:O%s' % (vehicle_row, vehicle_row), driver_d.vehicle_no.name, bold)
-                                    worksheet.write('M%s' % (new_row), driver_d.deposit, regular)
+                                    worksheet.merge_range('I%s:Q%s' % (vehicle_row, vehicle_row), driver_d.vehicle_no.name, bold)
+                                    worksheet.write('O%s' % (new_row), driver_d.deposit, regular)
 
                                     if len(driver_d.driver_stmt_line) == 0:
                                         worksheet.write('A%s' % (new_row),
                                                         datetime.strptime(driver_d.date, "%Y-%m-%d").strftime("%d-%m-%Y"),
                                                         regular)
                                         worksheet.write('B%s' % (new_row), driver_d.vehicle_no.name, regular)
-                                        worksheet.write('C%s' % (new_row), driver_d.running_km, regular)
+                                        worksheet.write('C%s' % (new_row), driver_d.start_km, regular)
+                                        worksheet.write('D%s' % (new_row), driver_d.actual_close_km, regular)
+                                        worksheet.write('E%s' % (new_row), driver_d.running_km, regular)
                                         if driver_d.start_time:
                                             from_zone = tz.gettz('UTC')
                                             to_zone = tz.gettz('Asia/Kolkata')
@@ -444,7 +457,7 @@ class BillReportXlsx(ReportXlsx):
                                                                         '%Y-%m-%d %H:%M:%S').strftime(
                                                 "%d-%m-%Y %H:%M:%S")
 
-                                            worksheet.write('D%s' % (new_row), central, regular)
+                                            worksheet.write('F%s' % (new_row), central, regular)
                                         if driver_d.end_time:
                                             utc = datetime.strptime(driver_d.end_time, '%Y-%m-%d %H:%M:%S')
                                             utc = utc.replace(tzinfo=from_zone)
@@ -452,34 +465,34 @@ class BillReportXlsx(ReportXlsx):
                                             central = datetime.strptime(central.strftime("%Y-%m-%d %H:%M:%S"),
                                                                         '%Y-%m-%d %H:%M:%S').strftime(
                                                 "%d-%m-%Y %H:%M:%S")
-                                            worksheet.write('E%s' % (new_row), central, regular)
+                                            worksheet.write('G%s' % (new_row), central, regular)
                                         if first_row == new_row:
-                                            worksheet.write('F%s' % (new_row), driver_d.project_id.name, regular)
+                                            worksheet.write('H%s' % (new_row), driver_d.project_id.name, regular)
                                         else:
-                                            worksheet.merge_range('F%s:F%s' % (first_row,new_row), driver_d.project_id.name, regular)
-                                        worksheet.write('G%s' % (new_row), '', regular)
-                                        worksheet.write('H%s' % (new_row), '', regular)
+                                            worksheet.merge_range('H%s:H%s' % (first_row,new_row), driver_d.project_id.name, regular)
+                                        worksheet.write('I%s' % (new_row), '', regular)
+                                        worksheet.write('J%s' % (new_row), '', regular)
 
-                                        worksheet.write('I%s' % (new_row), 1, regular)
+                                        worksheet.write('K%s' % (new_row), 1, regular)
 
-                                        worksheet.write('J%s' % (new_row), driver_d.driver_bata, regular)
+                                        worksheet.write('L%s' % (new_row), driver_d.driver_bata, regular)
 
-                                        worksheet.write('K%s' % (new_row), driver_d.ot_time, regular)
+                                        worksheet.write('M%s' % (new_row), driver_d.ot_time, regular)
 
                                         total += driver_d.driver_bata * 1 + (driver_d.ot_time * driver_d.ot_rate)
-                                        worksheet.write('L%s' % (new_row), (driver_d.ot_time * driver_d.ot_rate), regular)
-                                        worksheet.write('N%s' % (new_row), total, regular)
+                                        worksheet.write('N%s' % (new_row), (driver_d.ot_time * driver_d.ot_rate), regular)
+                                        worksheet.write('P%s' % (new_row), total, regular)
                                         driver_subtotal += total
                                         total += 0
                                         driver_deposit += 0
-                                        worksheet.write('O%s' % (new_row), 0, regular)
+                                        worksheet.write('Q%s' % (new_row), 0, regular)
                                         pro_total += total
                                         if first_row == new_row:
-                                            worksheet.write("P%s" % (new_row), pro_total, regular)
+                                            worksheet.write("R%s" % (new_row), pro_total, regular)
                                         else:
-                                            worksheet.merge_range("P%s:P%s" % (first_row,new_row), pro_total, regular)
+                                            worksheet.merge_range("R%s:R%s" % (first_row,new_row), pro_total, regular)
                                         driver_total += total
-                                        worksheet.write("Q%s" % (new_row), driver_d.remark,regular)
+                                        worksheet.write("S%s" % (new_row), driver_d.remark,regular)
                                         count += 1
                                         new_row += 1
                                         # worksheet.write('R%s' % (new_row), driver.remark, regular)
@@ -508,7 +521,9 @@ class BillReportXlsx(ReportXlsx):
                                     # worksheet.write('F%s' % (new_row), driver.start_km, regular)
                                     # worksheet.write('G%s' % (new_row), driver.actual_close_km, regular)
                                     worksheet.write('B%s' % (new_row), driver_line.line_id.vehicle_no.name, regular)
-                                    worksheet.write('C%s' % (new_row), driver_line.line_id.running_km, regular)
+                                    worksheet.write('C%s' % (new_row), driver_line.line_id.start_km, regular)
+                                    worksheet.write('D%s' % (new_row), driver_line.line_id.actual_close_km, regular)
+                                    worksheet.write('E%s' % (new_row), driver_line.line_id.running_km, regular)
 
                                     if driver_line.line_id.start_time:
                                         from_zone = tz.gettz('UTC')
@@ -522,7 +537,7 @@ class BillReportXlsx(ReportXlsx):
                                                                     '%Y-%m-%d %H:%M:%S').strftime(
                                             "%d-%m-%Y %H:%M:%S")
 
-                                        worksheet.write('D%s' % (new_row), central, regular)
+                                        worksheet.write('F%s' % (new_row), central, regular)
                                     if driver_line.line_id.end_time:
                                         from_zone = tz.gettz('UTC')
                                         to_zone = tz.gettz('Asia/Kolkata')
@@ -535,42 +550,42 @@ class BillReportXlsx(ReportXlsx):
                                                                     '%Y-%m-%d %H:%M:%S').strftime(
                                             "%d-%m-%Y %H:%M:%S")
 
-                                        worksheet.write('E%s' % (new_row), central, regular)
+                                        worksheet.write('G%s' % (new_row), central, regular)
                                     if first_row != new_row:
-                                        worksheet.merge_range('F%s:F%s' % (first_row, new_row),
+                                        worksheet.merge_range('H%s:H%s' % (first_row, new_row),
                                                               driver_line.project_id.name,
                                                               regular)
                                     else:
-                                        worksheet.write("F%s" % (new_row), driver_line.project_id.name, regular)
-                                    worksheet.write('G%s' % (new_row),
+                                        worksheet.write("H%s" % (new_row), driver_line.project_id.name, regular)
+                                    worksheet.write('I%s' % (new_row),
                                                     driver_line.from_id2 and driver_line.from_id2.name or driver_line.location_id.name,
                                                     regular)
-                                    worksheet.write('H%s' % (new_row), driver_line.to_id2.name, regular)
-                                    worksheet.write('I%s' % (new_row), 1, regular)
+                                    worksheet.write('J%s' % (new_row), driver_line.to_id2.name, regular)
+                                    worksheet.write('K%s' % (new_row), 1, regular)
 
-                                    worksheet.write('J%s' % (new_row), driver_line.bata_driver, regular)
+                                    worksheet.write('L%s' % (new_row), driver_line.bata_driver, regular)
 
-                                    worksheet.write('K%s' % (new_row), driver_line.line_id.ot_time, regular)
+                                    worksheet.write('M%s' % (new_row), driver_line.line_id.ot_time, regular)
 
-                                    worksheet.write('L%s' % (new_row),
+                                    worksheet.write('N%s' % (new_row),
                                                     (driver_line.line_id.ot_time * driver_line.line_id.ot_rate),
                                                     regular)
 
                                     total += driver_line.bata_driver * 1 + (
                                             driver_line.line_id.ot_time * driver_line.line_id.ot_rate)
 
-                                    worksheet.write('N%s' % (new_row), total, regular)
+                                    worksheet.write('P%s' % (new_row), total, regular)
                                     driver_subtotal += total
-                                    worksheet.write('O%s' % (new_row), driver_line.km_deposit, regular)
+                                    worksheet.write('Q%s' % (new_row), driver_line.km_deposit, regular)
                                     total += driver_line.km_deposit
                                     driver_deposit += driver_line.km_deposit
                                     pro_total += total
                                     if first_row != new_row:
-                                        worksheet.merge_range('P%s:P%s' % (first_row, new_row), pro_total, regular)
+                                        worksheet.merge_range('R%s:R%s' % (first_row, new_row), pro_total, regular)
                                     else:
-                                        worksheet.write("P%s" % (new_row), pro_total, regular)
+                                        worksheet.write("R%s" % (new_row), pro_total, regular)
                                     driver_total += total
-                                    worksheet.write("Q%s"%(new_row),driver_line.remarks,regular)
+                                    worksheet.write("S%s"%(new_row),driver_line.remarks,regular)
                                     count += 1
                                     new_row += 1
                             if len(driver_daily) != 0:
@@ -588,28 +603,30 @@ class BillReportXlsx(ReportXlsx):
                          ],order='date asc,vehicle_no asc')
 
                     if len(driver_daily) != 0:
-                        worksheet.merge_range('A%s:F%s' % (new_row, new_row), rec.driver_id.name, boldc)
+                        worksheet.merge_range('A%s:H%s' % (new_row, new_row), rec.driver_id.name, boldc)
                         vehicle_row = new_row
 
                         new_row += 1
                         worksheet.write('A%s' % (new_row), 'Date', bold)
                         worksheet.write('B%s' % (new_row), 'Vehicle', bold)
-                        worksheet.write('C%s' % (new_row), 'Total KM', bold)
-                        worksheet.write('D%s' % (new_row), 'Time IN', bold)
-                        worksheet.write('E%s' % (new_row), 'Time OUT', bold)
-                        worksheet.write('F%s' % (new_row), 'Site', bold)
-                        worksheet.write('G%s' % (new_row), 'From', bold)
-                        worksheet.write('H%s' % (new_row), 'To', bold)
-                        worksheet.write('I%s' % (new_row), 'Trip ', bold)
-                        worksheet.write('J%s' % (new_row), 'Rent', bold)
-                        worksheet.write('K%s' % (new_row), 'OT', bold)
+                        worksheet.write('C%s' % (new_row), 'Start KM', bold)
+                        worksheet.write('D%s' % (new_row), 'End KM', bold)
+                        worksheet.write('E%s' % (new_row), 'Total KM', bold)
+                        worksheet.write('F%s' % (new_row), 'Time IN', bold)
+                        worksheet.write('G%s' % (new_row), 'Time OUT', bold)
+                        worksheet.write('H%s' % (new_row), 'Site', bold)
+                        worksheet.write('I%s' % (new_row), 'From', bold)
+                        worksheet.write('J%s' % (new_row), 'To', bold)
+                        worksheet.write('K%s' % (new_row), 'Trip ', bold)
+                        worksheet.write('L%s' % (new_row), 'Rent', bold)
+                        worksheet.write('M%s' % (new_row), 'OT', bold)
 
-                        worksheet.write('L%s' % (new_row), 'OT Amount', bold)
-                        worksheet.write('M%s' % (new_row), 'Food Allowance', bold)
-                        worksheet.write('N%s' % (new_row), 'Subtotal', bold)
-                        worksheet.write('O%s' % (new_row), 'Deposit/KM', bold)
-                        worksheet.write('P%s' % (new_row), 'Total', bold)
-                        worksheet.write('Q%s' % (new_row), 'Remarks', bold)
+                        worksheet.write('N%s' % (new_row), 'OT Amount', bold)
+                        worksheet.write('O%s' % (new_row), 'Food Allowance', bold)
+                        worksheet.write('P%s' % (new_row), 'Subtotal', bold)
+                        worksheet.write('Q%s' % (new_row), 'Deposit/KM', bold)
+                        worksheet.write('R%s' % (new_row), 'Total', bold)
+                        worksheet.write('S%s' % (new_row), 'Remarks', bold)
                         spec = new_row
                         new_row += 1
                         driver_subtotal = 0
@@ -627,16 +644,18 @@ class BillReportXlsx(ReportXlsx):
                             print('8..........................................................................')
                             sl_count = 0
                             total = 0
-                            worksheet.merge_range('G%s:O%s' % (vehicle_row, vehicle_row), driver.vehicle_no.name,
-                                                  boldc)
-                            worksheet.write('M%s' % (new_row), driver.deposit, regular)
+                            worksheet.merge_range('I%s:Q%s' % (vehicle_row, vehicle_row), driver.vehicle_no.name,
+                                                   boldc)
+                            worksheet.write('O%s' % (new_row), driver.deposit, regular)
 
                             if len(driver.driver_stmt_line) == 0:
                                 worksheet.write('A%s' % (new_row),
                                                 datetime.strptime(driver.date, "%Y-%m-%d").strftime("%d-%m-%Y"),
                                                 regular)
                                 worksheet.write('B%s' % (new_row), driver.vehicle_no.name, regular)
-                                worksheet.write('C%s' % (new_row), driver.running_km, regular)
+                                worksheet.write('C%s' % (new_row), driver.start_km, regular)
+                                worksheet.write('D%s' % (new_row), driver.actual_close_km, regular)
+                                worksheet.write('E%s' % (new_row), driver.running_km, regular)
                                 if driver.start_time:
                                     from_zone = tz.gettz('UTC')
                                     to_zone = tz.gettz('Asia/Kolkata')
@@ -649,7 +668,7 @@ class BillReportXlsx(ReportXlsx):
                                                                 '%Y-%m-%d %H:%M:%S').strftime(
                                         "%d-%m-%Y %H:%M:%S")
 
-                                    worksheet.write('D%s' % (new_row), central, regular)
+                                    worksheet.write('F%s' % (new_row), central, regular)
                                 if driver.end_time:
                                     utc = datetime.strptime(driver.end_time, '%Y-%m-%d %H:%M:%S')
                                     utc = utc.replace(tzinfo=from_zone)
@@ -657,26 +676,26 @@ class BillReportXlsx(ReportXlsx):
                                     central = datetime.strptime(central.strftime("%Y-%m-%d %H:%M:%S"),
                                                                 '%Y-%m-%d %H:%M:%S').strftime(
                                         "%d-%m-%Y %H:%M:%S")
-                                    worksheet.write('E%s' % (new_row), central, regular)
-                                worksheet.write('F%s' % (new_row), driver.project_id.name, regular)
-                                worksheet.write('G%s' % (new_row), '', regular)
-                                worksheet.write('H%s' % (new_row), '', regular)
+                                    worksheet.write('G%s' % (new_row), central, regular)
+                                worksheet.write('H%s' % (new_row), driver.project_id.name, regular)
+                                worksheet.write('I%s' % (new_row), '', regular)
+                                worksheet.write('J%s' % (new_row), '', regular)
 
-                                worksheet.write('I%s' % (new_row), 1, regular)
+                                worksheet.write('K%s' % (new_row), 1, regular)
 
-                                worksheet.write('J%s' % (new_row), driver.driver_bata, regular)
+                                worksheet.write('L%s' % (new_row), driver.driver_bata, regular)
 
-                                worksheet.write('K%s' % (new_row), driver.ot_time, regular)
+                                worksheet.write('M%s' % (new_row), driver.ot_time, regular)
 
                                 total += driver.driver_bata * 1 + (driver.ot_time * driver.ot_rate)
-                                worksheet.write('L%s' % (new_row), (driver.ot_time * driver.ot_rate), regular)
-                                worksheet.write('N%s' % (new_row), total, regular)
+                                worksheet.write('N%s' % (new_row), (driver.ot_time * driver.ot_rate), regular)
+                                worksheet.write('P%s' % (new_row), total, regular)
                                 driver_subtotal += total
                                 total += 0
                                 driver_deposit += 0
-                                worksheet.write('O%s' % (new_row),0, regular)
-                                worksheet.write("P%s" % (new_row), total, regular)
-                                worksheet.write("Q%s" % (new_row), driver.remark or '', regular)
+                                worksheet.write('Q%s' % (new_row),0, regular)
+                                worksheet.write("R%s" % (new_row), total, regular)
+                                worksheet.write("S%s" % (new_row), driver.remark or '', regular)
                                 driver_total += total
                                 count += 1
                                 new_row += 1
@@ -690,14 +709,14 @@ class BillReportXlsx(ReportXlsx):
                         ot_count = 0
                         for driver_line in driver_stmt_line:
                             print('9........................................................................')
-                            worksheet.merge_range('A%s:F%s' % (spec - 1, spec - 1),
+                            worksheet.merge_range('A%s:H%s' % (spec - 1, spec - 1),
                                                   driver_line.line_id.driver_name.name, bold)
-                            worksheet.merge_range('G%s:O%s' % (spec - 1, spec - 1),
+                            worksheet.merge_range('I%s:Q%s' % (spec - 1, spec - 1),
                                                   driver_line.line_id.vehicle_no.name,
                                                   bold)
                             total = 0
                             if driver_line.invoice_date != date:
-                                worksheet.write('M%s' % (new_row), driver_line.line_id.deposit, regular)
+                                worksheet.write('O%s' % (new_row), driver_line.line_id.deposit, regular)
                                 total += driver_line.line_id.deposit
 
                                 date = driver_line.invoice_date
@@ -709,10 +728,12 @@ class BillReportXlsx(ReportXlsx):
                                             regular)
                             # worksheet.write('C%s' % (new_row), driver.remark, regular)
 
-                            # worksheet.write('F%s' % (new_row), driver.start_km, regular)
-                            # worksheet.write('G%s' % (new_row), driver.actual_close_km, regular)
+                            # worksheet.write('F%s' % (new_row), driver_line.line_id.start_km, regular)
+                            # worksheet.write('G%s' % (new_row), driver_line.line_id.actual_close_km, regular)
                             worksheet.write('B%s' % (new_row), driver_line.line_id.vehicle_no.name, regular)
-                            worksheet.write('C%s' % (new_row), driver_line.line_id.running_km, regular)
+                            worksheet.write('C%s' % (new_row), driver_line.line_id.start_km, regular)
+                            worksheet.write('D%s' % (new_row), driver_line.line_id.actual_close_km, regular)
+                            worksheet.write('E%s' % (new_row), driver_line.line_id.running_km, regular)
 
                             if driver_line.line_id.start_time:
                                 from_zone = tz.gettz('UTC')
@@ -726,7 +747,7 @@ class BillReportXlsx(ReportXlsx):
                                                             '%Y-%m-%d %H:%M:%S').strftime(
                                     "%d-%m-%Y %H:%M:%S")
 
-                                worksheet.write('D%s' % (new_row), central, regular)
+                                worksheet.write('F%s' % (new_row), central, regular)
                             if driver_line.line_id.end_time:
                                 from_zone = tz.gettz('UTC')
                                 to_zone = tz.gettz('Asia/Kolkata')
@@ -739,43 +760,43 @@ class BillReportXlsx(ReportXlsx):
                                                             '%Y-%m-%d %H:%M:%S').strftime(
                                     "%d-%m-%Y %H:%M:%S")
 
-                                worksheet.write('E%s' % (new_row), central, regular)
+                                worksheet.write('G%s' % (new_row), central, regular)
 
-                            worksheet.write("F%s" % (new_row), driver_line.project_id.name, regular)
-                            worksheet.write('G%s' % (new_row),
+                            worksheet.write("H%s" % (new_row), driver_line.project_id.name, regular)
+                            worksheet.write('I%s' % (new_row),
                                             driver_line.from_id2 and driver_line.from_id2.name or driver_line.location_id.name,
                                             regular)
-                            worksheet.write('H%s' % (new_row), driver_line.to_id2.name, regular)
-                            worksheet.write('I%s' % (new_row), 1, regular)
+                            worksheet.write('J%s' % (new_row), driver_line.to_id2.name, regular)
+                            worksheet.write('K%s' % (new_row), 1, regular)
 
-                            worksheet.write('J%s' % (new_row), driver_line.bata_driver, regular)
+                            worksheet.write('L%s' % (new_row), driver_line.bata_driver, regular)
                             if ot_count == 0:
-                                worksheet.write('K%s' % (new_row), driver_line.line_id.ot_time, regular)
+                                worksheet.write('M%s' % (new_row), driver_line.line_id.ot_time, regular)
 
-                                worksheet.write('L%s' % (new_row),
+                                worksheet.write('N%s' % (new_row),
                                                 (driver_line.line_id.ot_time * driver_line.line_id.ot_rate), regular)
                                 total +=  (
                                         driver_line.line_id.ot_time * driver_line.line_id.ot_rate)
                                 ot_count = 1
                             total += driver_line.bata_driver * 1
 
-                            worksheet.write('N%s' % (new_row), total, regular)
+                            worksheet.write('P%s' % (new_row), total, regular)
                             driver_subtotal += total
-                            worksheet.write('O%s' % (new_row), driver_line.km_deposit, regular)
+                            worksheet.write('Q%s' % (new_row), driver_line.km_deposit, regular)
                             total += driver_line.km_deposit
                             driver_deposit += driver_line.km_deposit
                             pro_total += total
 
-                            worksheet.write("P%s" % (new_row), total, regular)
-                            worksheet.write("Q%s"%(new_row),driver_line.remarks)
+                            worksheet.write("R%s" % (new_row), total, regular)
+                            worksheet.write("S%s"%(new_row),driver_line.remarks)
                             driver_total += total
                             count += 1
                             new_row += 1
                     if len(f_driver_daily) != 0:
-                        worksheet.merge_range('A%s:F%s' % (new_row, new_row), "Total", boldc)
-                        worksheet.write('N%s' % (new_row), driver_subtotal, boldc)
-                        worksheet.write('O%s' % (new_row), driver_deposit, boldc)
-                        worksheet.write('P%s' % (new_row), driver_total, boldc)
+                        worksheet.merge_range('A%s:H%s' % (new_row, new_row), "Total", boldc)
+                        worksheet.write('P%s' % (new_row), driver_subtotal, boldc)
+                        worksheet.write('Q%s' % (new_row), driver_deposit, boldc)
+                        worksheet.write('R%s' % (new_row), driver_total, boldc)
                         new_row += 2
 
                 else:
@@ -844,27 +865,29 @@ class BillReportXlsx(ReportXlsx):
                         vehicle_row = new_row
 
                         if len(driver_daily) != 0:
-                            worksheet.merge_range('A%s:F%s' % (new_row, new_row), driver.name, boldc)
+                            worksheet.merge_range('A%s:H%s' % (new_row, new_row), driver.name, boldc)
 
                             new_row += 1
                             worksheet.write('A%s' % (new_row), 'Date', bold)
                             worksheet.write('B%s' % (new_row), 'Vehicle No', bold)
-                            worksheet.write('C%s' % (new_row), 'Total KM', bold)
-                            worksheet.write('D%s' % (new_row), 'Time IN', bold)
-                            worksheet.write('E%s' % (new_row), 'Time OUT', bold)
-                            worksheet.write('F%s' % (new_row), 'Site', bold)
-                            worksheet.write('G%s' % (new_row), 'From', bold)
-                            worksheet.write('H%s' % (new_row), 'To', bold)
-                            worksheet.write('I%s' % (new_row), 'Trip ', bold)
-                            worksheet.write('J%s' % (new_row), 'Rent', bold)
-                            worksheet.write('K%s' % (new_row), 'OT', bold)
+                            worksheet.write('C%s' % (new_row), 'Start KM', bold)
+                            worksheet.write('D%s' % (new_row), 'End KM', bold)
+                            worksheet.write('E%s' % (new_row), 'Total KM', bold)
+                            worksheet.write('F%s' % (new_row), 'Time IN', bold)
+                            worksheet.write('G%s' % (new_row), 'Time OUT', bold)
+                            worksheet.write('H%s' % (new_row), 'Site', bold)
+                            worksheet.write('I%s' % (new_row), 'From', bold)
+                            worksheet.write('J%s' % (new_row), 'To', bold)
+                            worksheet.write('K%s' % (new_row), 'Trip ', bold)
+                            worksheet.write('L%s' % (new_row), 'Rent', bold)
+                            worksheet.write('M%s' % (new_row), 'OT', bold)
 
-                            worksheet.write('L%s' % (new_row), 'OT Amount', bold)
-                            worksheet.write('M%s' % (new_row), 'Food Allowance', bold)
-                            worksheet.write('N%s' % (new_row), 'Subtotal', bold)
-                            worksheet.write('O%s' % (new_row), 'Deposit/KM', bold)
-                            worksheet.write('P%s' % (new_row), 'Total', bold)
-                            worksheet.write('Q%s' % (new_row), 'Remarks', bold)
+                            worksheet.write('N%s' % (new_row), 'OT Amount', bold)
+                            worksheet.write('O%s' % (new_row), 'Food Allowance', bold)
+                            worksheet.write('P%s' % (new_row), 'Subtotal', bold)
+                            worksheet.write('Q%s' % (new_row), 'Deposit/KM', bold)
+                            worksheet.write('R%s' % (new_row), 'Total', bold)
+                            worksheet.write('S%s' % (new_row), 'Remarks', bold)
                             spec = new_row
                             new_row += 1
                             driver_subtotal = 0
@@ -900,14 +923,14 @@ class BillReportXlsx(ReportXlsx):
                                     pro_deposit = 0
                                     pro_total =0
                                     total = 0
-                                    worksheet.merge_range('G%s:O%s' % (vehicle_row, vehicle_row),
+                                    worksheet.merge_range('I%s:Q%s' % (vehicle_row, vehicle_row),
                                                           driver_d.vehicle_no.name, bold)
                                     date_row = new_row
                                     if date_row == new_row:
-                                        worksheet.write('M%s' % (new_row), driver_d.deposit, regular)
+                                        worksheet.write('O%s' % (new_row), driver_d.deposit, regular)
                                     else:
-                                        worksheet.write('M%s' % (new_row), driver_d.deposit, regular)
-                                        worksheet.write('M%s' % (date_row), "0", regular)
+                                        worksheet.write('O%s' % (new_row), driver_d.deposit, regular)
+                                        worksheet.write('O%s' % (date_row), "0", regular)
                                         # worksheet.merge_range('M%s:M%s' % (date_row, new_row),
                                         #                       driver_d.deposit, regular)
 
@@ -922,7 +945,9 @@ class BillReportXlsx(ReportXlsx):
                                                             "%d-%m-%Y"),
                                                         regular)
                                             worksheet.write('B%s' % (new_row), driver_d.vehicle_no.name, regular)
-                                            worksheet.write('C%s' % (new_row), driver_d.running_km, regular)
+                                            worksheet.write('C%s' % (new_row), driver_d.start_km, regular)
+                                            worksheet.write('D%s' % (new_row), driver_d.actual_close_km, regular)
+                                            worksheet.write('E%s' % (new_row), driver_d.running_km, regular)
                                             if driver_d.start_time:
                                                 from_zone = tz.gettz('UTC')
                                                 to_zone = tz.gettz('Asia/Kolkata')
@@ -935,7 +960,7 @@ class BillReportXlsx(ReportXlsx):
                                                                             '%Y-%m-%d %H:%M:%S').strftime(
                                                     "%d-%m-%Y %H:%M:%S")
 
-                                                worksheet.write('D%s' % (new_row), central, regular)
+                                                worksheet.write('F%s' % (new_row), central, regular)
                                             if driver_d.end_time:
                                                 utc = datetime.strptime(driver_d.end_time, '%Y-%m-%d %H:%M:%S')
                                                 utc = utc.replace(tzinfo=from_zone)
@@ -943,14 +968,16 @@ class BillReportXlsx(ReportXlsx):
                                                 central = datetime.strptime(central.strftime("%Y-%m-%d %H:%M:%S"),
                                                                             '%Y-%m-%d %H:%M:%S').strftime(
                                                     "%d-%m-%Y %H:%M:%S")
-                                                worksheet.write('E%s' % (new_row), central, regular)
+                                                worksheet.write('G%s' % (new_row), central, regular)
                                         else:
                                             worksheet.merge_range('A%s:A%s' % (date_row,new_row),
                                                             datetime.strptime(driver_d.date, "%Y-%m-%d").strftime(
                                                                 "%d-%m-%Y"),
                                                             regular)
                                             worksheet.merge_range('B%s:B%s' % (date_row,new_row), driver_d.vehicle_no.name, regular)
-                                            worksheet.merge_range('C%s:C%s' % (date_row,new_row), driver_d.running_km, regular)
+                                            worksheet.merge_range('C%s:C%s' % (date_row,new_row), driver_d.start_km, regular)
+                                            worksheet.merge_range('D%s:D%s' % (date_row,new_row), driver_d.actual_close_km, regular)
+                                            worksheet.merge_range('E%s:E%s' % (date_row,new_row), driver_d.running_km, regular)
                                             if driver_d.start_time:
                                                 from_zone = tz.gettz('UTC')
                                                 to_zone = tz.gettz('Asia/Kolkata')
@@ -963,7 +990,7 @@ class BillReportXlsx(ReportXlsx):
                                                                             '%Y-%m-%d %H:%M:%S').strftime(
                                                     "%d-%m-%Y %H:%M:%S")
 
-                                                worksheet.merge_range('D%s:D%s' % (date_row,new_row), central, regular)
+                                                worksheet.merge_range('F%s:F%s' % (date_row,new_row), central, regular)
                                             if driver_d.end_time:
                                                 utc = datetime.strptime(driver_d.end_time, '%Y-%m-%d %H:%M:%S')
                                                 utc = utc.replace(tzinfo=from_zone)
@@ -971,32 +998,32 @@ class BillReportXlsx(ReportXlsx):
                                                 central = datetime.strptime(central.strftime("%Y-%m-%d %H:%M:%S"),
                                                                             '%Y-%m-%d %H:%M:%S').strftime(
                                                     "%d-%m-%Y %H:%M:%S")
-                                                worksheet.merge_range('E%s:E%s' % (date_row,new_row), central, regular)
+                                                worksheet.merge_range('G%s:G%s' % (date_row,new_row), central, regular)
 
 
-                                        worksheet.write('F%s' % (new_row), driver_d.project_id.name, regular)
-                                        worksheet.write('G%s' % (new_row), '', regular)
-                                        worksheet.write('H%s' % (new_row), '', regular)
+                                        worksheet.write('H%s' % (new_row), driver_d.project_id.name, regular)
+                                        worksheet.write('I%s' % (new_row), '', regular)
+                                        worksheet.write('J%s' % (new_row), '', regular)
 
-                                        worksheet.write('I%s' % (new_row), 1, regular)
+                                        worksheet.write('K%s' % (new_row), 1, regular)
 
-                                        worksheet.write('J%s' % (new_row), driver_d.driver_bata, regular)
+                                        worksheet.write('L%s' % (new_row), driver_d.driver_bata, regular)
 
-                                        worksheet.write('K%s' % (new_row), driver_d.ot_time, regular)
+                                        worksheet.write('M%s' % (new_row), driver_d.ot_time, regular)
 
                                         total += driver_d.driver_bata * 1 + (driver_d.ot_time * driver_d.ot_rate)
-                                        worksheet.write('L%s' % (new_row), (driver_d.ot_time * driver_d.ot_rate),
+                                        worksheet.write('N%s' % (new_row), (driver_d.ot_time * driver_d.ot_rate),
                                                         regular)
-                                        worksheet.write('N%s' % (new_row), total, regular)
+                                        worksheet.write('P%s' % (new_row), total, regular)
                                         driver_subtotal += total
                                         pro_sub = total
                                         total += 0
                                         driver_deposit += 0
                                         pro_deposit = 0
-                                        worksheet.set_column('Q:Q', 17)
-                                        worksheet.write('O%s' % (new_row), 0, regular)
-                                        worksheet.write("P%s" % (new_row), total, regular)
-                                        worksheet.write("Q%s" % (new_row), driver_d.remark or '', regular)
+                                        worksheet.set_column('S:S', 17)
+                                        worksheet.write('Q%s' % (new_row), 0, regular)
+                                        worksheet.write("R%s" % (new_row), total, regular)
+                                        worksheet.write("S%s" % (new_row), driver_d.remark or '', regular)
                                         driver_total += total
                                         pro_total = total
                                         count += 1
@@ -1023,10 +1050,10 @@ class BillReportXlsx(ReportXlsx):
                                                 curr_total = 0
                                             if date_row == new_row:
 
-                                                worksheet.write('M%s' % (new_row), driver_line.line_id.deposit, regular)
+                                                worksheet.write('O%s' % (new_row), driver_line.line_id.deposit, regular)
                                             else:
-                                                worksheet.write('M%s' % (date_row), driver_line.line_id.deposit, regular)
-                                                worksheet.write('M%s' % (new_row), "0", regular)
+                                                worksheet.write('O%s' % (date_row), driver_line.line_id.deposit, regular)
+                                                worksheet.write('O%s' % (new_row), "0", regular)
                                             #     worksheet.merge_range('M%s:M%s' % (date_row, new_row),driver_line.line_id.deposit, regular)
                                             # total += driver_line.line_id.deposit
 
@@ -1040,7 +1067,11 @@ class BillReportXlsx(ReportXlsx):
                                                                 regular)
                                                 worksheet.write('B%s' % (new_row), driver_line.line_id.vehicle_no.name,
                                                                 regular)
-                                                worksheet.write('C%s' % (new_row), driver_line.line_id.running_km,
+                                                worksheet.write('C%s' % (new_row), driver_line.line_id.start_km,
+                                                                regular)
+                                                worksheet.write('D%s' % (new_row), driver_line.line_id.actual_close_km,
+                                                                regular)
+                                                worksheet.write('E%s' % (new_row), driver_line.line_id.running_km,
                                                                 regular)
 
                                                 if driver_line.line_id.start_time:
@@ -1056,7 +1087,7 @@ class BillReportXlsx(ReportXlsx):
                                                                                 '%Y-%m-%d %H:%M:%S').strftime(
                                                         "%d-%m-%Y %H:%M:%S")
 
-                                                    worksheet.write('D%s' % (new_row), central, regular)
+                                                    worksheet.write('F%s' % (new_row), central, regular)
                                                 if driver_line.line_id.end_time:
                                                     from_zone = tz.gettz('UTC')
                                                     to_zone = tz.gettz('Asia/Kolkata')
@@ -1070,16 +1101,20 @@ class BillReportXlsx(ReportXlsx):
                                                                                 '%Y-%m-%d %H:%M:%S').strftime(
                                                         "%d-%m-%Y %H:%M:%S")
 
-                                                    worksheet.write('E%s' % (new_row), central, regular)
+                                                    worksheet.write('G%s' % (new_row), central, regular)
 
                                             else:
                                                 worksheet.merge_range('A%s:A%s' % (date_row, new_row),
                                                                       datetime.strptime(driver_d.date,
                                                                                         "%Y-%m-%d").strftime(
-                                                                          "%d-%m-%Y"),regular),
+                                                                          "%d-%m-%Y"),regular)
                                                 worksheet.merge_range('B%s:B%s' % (date_row, new_row), driver_line.line_id.vehicle_no.name,
                                                                 regular)
-                                                worksheet.merge_range('C%s:C%s' % (date_row, new_row), driver_line.line_id.running_km,
+                                                worksheet.merge_range('C%s:C%s' % (date_row, new_row), driver_line.line_id.start_km,
+                                                                regular)
+                                                worksheet.merge_range('D%s:D%s' % (date_row, new_row), driver_line.line_id.actual_close_km,
+                                                                regular)
+                                                worksheet.merge_range('E%s:E%s' % (date_row, new_row), driver_line.line_id.running_km,
                                                                 regular)
 
                                                 if driver_line.line_id.start_time:
@@ -1095,7 +1130,7 @@ class BillReportXlsx(ReportXlsx):
                                                                                 '%Y-%m-%d %H:%M:%S').strftime(
                                                         "%d-%m-%Y %H:%M:%S")
 
-                                                    worksheet.merge_range('D%s:D%s' % (date_row, new_row), central, regular)
+                                                    worksheet.merge_range('F%s:F%s' % (date_row, new_row), central, regular)
                                                 if driver_line.line_id.end_time:
                                                     from_zone = tz.gettz('UTC')
                                                     to_zone = tz.gettz('Asia/Kolkata')
@@ -1109,7 +1144,7 @@ class BillReportXlsx(ReportXlsx):
                                                                                 '%Y-%m-%d %H:%M:%S').strftime(
                                                         "%d-%m-%Y %H:%M:%S")
 
-                                                    worksheet.merge_range('E%s:E%s' % (date_row, new_row),central, regular)
+                                                    worksheet.merge_range('G%s:G%s' % (date_row, new_row),central, regular)
 
                                             # worksheet.write('A%s' % (new_row),
                                             #                 datetime.strptime(driver_line.line_id.date, "%Y-%m-%d").strftime(
@@ -1120,24 +1155,24 @@ class BillReportXlsx(ReportXlsx):
                                             # worksheet.write('F%s' % (new_row), driver.start_km, regular)
                                             # worksheet.write('G%s' % (new_row), driver.actual_close_km, regular)
 
-                                            worksheet.write("F%s" % (new_row), driver_line.project_id.name, regular)
-                                            worksheet.write('G%s' % (new_row),
+                                            worksheet.write("H%s" % (new_row), driver_line.project_id.name, regular)
+                                            worksheet.write('I%s' % (new_row),
                                                             driver_line.from_id2 and driver_line.from_id2.name or driver_line.location_id.name,
                                                             regular)
-                                            worksheet.write('H%s' % (new_row), driver_line.to_id2.name, regular)
-                                            worksheet.write('I%s' % (new_row), 1, regular)
+                                            worksheet.write('J%s' % (new_row), driver_line.to_id2.name, regular)
+                                            worksheet.write('K%s' % (new_row), 1, regular)
 
-                                            worksheet.write('J%s' % (new_row), driver_line.bata_driver, regular)
+                                            worksheet.write('L%s' % (new_row), driver_line.bata_driver, regular)
                                             if ot_count != 0:
-                                                worksheet.write('K%s' % (new_row), "0", regular)
+                                                worksheet.write('M%s' % (new_row), "0", regular)
 
-                                                worksheet.write('L%s' % (new_row), "0", regular)
+                                                worksheet.write('N%s' % (new_row), "0", regular)
 
                                             if ot_count == 0:
 
-                                                worksheet.write('K%s' % (new_row), driver_line.line_id.ot_time, regular)
+                                                worksheet.write('M%s' % (new_row), driver_line.line_id.ot_time, regular)
 
-                                                worksheet.write('L%s' % (new_row),
+                                                worksheet.write('N%s' % (new_row),
                                                                 (driver_line.line_id.ot_time * driver_line.line_id.ot_rate),
                                                                 regular)
                                                 curr_total += (
@@ -1147,14 +1182,14 @@ class BillReportXlsx(ReportXlsx):
                                             curr_total += driver_line.bata_driver * 1
                                             driver_subtotal+=curr_total
                                             pro_sub = curr_total
-                                            worksheet.write('N%s' % (new_row), curr_total, regular)
+                                            worksheet.write('P%s' % (new_row), curr_total, regular)
                                             sub_total += curr_total
-                                            worksheet.write('O%s' % (new_row), driver_line.km_deposit, regular)
+                                            worksheet.write('Q%s' % (new_row), driver_line.km_deposit, regular)
                                             curr_total += driver_line.km_deposit
                                             driver_deposit += driver_line.km_deposit
                                             pro_deposit = driver_line.km_deposit
-                                            worksheet.write("P%s" % (new_row), curr_total, regular)
-                                            worksheet.write("Q%s" % (new_row), driver_line.remarks or '', regular)
+                                            worksheet.write("R%s" % (new_row), curr_total, regular)
+                                            worksheet.write("S%s" % (new_row), driver_line.remarks or '', regular)
                                             driver_total += curr_total
                                             pro_total = curr_total
                                             count += 1
@@ -1188,22 +1223,22 @@ class BillReportXlsx(ReportXlsx):
                             #     total = 0
 
                             if len(driver_daily) != 0:
-                                worksheet.merge_range('A%s:F%s' % (new_row, new_row), "Total", boldc)
-                                worksheet.write('N%s' % (new_row), driver_subtotal, boldc)
-                                worksheet.write('O%s' % (new_row), driver_deposit, boldc)
-                                worksheet.write('P%s' % (new_row), driver_total, boldc)
+                                worksheet.merge_range('A%s:H%s' % (new_row, new_row), "Total", boldc)
+                                worksheet.write('P%s' % (new_row), driver_subtotal, boldc)
+                                worksheet.write('Q%s' % (new_row), driver_deposit, boldc)
+                                worksheet.write('R%s' % (new_row), driver_total, boldc)
                                 new_row += 2
-                                worksheet.merge_range('A%s:F%s' % (new_row, new_row), "Project", boldc)
-                                worksheet.write('N%s' % (new_row), "Subtotal", boldc)
-                                worksheet.write('O%s' % (new_row), "Deposit", boldc)
-                                worksheet.write('P%s' % (new_row), "Total", boldc)
+                                worksheet.merge_range('A%s:H%s' % (new_row, new_row), "Project", boldc)
+                                worksheet.write('P%s' % (new_row), "Subtotal", boldc)
+                                worksheet.write('Q%s' % (new_row), "Deposit", boldc)
+                                worksheet.write('R%s' % (new_row), "Total", boldc)
                                 new_row += 1
 
                                 for key,value in project_dict.items():
-                                    worksheet.merge_range('A%s:F%s' % (new_row, new_row), key, boldc)
-                                    worksheet.write('N%s' % (new_row), project_dict[key]['pro_sub'], boldc)
-                                    worksheet.write('O%s' % (new_row), project_dict[key]['pro_deposit'], boldc)
-                                    worksheet.write('P%s' % (new_row), project_dict[key]['pro_total'], boldc)
+                                    worksheet.merge_range('A%s:H%s' % (new_row, new_row), key, boldc)
+                                    worksheet.write('P%s' % (new_row), project_dict[key]['pro_sub'], boldc)
+                                    worksheet.write('Q%s' % (new_row), project_dict[key]['pro_deposit'], boldc)
+                                    worksheet.write('R%s' % (new_row), project_dict[key]['pro_total'], boldc)
                                     new_row+=1
                                 new_row+=4
 
