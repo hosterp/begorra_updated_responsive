@@ -887,8 +887,10 @@
 
                 <xpath expr="//header/button[@string='Confirm Order']"
                        position="after">
+<!--                    <button name="button_approve" class="oe_highlight" string="Approve"-->
+<!--                            groups="hiworth_construction.group_ceo" type="object" states="draft"/>-->
                     <button name="button_approve" class="oe_highlight" string="Approve"
-                            groups="hiworth_construction.group_ceo" type="object" states="draft"/>
+                            groups="hiworth_construction.group_two_user" type="object" states="draft"/>
                     <button name="received_button" class="oe_highlight" string="Received"
                             groups="hiworth_construction.group_ceo" type="object" states="draft"/>
                     <button name="%(action_view_purchase_history)d" states="draft,confirmed,approved,done"
