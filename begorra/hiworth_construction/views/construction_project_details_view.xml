@@ -454,6 +454,59 @@
             </field>
         </record>
 
+        <record id="edit_project_changed_hide_create"
+                model="ir.ui.view">
+
+            <field name="name">
+                project.project.form.hide.create
+            </field>
+
+            <field name="model">project.project</field>
+
+            <field name="inherit_id"
+                   ref="hiworth_construction.edit_project_changed"/>
+
+            <field name="arch" type="xml">
+
+                <xpath expr="//form" position="attributes">
+
+                    <attribute name="create">false</attribute>
+
+                </xpath>
+
+            </field>
+
+        </record>
+
+        <record id="edit_project_changed_show_create"
+                model="ir.ui.view">
+
+            <field name="name">
+                project.project.form.show.create
+            </field>
+
+            <field name="model">project.project</field>
+
+            <field name="inherit_id"
+                   ref="hiworth_construction.edit_project_changed"/>
+
+            <field name="priority" eval="100"/>
+
+            <field name="groups_id"
+                   eval="[(6,0,[ref('hiworth_construction.group_project_create_access')])]"/>
+
+            <field name="arch" type="xml">
+
+                <xpath expr="//form" position="attributes">
+
+                    <attribute name="create">true</attribute>
+
+                </xpath>
+
+            </field>
+
+        </record>
+
         <record id="view_project_changed" model="ir.ui.view">
             <field name="name">project.view_project.changed</field>
             <field name="model">project.project</field>
@@ -605,7 +658,9 @@
                 <!-- Update the colors and fonts attributes in the existing tree view -->
                 <tree position="attributes">
                     <attribute name="fonts">bold:message_unread==True</attribute>
-                    <attribute name="colors">grey:state=='cancel';orange:state=='confirmed';red:state=='draft';green:state=='done';blue:state=='received'</attribute>
+                    <attribute name="colors">
+                        grey:state=='cancel';orange:state=='confirmed';red:state=='draft';green:state=='done';blue:state=='received'
+                    </attribute>
                 </tree>
             </field>
         </record>
@@ -915,8 +970,8 @@
 
                 <xpath expr="//header/button[@string='Confirm Order']"
                        position="after">
-<!--                    <button name="button_approve" class="oe_highlight" string="Approve"-->
-<!--                            groups="hiworth_construction.group_ceo" type="object" states="draft"/>-->
+                    <!--                    <button name="button_approve" class="oe_highlight" string="Approve"-->
+                    <!--                            groups="hiworth_construction.group_ceo" type="object" states="draft"/>-->
                     <button name="button_approve" class="oe_highlight" string="Approve"
                             groups="hiworth_construction.group_two_user" type="object" states="draft"/>
                     <button name="received_button" class="oe_highlight" string="Received"
