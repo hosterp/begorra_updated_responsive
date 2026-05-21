@@ -468,7 +468,7 @@
             <field name="priority" eval="100"/>
 
             <field name="groups_id"
-                   eval="[(6,0,[ref('hiworth_construction.group_grr_delete_access')])]"/>
+                   eval="[(6,0,[ref('hiworth_construction.group_grr_delete_access_po')])]"/>
 
             <field name="arch" type="xml">
 
@@ -559,7 +559,7 @@
             <field name="name">form.goods.recieve.report</field>
             <field name="model">goods.recieve.report</field>
             <field name="arch" type="xml">
-                <form>
+                <form delete="false">
                     <header>
                         <button name="action_done" string="Request" type="object" invisible="1"/>
                         <button name="action_cancel" string="Cancel" type="object" class="oe_highlight"
@@ -653,6 +653,38 @@
                 </form>
             </field>
         </record>
+
+
+        <record id="form_goods_recieve_report_without_po_delete_enable"
+                    model="ir.ui.view">
+
+                <field name="name">
+                    form.goods.recieve.report.without.po.delete.enable
+                </field>
+
+                <field name="model">goods.recieve.report</field>
+
+                <field name="inherit_id"
+                       ref="hiworth_construction.form_goods_recieve_report_without_PO"/>
+
+                <field name="priority" eval="100"/>
+
+                <field name="groups_id"
+                       eval="[(6,0,[ref('hiworth_construction.group_grr_delete_access_without_po')])]"/>
+
+                <field name="arch" type="xml">
+
+                    <xpath expr="//form" position="attributes">
+
+                        <attribute name="delete">true</attribute>
+
+
+                    </xpath>
+
+                </field>
+
+            </record>
+
         <record id="tree_goods_receive_report_without_PO" model="ir.ui.view">
             <field name="name">tree.goods.recieve.report</field>
             <field name="model">goods.recieve.report</field>
